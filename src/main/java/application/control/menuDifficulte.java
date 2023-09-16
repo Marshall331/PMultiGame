@@ -1,6 +1,7 @@
 package application.control;
 
 import application.PMultiApp;
+import application.tools.Utilitaires;
 import application.view.menuDifficulteController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -30,7 +31,13 @@ public class menuDifficulte {
 			// Paramétrage du Stage : feuille de style, titre
 			Scene scene = new Scene(root, root.getPrefWidth() + 20, root.getPrefHeight() + 10);
 	        scene.getStylesheets().add(PMultiApp.class.getResource("application.css").toExternalForm());
-	        
+
+			// Suppression des évènements du clavier
+			Utilitaires.removeKeysEvents(scene);
+
+			// Placement de la fenêtre au milieu de l'écran
+			Utilitaires.setCenterStage(primaryStage, scene);
+
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Configuration de la partie");
 			primaryStage.setResizable(false);

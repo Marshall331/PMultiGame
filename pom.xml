@@ -41,7 +41,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>${javafx.maven.plugin.version}</version>
                 <configuration>
-                    <mainClass>C:\Users\ahmad\OneDrive\Documents\pong\src\main\java\application\PMultiApp.java</mainClass>
+                    <mainClass>C:\Users\K\Documents\PMultiGame\src\main\java\application\PMultiApp.java</mainClass>
                 </configuration>
             </plugin>
         </plugins>

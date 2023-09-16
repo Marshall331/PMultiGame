@@ -2,25 +2,18 @@ package application.view;
 
 import application.control.menuDifficulte;
 import application.tools.AlertUtilities;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import application.tools.Constants;
+import application.tools.player;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import javafx.util.Duration;
 
 /**
  * Controller JavaFX de la scène du jeu.
@@ -33,26 +26,18 @@ public class gameController {
 	// Scène de la fenêtre précédente
 	private Scene scene;
 
-	// Boucle du jeu
-	Timeline jeu;
-
-	// Score des joueurs
-	private IntegerProperty scrj1 = new SimpleIntegerProperty(0);
-	private IntegerProperty scrj2 = new SimpleIntegerProperty(0);
+	private game game;
 
 	private static final int WIDTH = 1680 / 2;
 	private static final int HEIGHT = 972 / 2;
 	private static final int PADDLE_WIDTH = 30;
 	private static final int PADDLE_HEIGHT = 160;
-	private static final int BALL_RADIUS = 30;
-	private static final double PADDLE_SPEED = 1;
-	private static final double BALL_SPEED = 1;
-
+	private static final int BALL_RADIUS = 20;
+	private static final double PADDLE_SPEED = 7;
+	private static final double BALL_SPEED = 5;
 	private double paddle1Velocity;
 	private double paddle2Velocity;
-	private double ballVelocityX;
-	private double ballVelocityY;
-	public boolean ballCollidedWithPaddle;
+	private boolean ballCollidedWithPaddle;
 
 	@FXML
 	private GridPane terrain;
@@ -67,6 +52,9 @@ public class gameController {
 	@FXML
 	private Circle balle;
 
+	private player j1;
+	private player j2;
+
 	/**
 	 * Initialisation du contrôleur de vue GameController.
 	 *
@@ -77,12 +65,18 @@ public class gameController {
 		this.scene = scene;
 		this.primaryStage.setOnCloseRequest(e -> this.closeWindow(e));
 
+		j1 = new player(paddle1);
+		j2 = new player(paddle2);
+		game = new game(j1, j2, balle);
+
 		// Mises à jour automatique des scores
-		labScrj1.textProperty().bind(Bindings.convert(Bindings.concat(scrj1)));
-		labScrj2.textProperty().bind(Bindings.convert(Bindings.concat(scrj2)));
+		labScrj1.textProperty().bind(Bindings.convert(Bindings.concat(game.score)));
+
+		// Configuration des évenements du clavier
+		setKeyEvents();
 
 		// Lancement du jeu
-		this.jouer();
+		game.start();
 	}
 
 	/**
@@ -92,71 +86,6 @@ public class gameController {
 		this.primaryStage.show();
 	}
 
-	/**
-	 * Boucle de jeu, gère les déplacements de la balle et des raquettes et met à
-	 * jour les scores lors des buts.
-	 */
-	public void jouer() {
-
-		paddle1Velocity = 0;
-		paddle2Velocity = 0;
-		ballVelocityX = BALL_SPEED;
-		ballVelocityY = BALL_SPEED;
-	    this.ballCollidedWithPaddle = false; // Variable de contrôle
-
-		jeu = new Timeline(new KeyFrame(Duration.millis(16), new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent arg0) {
-
-				// Déplacer les raquettes
-				paddle1.setTranslateY(paddle1.getTranslateY() + paddle1Velocity);
-				paddle2.setTranslateY(paddle2.getTranslateY() + paddle2Velocity);
-
-				// Gérer les collisions avec les bords
-				if (paddle1.getTranslateY() < -HEIGHT + PADDLE_HEIGHT / 2) {
-					paddle1.setTranslateY(-HEIGHT + PADDLE_HEIGHT / 2);
-				} else if (paddle1.getTranslateY() > HEIGHT - PADDLE_HEIGHT / 2) {
-					paddle1.setTranslateY(HEIGHT - PADDLE_HEIGHT / 2);
-				}
-				if (paddle2.getTranslateY() < -HEIGHT + PADDLE_HEIGHT / 2) {
-					paddle2.setTranslateY(-HEIGHT + PADDLE_HEIGHT / 2);
-				} else if (paddle2.getTranslateY() > HEIGHT - PADDLE_HEIGHT / 2) {
-					paddle2.setTranslateY(HEIGHT - PADDLE_HEIGHT / 2);
-				}
-
-				// Mouvement de la balle
-				balle.setTranslateX(balle.getTranslateX() + ballVelocityX);
-				balle.setTranslateY(balle.getTranslateY() + ballVelocityY);
-
-				// Gérer les collisions de la balle avec les raquettes
-	            if ((balle.getBoundsInParent().intersects(paddle1.getBoundsInParent())
-	                    || balle.getBoundsInParent().intersects(paddle2.getBoundsInParent()))
-	                    && !ballCollidedWithPaddle) {
-	                ballVelocityX *= -1;
-	                balle.setTranslateX(balle.getTranslateX() + ballVelocityX);
-	                ballCollidedWithPaddle = true;
-	            } else if (!balle.getBoundsInParent().intersects(paddle1.getBoundsInParent())
-	                    && !balle.getBoundsInParent().intersects(paddle2.getBoundsInParent())) {
-	                ballCollidedWithPaddle = false;
-	            }
-
-				if (balle.getTranslateX() < -WIDTH + BALL_RADIUS) {
-					scrj1.set(scrj1.getValue() + 1);
-					resetPoint();
-				} else if (balle.getTranslateX() > WIDTH - BALL_RADIUS / 2) {
-					scrj2.set(scrj2.getValue() + 1);
-					resetPoint();
-				}
-				
-				// Gère le rebond verticale
-				if (balle.getTranslateY() <= -HEIGHT + BALL_RADIUS || balle.getTranslateY() >= HEIGHT - BALL_RADIUS) {
-					ballVelocityY *= -1;
-				}
-			}
-		}));
-		jeu.setCycleCount(Timeline.INDEFINITE);
-		jeu.play();
-	}
-
 	private void resetPoint() {
 		balle.setTranslateX(0);
 		balle.setTranslateY(0);
@@ -164,26 +93,48 @@ public class gameController {
 		paddle2.setTranslateY(0);
 	}
 
-	@FXML
-	public void bougerPaddle(KeyEvent event) {
-		if (event.getCode() == KeyCode.Z) {
-			paddle1Velocity = -PADDLE_SPEED;
-		} else if (event.getCode() == KeyCode.S) {
-			paddle1Velocity = PADDLE_SPEED;
-		} else if (event.getCode() == KeyCode.P) {
-			paddle2Velocity = -PADDLE_SPEED;
-		} else if (event.getCode() == KeyCode.L) {
-			paddle2Velocity = PADDLE_SPEED;
-		}
-	}
+	private void setKeyEvents() {
+		// Mise en mouvement des raquettes lorsque les touches sont appuyés
+		scene.setOnKeyPressed(event -> {
+			switch (event.getCode()) {
+				case Z:
+						j1.vel = -5;
+					break;
+				case S:
+						j1.vel = 5;
+					break;
+				case P:
+						j2.vel = -5;
+					break;
+				case L:
+						j2.vel = 5;
+					break;
+				default:
+					event.consume();
+					break;
+			}
+		});
 
-	@FXML
-	public void arreterPaddle(KeyEvent event) {
-		if (event.getCode() == KeyCode.Z || event.getCode() == KeyCode.S) {
-			paddle1Velocity = 0;
-		} else if (event.getCode() == KeyCode.P || event.getCode() == KeyCode.L) {
-			paddle2Velocity = 0;
-		}
+		// Arrêt du mouvement des raquettes lorsque les touches sont relachés
+		scene.setOnKeyReleased(event -> {
+			switch (event.getCode()) {
+				case Z:
+						j1.vel = 0;
+					break;
+				case S:
+						j1.vel = 0;
+					break;
+				case P:
+						j2.vel = 0;
+					break;
+				case L:
+						j2.vel = 0;
+					break;
+				default:
+					event.consume();
+					break;
+			}
+		});
 	}
 
 	/*
@@ -192,7 +143,7 @@ public class gameController {
 	@FXML
 	private void doRetour() {
 		this.primaryStage.close();
-		jeu.stop();
+		game.stop();
 		menuDifficulte mD = new menuDifficulte(primaryStage);
 	}
 
