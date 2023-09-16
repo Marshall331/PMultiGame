@@ -1,4 +1,4 @@
-package application.tools;
+package model;
 
 import javafx.scene.shape.Rectangle;
 
@@ -6,9 +6,11 @@ public final class player{
    
     public Rectangle rect;
     public double vel;
-
-    public player(Rectangle _rect){
+    public boolean isComputer;
+    
+    public player(Rectangle _rect, boolean isCPU){
         rect = _rect;
+        isComputer = isCPU;
     }
 
     public void move (double vel){

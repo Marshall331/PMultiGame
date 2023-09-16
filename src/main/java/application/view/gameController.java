@@ -2,18 +2,19 @@ package application.view;
 
 import application.control.menuDifficulte;
 import application.tools.AlertUtilities;
-import application.tools.Constants;
-import application.tools.player;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import model.game;
+import model.player;
 
 /**
  * Controller JavaFX de la scène du jeu.
@@ -65,8 +66,8 @@ public class gameController {
 		this.scene = scene;
 		this.primaryStage.setOnCloseRequest(e -> this.closeWindow(e));
 
-		j1 = new player(paddle1);
-		j2 = new player(paddle2);
+		j1 = new player(paddle1, false);
+		j2 = new player(paddle2, true);
 		game = new game(j1, j2, balle);
 
 		// Mises à jour automatique des scores
@@ -98,16 +99,16 @@ public class gameController {
 		scene.setOnKeyPressed(event -> {
 			switch (event.getCode()) {
 				case Z:
-						j1.vel = -5;
+					j1.vel = -5;
 					break;
 				case S:
-						j1.vel = 5;
+					j1.vel = 5;
 					break;
 				case P:
-						j2.vel = -5;
+					j2.vel = -5;
 					break;
 				case L:
-						j2.vel = 5;
+					j2.vel = 5;
 					break;
 				default:
 					event.consume();
@@ -119,16 +120,16 @@ public class gameController {
 		scene.setOnKeyReleased(event -> {
 			switch (event.getCode()) {
 				case Z:
-						j1.vel = 0;
+					j1.vel = 0;
 					break;
 				case S:
-						j1.vel = 0;
+					j1.vel = 0;
 					break;
 				case P:
-						j2.vel = 0;
+					j2.vel = 0;
 					break;
 				case L:
-						j2.vel = 0;
+					j2.vel = 0;
 					break;
 				default:
 					event.consume();
