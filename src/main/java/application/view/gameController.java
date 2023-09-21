@@ -71,8 +71,8 @@ public class gameController {
 		game = new game(j1, j2, balle);
 
 		// Mises à jour automatique des scores
-		labScrj1.textProperty().bind(Bindings.convert(Bindings.concat(game.score)));
-
+		labScrj1.textProperty().bind(Bindings.convert(Bindings.concat(game.scr1)));
+		labScrj2.textProperty().bind(Bindings.convert(Bindings.concat(game.scr2)));
 		// Configuration des évenements du clavier
 		setKeyEvents();
 
@@ -136,6 +136,12 @@ public class gameController {
 					break;
 			}
 		});
+
+		// scene.setOnMouseMoved(event -> {
+		// 	double mouseX = event.getX();
+		// 	double mouseY = event.getY();
+		// 	System.out.println("Coordonnées de la souris : X=" + mouseX + ", Y=" + mouseY);
+		// });
 	}
 
 	/*

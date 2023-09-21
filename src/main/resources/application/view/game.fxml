@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1050.0" prefWidth="1680.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.gameController">
+<BorderPane maxHeight="-Infinity" maxWidth="1680.0" minHeight="-Infinity" minWidth="1680.0" prefHeight="1050.0" prefWidth="1680.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.gameController">
    <top>
       <GridPane prefHeight="78.0" prefWidth="1680.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
         <rowConstraints>
@@ -58,7 +58,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </Button>
-                  <Line endX="100.0" fill="#900b0b" startX="100.0" startY="60.0" stroke="#17037c" strokeWidth="4.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Line endX="100.17156982421875" endY="-46.166561126708984" fill="#900b0b" startX="100.0" startY="31.833438873291016" strokeWidth="2.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                   <Label fx:id="labScrj2" alignment="CENTER" contentDisplay="CENTER" prefHeight="79.0" prefWidth="150.0" text="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Arial Bold" size="50.0" />
@@ -81,17 +81,15 @@
       </GridPane>
    </top>
    <left>
-      <GridPane fx:id="terrain" prefWidth="1680.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
+      <GridPane fx:id="terrain" prefHeight="978.0" prefWidth="1680.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="80.0" prefWidth="80.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1680.0" minWidth="10.0" prefWidth="1680.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="80.0" prefWidth="80.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1680.0" minWidth="1680.0" percentWidth="0.0" prefWidth="1680.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Rectangle fx:id="paddle1" arcHeight="30.0" arcWidth="30.0" height="160.0" strokeType="INSIDE" strokeWidth="3.0" width="30.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <Rectangle fx:id="paddle1" arcHeight="30.0" arcWidth="30.0" height="160.0" strokeType="INSIDE" strokeWidth="3.0" width="25.0" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                <stroke>
                   <RadialGradient centerX="0.4944751381215469" centerY="0.533175355450237" radius="0.5">
                      <stops>
@@ -125,10 +123,10 @@
                   </LinearGradient>
                </fill>
                <GridPane.margin>
-                  <Insets left="20.0" />
+                  <Insets left="30.0" />
                </GridPane.margin>
             </Rectangle>
-            <Rectangle fx:id="paddle2" arcHeight="30.0" arcWidth="30.0" height="160.0" strokeType="INSIDE" strokeWidth="3.0" width="30.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <Rectangle fx:id="paddle2" arcHeight="30.0" arcWidth="30.0" height="160.0" strokeType="INSIDE" strokeWidth="3.0" width="25.0" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
                <stroke>
                   <RadialGradient centerX="0.4944751381215469" centerY="0.533175355450237" radius="0.5">
                      <stops>
@@ -162,10 +160,10 @@
                   </LinearGradient>
                </fill>
                <GridPane.margin>
-                  <Insets right="20.0" />
+                  <Insets right="30.0" />
                </GridPane.margin>
             </Rectangle>
-            <Line endX="1449.878662109375" endY="900.0" startX="1450.0" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="8.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <Line endX="1449.878662109375" endY="900.0" startX="1450.0" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="8.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
@@ -186,7 +184,7 @@
                   </LinearGradient>
                </fill>
                <stroke>
-                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                  <RadialGradient centerX="0.505524861878453" centerY="0.5" radius="0.5">
                      <stops>
                         <Stop>
                            <color>
@@ -195,14 +193,14 @@
                         </Stop>
                         <Stop offset="1.0">
                            <color>
-                              <Color red="0.3815789520740509" green="0.3815789520740509" blue="0.3815789520740509" />
+                              <Color red="0.3799999952316284" green="0.2720166742801666" blue="0.2621999979019165" />
                            </color>
                         </Stop>
                      </stops>
                   </RadialGradient>
                </stroke>
             </Line>
-            <Circle fx:id="balle" radius="30.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <Circle fx:id="balle" radius="30.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <fill>
                   <RadialGradient centerX="0.5193370165745855" centerY="0.5308056872037915" radius="0.5">
                      <stops>

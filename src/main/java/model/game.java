@@ -9,7 +9,8 @@ import java.util.Random;
 
 public final class game extends AnimationTimer {
 
-    public final IntegerProperty score = new SimpleIntegerProperty(0);
+    public IntegerProperty scr1 = new SimpleIntegerProperty(0);
+    public IntegerProperty scr2 = new SimpleIntegerProperty(0);
 
     // Elements de la scène
     private final player joueur1;
@@ -23,6 +24,8 @@ public final class game extends AnimationTimer {
     private static final int PADDLE_WIDTH = 30;
     private static final int PADDLE_HEIGHT = 160;
 
+    Random rand = new Random();
+
     double a;
     double mag;
     double dX;
@@ -33,6 +36,8 @@ public final class game extends AnimationTimer {
         this.joueur2 = joueur2;
         this.ball = balle;
         reset(); // Initialise la balle au début
+        // ball.setTranslateX(790);
+        // ball.setTranslateY(-200);
     }
 
     @Override
@@ -49,9 +54,28 @@ public final class game extends AnimationTimer {
     private void handlePlayer() {
         if (checkCollision(joueur1) && !joueur1.isComputer) {
             joueur1.move(joueur1.vel);
-        } 
-        if (checkCollision(joueur2) && joueur2.isComputer) {
-                joueur2.rect.setTranslateY(ball.getLayoutY() - 90);
+        }
+        if (joueur2.isComputer) {
+            double targetY = ball.getTranslateY(); // Position verticale cible du joueur 2
+            double speed = 20; // Vitesse maximale du joueur 2
+            double currentY = joueur2.rect.getTranslateY();
+
+            // Calculer la direction et la distance vers la cible
+            double direction = (targetY > currentY) ? 1 : -1;
+            double distance = Math.abs(targetY - currentY);
+
+            // Limiter la vitesse du joueur 2 à 10
+            if (distance > speed) {
+                distance = speed;
+            }
+
+            double mouvementBot = currentY + direction * distance - 15;
+            // Déplacer le joueur 2 vers la cible
+            if (joueur2.rect.getTranslateY() + distance <= HEIGHT + PADDLE_HEIGHT / 2 - 60
+                    && joueur2.rect.getTranslateY() + distance >= -HEIGHT - PADDLE_HEIGHT / 2 - 60) {
+                joueur2.rect.setTranslateY(mouvementBot);
+            }
+            // System.out.println(joueur2.rect.getTranslateY());
         }
     }
 
@@ -67,16 +91,16 @@ public final class game extends AnimationTimer {
         joueur2.rect.setTranslateY(0);
 
         // Génère un angle aléatoire pour la direction de la balle
-        Random rand = new Random();
         double randomAngle = rand.nextDouble() * Math.PI * 2; // Entre 0 et 2*pi radians
         mag = Constants.MAG;
-        dX = mag * Math.cos(randomAngle);
+        // dX = 0.05;
+        // dY = 0;
+        dX = mag * Math.sin(randomAngle);
         dY = mag * Math.sin(randomAngle);
     }
 
     private void updateGame() {
-        ball.setTranslateX(ball.getTranslateX() + dX);
-        ball.setTranslateY(ball.getTranslateY() + dY);
+        this.moveBall();
 
         if (joueur1.rect.getBoundsInParent().intersects(ball.getBoundsInParent())) {
             mag *= (mag < Constants.SPEED) ? Constants.ACC : 1;
@@ -84,20 +108,26 @@ public final class game extends AnimationTimer {
             dX = mag * Math.cos(a);
             dY = mag * Math.sin(a);
             dY = (ball.getTranslateY() <= joueur1.rect.getTranslateY() + 75) ? -dY : dY;
-            score.set(score.get() + 1);
         } else if (joueur2.rect.getBoundsInParent().intersects(ball.getBoundsInParent())) {
-            dX = -dX;
+            // Utilisez joueur2 pour calculer la collision avec la raquette du joueur 2
+            a = Constants.C * Math.abs((joueur2.rect.getTranslateY() + 75 - ball.getTranslateY()) / 75);
+            dX = -mag * Math.cos(a); // Inverser la direction pour le joueur 2
         } else if (ball.getTranslateY() >= HEIGHT - BALL_RADIUS) {
             dY = -dY;
         } else if (ball.getTranslateY() <= -HEIGHT + BALL_RADIUS) {
             dY = -dY;
         }
-        if (ball.getTranslateX() < -WIDTH + BALL_RADIUS) {
-            score.set(score.getValue() + 1);
+        if (ball.getTranslateX() <= -WIDTH + BALL_RADIUS - 5) {
+            scr1.set(scr1.getValue() + 1);
             reset();
-        } else if (ball.getTranslateX() > WIDTH - BALL_RADIUS / 2) {
-            score.set(score.getValue() + 1);
+        } else if (ball.getTranslateX() >= WIDTH - 5) {
+            scr2.set(scr2.getValue() + 1);
             reset();
         }
+    }
+
+    private void moveBall() {
+        ball.setTranslateX(ball.getTranslateX() + dX);
+        ball.setTranslateY(ball.getTranslateY() + dY);
     }
 }

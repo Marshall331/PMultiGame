@@ -14,5 +14,5 @@ public class Constants {
 
     public static final double MAG = Math.sqrt(26);
     public static final double SPEED = 30;
-    public static final double ACC = 1.1;
+    public static final double ACC = 1.2;
 }
