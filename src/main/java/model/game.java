@@ -4,7 +4,7 @@ import javafx.animation.AnimationTimer;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.shape.Circle;
-import application.tools.Constants;
+
 import java.util.Random;
 
 public final class game extends AnimationTimer {
@@ -13,8 +13,8 @@ public final class game extends AnimationTimer {
     public IntegerProperty scr2 = new SimpleIntegerProperty(0);
 
     // Elements de la scène
-    private final player joueur1;
-    private final player joueur2;
+    private final player player1;
+    private final player player2;
     private final Circle ball;
 
     // Dimensions des éléments de la scène
@@ -26,39 +26,44 @@ public final class game extends AnimationTimer {
 
     Random rand = new Random();
 
-    double a;
+    double acc;
     double mag;
     double dX;
     double dY;
 
-    public game(player joueur1, player joueur2, Circle balle) {
-        this.joueur1 = joueur1;
-        this.joueur2 = joueur2;
+    public game(player player1, player player2, Circle balle) {
+        this.player1 = player1;
+        this.player2 = player2;
         this.ball = balle;
-        reset(); // Initialise la balle au début
-        // ball.setTranslateX(790);
-        // ball.setTranslateY(-200);
+
+        reset();
     }
 
     @Override
     public void handle(long now) {
-        handlePlayer();
         updateGame();
-        checkEndGame();
     }
 
-    void checkEndGame() {
+    private void updateGame() {
+        checkEndGame();
+        checkBallCollision();
+        checkPaddleCollision();
+        movePlayer();
+        moveBall();
+    }
+
+    private void checkEndGame() {
         // Ajoutez votre logique pour vérifier la fin du jeu ici si nécessaire
     }
 
-    private void handlePlayer() {
-        if (checkCollision(joueur1) && !joueur1.isComputer) {
-            joueur1.move(joueur1.vel);
+    private void movePlayer() {
+        if (checkPlayerBorderCollision(player1) && !player1.isComputer) {
+            player1.move(player1.vel);
         }
-        if (joueur2.isComputer) {
+        if (player2.isComputer) {
             double targetY = ball.getTranslateY(); // Position verticale cible du joueur 2
-            double speed = 20; // Vitesse maximale du joueur 2
-            double currentY = joueur2.rect.getTranslateY();
+            double speed = 10; // Vitesse maximale du joueur 2
+            double currentY = player2.rect.getTranslateY();
 
             // Calculer la direction et la distance vers la cible
             double direction = (targetY > currentY) ? 1 : -1;
@@ -69,50 +74,67 @@ public final class game extends AnimationTimer {
                 distance = speed;
             }
 
-            double mouvementBot = currentY + direction * distance - 15;
-            // Déplacer le joueur 2 vers la cible
-            if (joueur2.rect.getTranslateY() + distance <= HEIGHT + PADDLE_HEIGHT / 2 - 60
-                    && joueur2.rect.getTranslateY() + distance >= -HEIGHT - PADDLE_HEIGHT / 2 - 60) {
-                joueur2.rect.setTranslateY(mouvementBot);
+            double mouvementBot = currentY + direction * distance;
+
+            if (mouvementBot < -405) {
+                mouvementBot = -405;
+            } else if (mouvementBot > 415) {
+                mouvementBot = 415;
             }
+
+            if (player2.rect.getTranslateY() <= HEIGHT - PADDLE_HEIGHT / 2 + 9
+                    && player2.rect.getTranslateY() >= -HEIGHT + PADDLE_HEIGHT / 2) {
+                player2.rect.setTranslateY(mouvementBot);
+            }
+
+            // joueur2.rect.setTranslateY(joueur2.rect.getTranslateY() + 0.2);
             // System.out.println(joueur2.rect.getTranslateY());
+
+            // if (joueur2.rect.getTranslateY() + 0.2 >= HEIGHT - PADDLE_HEIGHT / 2 + 9) {
+            // this.reset();
+            // }
         }
     }
 
-    private boolean checkCollision(player _player) {
-        return _player.rect.getTranslateY() + _player.vel <= HEIGHT - PADDLE_HEIGHT / 2
+    private boolean checkPlayerBorderCollision(player _player) {
+        return _player.rect.getTranslateY() + _player.vel <= HEIGHT - PADDLE_HEIGHT / 2 + 9
                 && _player.rect.getTranslateY() + _player.vel >= -HEIGHT + PADDLE_HEIGHT / 2;
     }
 
     private void reset() {
         ball.setTranslateX(0);
         ball.setTranslateY(0);
-        joueur1.rect.setTranslateY(0);
-        joueur2.rect.setTranslateY(0);
+        player1.rect.setTranslateY(0);
+        player2.rect.setTranslateY(0);
 
-        // Génère un angle aléatoire pour la direction de la balle
-        double randomAngle = rand.nextDouble() * Math.PI * 2; // Entre 0 et 2*pi radians
+        setRandomDirection();
+    }
+
+    private void setRandomDirection() {
         mag = Constants.MAG;
-        // dX = 0.05;
-        // dY = 0;
-        dX = mag * Math.sin(randomAngle);
+        this.dX = 0;
+        this.dY = 0;
+
+        double randomAngle = rand.nextDouble() * Math.PI * 2; // Entre 0 et 2*pi radians
+        dX = mag * Math.cos(randomAngle);
         dY = mag * Math.sin(randomAngle);
     }
 
-    private void updateGame() {
-        this.moveBall();
-
-        if (joueur1.rect.getBoundsInParent().intersects(ball.getBoundsInParent())) {
+    private void checkPaddleCollision() {
+        if (player1.rect.getBoundsInParent().intersects(ball.getBoundsInParent())) {
             mag *= (mag < Constants.SPEED) ? Constants.ACC : 1;
-            a = Constants.C * Math.abs((joueur1.rect.getTranslateY() + 75 - ball.getTranslateY()) / 75);
-            dX = mag * Math.cos(a);
-            dY = mag * Math.sin(a);
-            dY = (ball.getTranslateY() <= joueur1.rect.getTranslateY() + 75) ? -dY : dY;
-        } else if (joueur2.rect.getBoundsInParent().intersects(ball.getBoundsInParent())) {
-            // Utilisez joueur2 pour calculer la collision avec la raquette du joueur 2
-            a = Constants.C * Math.abs((joueur2.rect.getTranslateY() + 75 - ball.getTranslateY()) / 75);
-            dX = -mag * Math.cos(a); // Inverser la direction pour le joueur 2
-        } else if (ball.getTranslateY() >= HEIGHT - BALL_RADIUS) {
+            acc = Constants.C * Math.abs((player1.rect.getTranslateY() + 75 - ball.getTranslateY()) / 75);
+            dX = mag * Math.cos(acc);
+            dY = mag * Math.sin(acc);
+            dY = (ball.getTranslateY() <= player1.rect.getTranslateY() + 75) ? -dY : dY;
+        } else if (player2.rect.getBoundsInParent().intersects(ball.getBoundsInParent())) {
+            acc = Constants.C * Math.abs((player2.rect.getTranslateY() + 75 - ball.getTranslateY()) / 75);
+            dX = -mag * Math.cos(acc);
+        }
+    }
+
+    private void checkBallCollision() {
+        if (ball.getTranslateY() >= HEIGHT - BALL_RADIUS + 5) {
             dY = -dY;
         } else if (ball.getTranslateY() <= -HEIGHT + BALL_RADIUS) {
             dY = -dY;

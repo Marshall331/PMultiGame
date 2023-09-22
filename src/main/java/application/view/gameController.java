@@ -6,9 +6,10 @@ import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
+import javafx.scene.robot.Robot;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -96,19 +97,19 @@ public class gameController {
 
 	private void setKeyEvents() {
 		// Mise en mouvement des raquettes lorsque les touches sont appuyés
-		scene.setOnKeyPressed(event -> {
+		terrain.setOnKeyPressed(event -> {
 			switch (event.getCode()) {
 				case Z:
-					j1.vel = -5;
+					j1.vel = -10;
 					break;
 				case S:
-					j1.vel = 5;
+					j1.vel = 10;
 					break;
 				case P:
-					j2.vel = -5;
+					j2.vel = -10;
 					break;
 				case L:
-					j2.vel = 5;
+					j2.vel = 10;
 					break;
 				default:
 					event.consume();
@@ -117,7 +118,7 @@ public class gameController {
 		});
 
 		// Arrêt du mouvement des raquettes lorsque les touches sont relachés
-		scene.setOnKeyReleased(event -> {
+		terrain.setOnKeyReleased(event -> {
 			switch (event.getCode()) {
 				case Z:
 					j1.vel = 0;
@@ -137,11 +138,28 @@ public class gameController {
 			}
 		});
 
-		// scene.setOnMouseMoved(event -> {
-		// 	double mouseX = event.getX();
-		// 	double mouseY = event.getY();
-		// 	System.out.println("Coordonnées de la souris : X=" + mouseX + ", Y=" + mouseY);
-		// });
+		scene.setOnMouseMoved(event -> {
+			scene.setCursor(Cursor.NONE);
+
+			double pos = event.getY() - HEIGHT;
+			if (pos - PADDLE_HEIGHT / 2 > j1.rect.getTranslateY()) {
+				j1.vel = 5;
+			}
+			if (pos + PADDLE_HEIGHT / 2 < j1.rect.getTranslateY()) {
+				j1.vel = -5;
+			}
+			if (pos > j1.rect.getTranslateY() + 160 && pos < j1.rect.getTranslateY() - 160) {
+				j1.vel = 0;
+			}
+			System.out.println(event.getY());
+			System.out.println(pos);
+
+		});
+
+		terrain.setOnMouseExited(event -> {
+			// La souris a quitté le terrain du jeu, rétablissez le curseur par défaut
+			scene.setCursor(Cursor.DEFAULT);
+		});
 	}
 
 	/*

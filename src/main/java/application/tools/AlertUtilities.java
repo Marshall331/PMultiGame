@@ -70,7 +70,7 @@ public class AlertUtilities {
 
 		alert.showAndWait();
 	}
-	
+
 	/**
 	 * Affiche une message simple avec bouton de fermeture.
 	 *

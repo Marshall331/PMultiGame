@@ -1,4 +1,4 @@
-package application.tools;
+package model;
 
 import static java.lang.Math.PI;
 
