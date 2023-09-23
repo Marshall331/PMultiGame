@@ -66,7 +66,7 @@
                      </GridPane.margin>
                   </Button>
                   <Line endX="100.17156982421875" endY="-46.166561126708984" fill="#900b0b" startX="100.0" startY="31.833438873291016" strokeWidth="2.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                  <Label fx:id="labScrj2" alignment="CENTER" contentDisplay="CENTER" prefHeight="79.0" prefWidth="150.0" text="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Label fx:id="labScrPlayer1" alignment="CENTER" contentDisplay="CENTER" prefHeight="79.0" prefWidth="150.0" text="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Arial Bold" size="50.0" />
                      </font>
@@ -74,7 +74,7 @@
                         <Insets right="150.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label fx:id="labScrj1" alignment="CENTER" contentDisplay="CENTER" prefHeight="79.0" prefWidth="150.0" text="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Label fx:id="labScrPlayer2" alignment="CENTER" contentDisplay="CENTER" prefHeight="79.0" prefWidth="150.0" text="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Arial Bold" size="50.0" />
                      </font>

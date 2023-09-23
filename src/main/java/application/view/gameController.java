@@ -44,9 +44,9 @@ public class gameController {
 	@FXML
 	private GridPane board;
 	@FXML
-	private Label labScrj1;
+	private Label labScrPlayer1;
 	@FXML
-	private Label labScrj2;
+	private Label labScrPlayer2;
 	@FXML
 	private Rectangle paddle1;
 	@FXML
@@ -54,8 +54,8 @@ public class gameController {
 	@FXML
 	private Circle balle;
 
-	private player j1;
-	private player j2;
+	private player player1;
+	private player player2;
 
 	/**
 	 * Initialisation du contrôleur de vue GameController.
@@ -67,15 +67,15 @@ public class gameController {
 		this.scene = scene;
 		this.primaryStage.setOnCloseRequest(e -> this.closeWindow(e));
 
-		j1 = new player(paddle1, false);
-		j2 = new player(paddle2, true);
-		game = new game(j1, j2, balle);
+		player1 = new player(paddle1, false, 5, false);
+		player2 = new player(paddle2, true, 5, true);
+		game = new game(player1, player2, balle);
 
 		// Mises à jour automatique des scores
-		labScrj1.textProperty().bind(Bindings.convert(Bindings.concat(game.scr1)));
-		labScrj2.textProperty().bind(Bindings.convert(Bindings.concat(game.scr2)));
+		labScrPlayer1.textProperty().bind(Bindings.convert(Bindings.concat(game.scorePlayer2)));
+		labScrPlayer2.textProperty().bind(Bindings.convert(Bindings.concat(game.scorePlayer1)));
 		// Configuration des évenements du clavier
-		setControls(true, j2.isComputer);
+		setControls(true, player2.isComputer);
 
 		// Lancement du jeu
 		game.start();
@@ -96,35 +96,36 @@ public class gameController {
 	}
 
 	private void setControls(boolean isMouseControl, boolean isSoloGame) {
-		if (isMouseControl && isSoloGame) {
-			board.setOnMouseMoved(event -> {
-				// board.setCursor(Cursor.NONE);
 
+		if (isMouseControl && isSoloGame) {
+			board.setOnMouseEntered(event -> {
+				board.setCursor(Cursor.NONE);
+			});
+			board.setOnMouseMoved(event -> {
 				// Calculez la position Y souhaitée pour le centre de la raquette
 				double desiredRacketY = event.getY() - HEIGHT;
+				double maxY = -HEIGHT + PADDLE_HEIGHT / 2;
+				double minY = HEIGHT - PADDLE_HEIGHT / 2 + 10;
 
-				if (desiredRacketY <= -405) {
-					desiredRacketY = -405;
-				} else if (desiredRacketY >= 415) {
-					desiredRacketY = 415;
+				if (desiredRacketY <= maxY) {
+					desiredRacketY = maxY + 1;
+				} else if (desiredRacketY >= minY) {
+					desiredRacketY = minY - 1;
 				}
 
-				j1.mouseMove = desiredRacketY;
-				// j1.mouseMove();
+				player1.mouseMove = desiredRacketY;
 			});
-
 			board.setOnMouseExited(event -> {
-				// La souris a quitté le terrain du jeu, rétablissez le curseur par défaut
 				board.setCursor(Cursor.DEFAULT);
 			});
 		} else if (!isMouseControl && isSoloGame) {
 			scene.setOnKeyPressed(event -> {
 				switch (event.getCode()) {
 					case Z:
-						j1.vel = -5;
+						player1.vel = -player1.maxSpeed;
 						break;
 					case S:
-						j1.vel = 5;
+						player1.vel = player1.maxSpeed;
 						break;
 					default:
 						event.consume();
@@ -134,10 +135,10 @@ public class gameController {
 			scene.setOnKeyReleased(event -> {
 				switch (event.getCode()) {
 					case Z:
-						j1.vel = 0;
+						player1.vel = 0;
 						break;
 					case S:
-						j1.vel = 0;
+						player1.vel = 0;
 						break;
 					default:
 						event.consume();
@@ -148,16 +149,16 @@ public class gameController {
 			scene.setOnKeyPressed(event -> {
 				switch (event.getCode()) {
 					case Z:
-						j1.vel = -5;
+						player1.vel = -player1.maxSpeed;
 						break;
 					case S:
-						j1.vel = 5;
+						player1.vel = player1.maxSpeed;
 						break;
 					case P:
-						j2.vel = -5;
+						player2.vel = -player2.maxSpeed;
 						break;
 					case L:
-						j2.vel = 5;
+						player2.vel = player2.maxSpeed;
 						break;
 					default:
 						event.consume();
@@ -167,16 +168,16 @@ public class gameController {
 			scene.setOnKeyReleased(event -> {
 				switch (event.getCode()) {
 					case Z:
-						j1.vel = 0;
+						player1.vel = 0;
 						break;
 					case S:
-						j1.vel = 0;
+						player1.vel = 0;
 						break;
 					case P:
-						j2.vel = 0;
+						player2.vel = 0;
 						break;
 					case L:
-						j2.vel = 0;
+						player2.vel = 0;
 						break;
 					default:
 						event.consume();
