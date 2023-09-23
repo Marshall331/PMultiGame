@@ -3,6 +3,8 @@ package model;
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.Cursor;
+import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 
 import java.util.Random;
@@ -31,10 +33,10 @@ public final class game extends AnimationTimer {
     double dX;
     double dY;
 
-    public game(player player1, player player2, Circle balle) {
-        this.player1 = player1;
-        this.player2 = player2;
-        this.ball = balle;
+    public game(player _player1, player _player2, Circle _ball) {
+        this.player1 = _player1;
+        this.player2 = _player2;
+        this.ball = _ball;
 
         reset();
     }
@@ -58,11 +60,15 @@ public final class game extends AnimationTimer {
 
     private void movePlayer() {
         if (checkPlayerBorderCollision(player1) && !player1.isComputer) {
+            player1.mouseMove();
             player1.move(player1.vel);
+        }
+        if (checkPlayerBorderCollision(player2) && !player2.isComputer) {
+            player2.move(player2.vel);
         }
         if (player2.isComputer) {
             double targetY = ball.getTranslateY(); // Position verticale cible du joueur 2
-            double speed = 10; // Vitesse maximale du joueur 2
+            double speed = 20; // Vitesse maximale du joueur 2
             double currentY = player2.rect.getTranslateY();
 
             // Calculer la direction et la distance vers la cible
@@ -86,17 +92,10 @@ public final class game extends AnimationTimer {
                     && player2.rect.getTranslateY() >= -HEIGHT + PADDLE_HEIGHT / 2) {
                 player2.rect.setTranslateY(mouvementBot);
             }
-
-            // joueur2.rect.setTranslateY(joueur2.rect.getTranslateY() + 0.2);
-            // System.out.println(joueur2.rect.getTranslateY());
-
-            // if (joueur2.rect.getTranslateY() + 0.2 >= HEIGHT - PADDLE_HEIGHT / 2 + 9) {
-            // this.reset();
-            // }
         }
     }
 
-    private boolean checkPlayerBorderCollision(player _player) {
+    public boolean checkPlayerBorderCollision(player _player) {
         return _player.rect.getTranslateY() + _player.vel <= HEIGHT - PADDLE_HEIGHT / 2 + 9
                 && _player.rect.getTranslateY() + _player.vel >= -HEIGHT + PADDLE_HEIGHT / 2;
     }

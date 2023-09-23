@@ -88,7 +88,7 @@
       </GridPane>
    </top>
    <left>
-      <GridPane fx:id="terrain" prefHeight="972.0" prefWidth="1680.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
+      <GridPane fx:id="board" prefHeight="972.0" prefWidth="1680.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="1680.0" minWidth="1680.0" percentWidth="0.0" prefWidth="1680.0" />
         </columnConstraints>

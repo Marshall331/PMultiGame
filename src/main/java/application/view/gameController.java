@@ -42,7 +42,7 @@ public class gameController {
 	private boolean ballCollidedWithPaddle;
 
 	@FXML
-	private GridPane terrain;
+	private GridPane board;
 	@FXML
 	private Label labScrj1;
 	@FXML
@@ -75,7 +75,7 @@ public class gameController {
 		labScrj1.textProperty().bind(Bindings.convert(Bindings.concat(game.scr1)));
 		labScrj2.textProperty().bind(Bindings.convert(Bindings.concat(game.scr2)));
 		// Configuration des évenements du clavier
-		setKeyEvents();
+		setControls(true, j2.isComputer);
 
 		// Lancement du jeu
 		game.start();
@@ -95,71 +95,95 @@ public class gameController {
 		paddle2.setTranslateY(0);
 	}
 
-	private void setKeyEvents() {
-		// Mise en mouvement des raquettes lorsque les touches sont appuyés
-		terrain.setOnKeyPressed(event -> {
-			switch (event.getCode()) {
-				case Z:
-					j1.vel = -10;
-					break;
-				case S:
-					j1.vel = 10;
-					break;
-				case P:
-					j2.vel = -10;
-					break;
-				case L:
-					j2.vel = 10;
-					break;
-				default:
-					event.consume();
-					break;
-			}
-		});
+	private void setControls(boolean isMouseControl, boolean isSoloGame) {
+		if (isMouseControl && isSoloGame) {
+			board.setOnMouseMoved(event -> {
+				// board.setCursor(Cursor.NONE);
 
-		// Arrêt du mouvement des raquettes lorsque les touches sont relachés
-		terrain.setOnKeyReleased(event -> {
-			switch (event.getCode()) {
-				case Z:
-					j1.vel = 0;
-					break;
-				case S:
-					j1.vel = 0;
-					break;
-				case P:
-					j2.vel = 0;
-					break;
-				case L:
-					j2.vel = 0;
-					break;
-				default:
-					event.consume();
-					break;
-			}
-		});
+				// Calculez la position Y souhaitée pour le centre de la raquette
+				double desiredRacketY = event.getY() - HEIGHT;
 
-		scene.setOnMouseMoved(event -> {
-			scene.setCursor(Cursor.NONE);
+				if (desiredRacketY <= -405) {
+					desiredRacketY = -405;
+				} else if (desiredRacketY >= 415) {
+					desiredRacketY = 415;
+				}
 
-			double pos = event.getY() - HEIGHT;
-			if (pos - PADDLE_HEIGHT / 2 > j1.rect.getTranslateY()) {
-				j1.vel = 5;
-			}
-			if (pos + PADDLE_HEIGHT / 2 < j1.rect.getTranslateY()) {
-				j1.vel = -5;
-			}
-			if (pos > j1.rect.getTranslateY() + 160 && pos < j1.rect.getTranslateY() - 160) {
-				j1.vel = 0;
-			}
-			System.out.println(event.getY());
-			System.out.println(pos);
+				j1.mouseMove = desiredRacketY;
+				// j1.mouseMove();
+			});
 
-		});
-
-		terrain.setOnMouseExited(event -> {
-			// La souris a quitté le terrain du jeu, rétablissez le curseur par défaut
-			scene.setCursor(Cursor.DEFAULT);
-		});
+			board.setOnMouseExited(event -> {
+				// La souris a quitté le terrain du jeu, rétablissez le curseur par défaut
+				board.setCursor(Cursor.DEFAULT);
+			});
+		} else if (!isMouseControl && isSoloGame) {
+			scene.setOnKeyPressed(event -> {
+				switch (event.getCode()) {
+					case Z:
+						j1.vel = -5;
+						break;
+					case S:
+						j1.vel = 5;
+						break;
+					default:
+						event.consume();
+						break;
+				}
+			});
+			scene.setOnKeyReleased(event -> {
+				switch (event.getCode()) {
+					case Z:
+						j1.vel = 0;
+						break;
+					case S:
+						j1.vel = 0;
+						break;
+					default:
+						event.consume();
+						break;
+				}
+			});
+		} else {
+			scene.setOnKeyPressed(event -> {
+				switch (event.getCode()) {
+					case Z:
+						j1.vel = -5;
+						break;
+					case S:
+						j1.vel = 5;
+						break;
+					case P:
+						j2.vel = -5;
+						break;
+					case L:
+						j2.vel = 5;
+						break;
+					default:
+						event.consume();
+						break;
+				}
+			});
+			scene.setOnKeyReleased(event -> {
+				switch (event.getCode()) {
+					case Z:
+						j1.vel = 0;
+						break;
+					case S:
+						j1.vel = 0;
+						break;
+					case P:
+						j2.vel = 0;
+						break;
+					case L:
+						j2.vel = 0;
+						break;
+					default:
+						event.consume();
+						break;
+				}
+			});
+		}
 	}
 
 	/*
