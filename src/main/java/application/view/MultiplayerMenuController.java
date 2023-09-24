@@ -1,17 +1,16 @@
 package application.view;
 
-import application.control.mainMenu;
+import application.control.MainMenu;
 import application.tools.AlertUtilities;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.CheckBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 /**
  * Controller JavaFX de la vue des choix de la difficulté
  */
-public class menuSettingsController {
+public class MultiplayerMenuController {
 
 	// Fenêtre physique ou est la scène contenant le fichier xml contrôlé par this
 	private Stage primaryStage;
@@ -19,18 +18,11 @@ public class menuSettingsController {
 	/**
 	 * Initialisation du contrôleur de vue DailyBankMainFrameController.
 	 *
-	 * @param _containingStage Stage qui contient la fenêtre précédente.
+     *@param _containingStage Stage qui contient la fenêtre précédente.
 	 */
 	public void initContext(Stage _containingStage) {
 		this.primaryStage = _containingStage;
 		this.primaryStage.setOnCloseRequest(e -> this.closeWindow(e));
-		this.boxSon.selectedProperty().addListener((observable, oldValue, newValue) -> {
-		    if (newValue) {
-		    	boxSon.setText("Activé");
-		    } else {
-		    	boxSon.setText("Désactivé");
-		    }
-		});
 	}
 
 	/**
@@ -40,15 +32,12 @@ public class menuSettingsController {
 		this.primaryStage.show();
 	}
 
-	@FXML
-	private CheckBox boxSon;
-	
 	/*
 	 * Action menu retour. Retourne à la fenêtre précédente.
 	 */
 	@FXML
 	private void doRetour() {
-		mainMenu mM = new mainMenu();
+		MainMenu mM = new MainMenu();
 		mM.start(primaryStage);
 	}
 

@@ -1,6 +1,6 @@
 package application.view;
 
-import application.control.menuDifficulte;
+import application.control.DifficultyMenu;
 import application.tools.AlertUtilities;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -20,7 +20,7 @@ import model.player;
 /**
  * Controller JavaFX de la scène du jeu.
  */
-public class gameController {
+public class GameController {
 
 	// Stage de la fenêtre précédente
 	private Stage primaryStage;
@@ -67,15 +67,16 @@ public class gameController {
 		this.scene = scene;
 		this.primaryStage.setOnCloseRequest(e -> this.closeWindow(e));
 
-		player1 = new player(paddle1, false, 5, false);
-		player2 = new player(paddle2, true, 5, true);
+		player1 = new player(paddle1, false, 5, false, false);
+		player2 = new player(paddle2, true, 5, true, false);
 		game = new game(player1, player2, balle);
 
 		// Mises à jour automatique des scores
 		labScrPlayer1.textProperty().bind(Bindings.convert(Bindings.concat(game.scorePlayer2)));
 		labScrPlayer2.textProperty().bind(Bindings.convert(Bindings.concat(game.scorePlayer1)));
+		
 		// Configuration des évenements du clavier
-		setControls(true, player2.isComputer);
+		setControls(false, player2.isComputer);
 
 		// Lancement du jeu
 		game.start();
@@ -194,7 +195,7 @@ public class gameController {
 	private void doRetour() {
 		this.primaryStage.close();
 		game.stop();
-		menuDifficulte mD = new menuDifficulte(primaryStage);
+		DifficultyMenu mD = new DifficultyMenu(primaryStage);
 	}
 
 	/*

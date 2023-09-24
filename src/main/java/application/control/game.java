@@ -1,9 +1,9 @@
 package application.control;
 
 import application.PMultiApp;
-import application.tools.Utilitaires;
-import application.view.gameController;
-import application.view.menuMultiController;
+import application.tools.Utilities;
+import application.view.GameController;
+import application.view.MultiplayerMenuController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -12,12 +12,12 @@ import javafx.stage.Stage;
 /**
  * Classe de controleur de Dialogue de la scène du jeu.
  */
-public class game {
+public class Game {
 
 	// Stage de la fenêtre précédente
 	private Stage primaryStage;
 
-	public game(Stage _parentStage) {
+	public Game(Stage _parentStage) {
 
 		try {
 
@@ -25,7 +25,7 @@ public class game {
 
 			// Chargement du source fxml
 			FXMLLoader loader = new FXMLLoader(
-					menuMultiController.class.getResource("game.fxml"));
+					GameController.class.getResource("Game.fxml"));
 			BorderPane root = loader.load();
 
 			// Paramétrage du Stage : feuille de style, titre
@@ -33,9 +33,9 @@ public class game {
 			scene.getStylesheets().add(PMultiApp.class.getResource("application.css").toExternalForm());
 
 			// Placement de la fenêtre au milieu de l'écran
-			Utilitaires.setCenterStage(primaryStage, scene);
+			Utilities.setCenterStage(primaryStage, scene);
 
-			gameController dbmfcViewController = loader.getController();
+			GameController dbmfcViewController = loader.getController();
 			dbmfcViewController.initContext(primaryStage, scene);
 
 			primaryStage.setScene(scene);

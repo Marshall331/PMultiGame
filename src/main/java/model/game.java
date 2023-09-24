@@ -42,7 +42,6 @@ public final class game extends AnimationTimer {
     @Override
     public void handle(long now) {
         updateGame();
-        System.out.println(player1.paddle.getTranslateY());
     }
 
     private void updateGame() {
@@ -59,11 +58,13 @@ public final class game extends AnimationTimer {
 
     private void movePlayer() {
         if (checkPlayerBorderCollision(player1) && !player1.isComputer) {
-            player1.mouseMove();
-            player1.move(player1.vel);
+            if (player1.mouseControl) {
+                player1.mouseMove();
+            }
+            player1.move();
         }
         if (checkPlayerBorderCollision(player2) && !player2.isComputer) {
-            player2.move(player2.vel);
+            player2.move();
         }
         if (player2.isComputer) {
             double targetY = ball.getTranslateY(); // Position verticale cible du joueur 2

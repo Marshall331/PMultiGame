@@ -1,7 +1,7 @@
 package application.view;
 
-import application.control.mainMenu;
-import application.control.menuDifficulte;
+import application.control.MainMenu;
+import application.control.DifficultyMenu;
 import application.tools.AlertUtilities;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -11,7 +11,7 @@ import javafx.stage.WindowEvent;
 /**
  * Controller JavaFX de la vue des choix de la difficulté
  */
-public class menuDifficulteController {
+public class DifficultyMenuController {
 
 	// Fenêtre physique ou est la scène contenant le fichier xml contrôlé par this
 	private Stage primaryStage;
@@ -39,7 +39,7 @@ public class menuDifficulteController {
 	@FXML
 	private void doLancerFacile() {
 		this.primaryStage.close();
-		menuDifficulte m = new menuDifficulte(primaryStage);
+		DifficultyMenu m = new DifficultyMenu(primaryStage);
 		m.lancerJeu(1);
 	}
 	
@@ -49,7 +49,7 @@ public class menuDifficulteController {
 	@FXML
 	private void doLancerNormal() {
 		this.primaryStage.close();
-		menuDifficulte m = new menuDifficulte(primaryStage);
+		DifficultyMenu m = new DifficultyMenu(primaryStage);
 		m.lancerJeu(1);
 	}
 	
@@ -59,7 +59,7 @@ public class menuDifficulteController {
 	@FXML
 	private void doLancerGuychel() {
 		this.primaryStage.close();
-		menuDifficulte m = new menuDifficulte(primaryStage);
+		DifficultyMenu m = new DifficultyMenu(primaryStage);
 		m.lancerJeu(1);
 	}
 
@@ -68,7 +68,7 @@ public class menuDifficulteController {
 	 */
 	@FXML
 	private void doRetour() {
-		mainMenu mM = new mainMenu();
+		MainMenu mM = new MainMenu();
 		mM.start(primaryStage);
 	}
 

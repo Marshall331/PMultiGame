@@ -1,8 +1,8 @@
 package application.control;
 
 import application.PMultiApp;
-import application.tools.Utilitaires;
-import application.view.mainMenuController;
+import application.tools.Utilities;
+import application.view.MainMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 /**
  * Classe de controleur de Dialogue de la scène du menu principale.
  */
-public class mainMenu extends Application {
+public class MainMenu extends Application {
 
 	// Stage de la fenêtre principale construite par DailyBankMainFrame
 	private Stage primaryStage;
@@ -29,24 +29,21 @@ public class mainMenu extends Application {
 
 			// Chargement du source fxml
 			FXMLLoader loader = new FXMLLoader(
-					mainMenuController.class.getResource("gamemenu.fxml"));
+					MainMenuController.class.getResource("MainMenu.fxml"));
 			BorderPane root = loader.load();
 
 			// Paramétrage du Stage : feuille de style, titre
 			Scene scene = new Scene(root, root.getPrefWidth() + 20, root.getPrefHeight() + 10);
 			scene.getStylesheets().add(PMultiApp.class.getResource("application.css").toExternalForm());
 
-			// Suppression des évènements du clavier
-			Utilitaires.removeKeysEvents(scene);
-
-			// Placement de la fenêtre au milieu de l'écran
-			Utilitaires.setCenterStage(primaryStage, scene);
+			// Removing all keyEvents
+			Utilities.removeKeysEvents(scene);
 
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Menu du jeu");
 			primaryStage.setResizable(false);
 
-			mainMenuController dbmfcViewController = loader.getController();
+			MainMenuController dbmfcViewController = loader.getController();
 			dbmfcViewController.initContext(primaryStage, this);
 			scene.getStylesheets().add("application.css");
 
@@ -69,20 +66,20 @@ public class mainMenu extends Application {
 	 * Méthode principale de lancement du menu des choix de la difficulté.
 	 */
 	public void menuSolo() {
-		menuDifficulte mD = new menuDifficulte(primaryStage);
+		DifficultyMenu dM = new DifficultyMenu(primaryStage);
 	}
 
 	/**
 	 * Méthode principale de lancement du menu multijoueur.
 	 */
 	public void menuMulti() {
-		menuMulti mM = new menuMulti(primaryStage);
+		MultiplayerMenu mM = new MultiplayerMenu(primaryStage);
 	}
 
 	/**
 	 * Méthode principale de lancement de la scène des paramètres.
 	 */
 	public void menuSettings() {
-		menuSettings mS = new menuSettings(primaryStage);
+		SettingsMenu sS = new SettingsMenu(primaryStage);
 	}
 }

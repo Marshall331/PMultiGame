@@ -6,7 +6,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class Utilitaires {
+public class Utilities {
 
     public static void setCenterStage(Stage _Stage, Scene _scene) {
         

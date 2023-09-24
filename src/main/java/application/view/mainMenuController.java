@@ -1,6 +1,6 @@
 package application.view;
 
-import application.control.mainMenu;
+import application.control.MainMenu;
 import application.tools.AlertUtilities;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -10,9 +10,9 @@ import javafx.stage.WindowEvent;
 /**
  * Controller JavaFX de la vue du menu principale.
  */
-public class mainMenuController {
+public class MainMenuController {
 	
-	private mainMenu mM;
+	private MainMenu mM;
 	
 	// Fenêtre physique ou est la scène contenant le fichier xml contrôlé par this
 	private Stage primaryStage;
@@ -22,7 +22,7 @@ public class mainMenuController {
 	 *
      *@param _containingStage Stage qui contient la fenêtre précédente.
 	 */
-	public void initContext(Stage _containingStage, mainMenu mM) {
+	public void initContext(Stage _containingStage, MainMenu mM) {
 		this.primaryStage = _containingStage;
 		this.mM = mM;
 		this.primaryStage.setOnCloseRequest(e -> this.closeWindow(e));

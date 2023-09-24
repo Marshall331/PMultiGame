@@ -7,28 +7,29 @@ public final class player {
     public Rectangle paddle;
     public double vel;
     public final double maxSpeed;
-    public boolean isComputer;
-    public boolean isSpeedLimited;
+    public final boolean isComputer;
+    public final boolean isSpeedLimited;
+    public final boolean mouseControl;
     public double mouseMove;
 
-    public player(Rectangle _paddle, boolean _isCPU, double _maxSpeed, boolean _speedLimit) {
+    public player(Rectangle _paddle, boolean _isCPU, double _maxSpeed, boolean _speedLimit, boolean _mouseControl) {
         this.paddle = _paddle;
         this.isComputer = _isCPU;
         this.maxSpeed = _maxSpeed;
         this.isSpeedLimited = _speedLimit;
+        this.mouseControl = _mouseControl;
     }
 
-    public void move(double vel) {
-        this.vel = vel;
+    public void move() {
         paddle.setTranslateY(paddle.getTranslateY() + vel);
     }
 
     public void mouseMove() {
         if (isSpeedLimited) {
-            if (paddle.getTranslateY() - 5 > mouseMove) {
-                this.vel = -5;
-            } else if (paddle.getTranslateY() + 5 < mouseMove) {
-                this.vel = 5;
+            if (paddle.getTranslateY() - maxSpeed > mouseMove) {
+                this.vel = -maxSpeed;
+            } else if (paddle.getTranslateY() + maxSpeed < mouseMove) {
+                this.vel = maxSpeed;
             } else {
                 this.vel = 0;
             }
