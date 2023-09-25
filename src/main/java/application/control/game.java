@@ -24,7 +24,7 @@ public class Game {
 
 			// Chargement du source fxml
 			FXMLLoader loader = new FXMLLoader(
-					GameController.class.getResource("Game2.fxml"));
+					GameController.class.getResource("Game1.fxml"));
 			BorderPane root = loader.load();
 
 			// Paramétrage du Stage : feuille de style, titre

@@ -21,7 +21,7 @@ public final class game extends AnimationTimer {
     private static final int WIDTH = 1680 / 2;
     private static final int HEIGHT = 972 / 2;
     private static final int BALL_RADIUS = 30;
-    private static final int PADDLE_WIDTH = 30;
+    private static final int PADDLE_WIDTH = 25;
     private static final int PADDLE_HEIGHT = 160;
 
     Random rand = new Random();
