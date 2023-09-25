@@ -6,7 +6,6 @@ import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
-import javafx.scene.robot.Robot;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -34,12 +33,9 @@ public class GameController {
 	private static final int HEIGHT = 972 / 2;
 	private static final int PADDLE_WIDTH = 30;
 	private static final int PADDLE_HEIGHT = 160;
-	private static final int BALL_RADIUS = 20;
+	private static final int BALL_RADIUS = 30;
 	private static final double PADDLE_SPEED = 7;
 	private static final double BALL_SPEED = 5;
-	private double paddle1Velocity;
-	private double paddle2Velocity;
-	private boolean ballCollidedWithPaddle;
 
 	@FXML
 	private GridPane board;
@@ -62,9 +58,9 @@ public class GameController {
 	 *
 	 * @param _containingStage Stage qui contient la fenêtre précédente.
 	 */
-	public void initContext(Stage _containingStage, Scene scene) {
+	public void initContext(Stage _containingStage, Scene _scene) {
 		this.primaryStage = _containingStage;
-		this.scene = scene;
+		this.scene = _scene;
 		this.primaryStage.setOnCloseRequest(e -> this.closeWindow(e));
 
 		player1 = new player(paddle1, false, 5, false, false);
@@ -89,16 +85,9 @@ public class GameController {
 		this.primaryStage.show();
 	}
 
-	private void resetPoint() {
-		balle.setTranslateX(0);
-		balle.setTranslateY(0);
-		paddle1.setTranslateY(0);
-		paddle2.setTranslateY(0);
-	}
+	private void setControls(boolean _isMouseControl, boolean _isSoloGame) {
 
-	private void setControls(boolean isMouseControl, boolean isSoloGame) {
-
-		if (isMouseControl && isSoloGame) {
+		if (_isMouseControl && _isSoloGame) {
 			board.setOnMouseEntered(event -> {
 				board.setCursor(Cursor.NONE);
 			});
@@ -119,7 +108,7 @@ public class GameController {
 			board.setOnMouseExited(event -> {
 				board.setCursor(Cursor.DEFAULT);
 			});
-		} else if (!isMouseControl && isSoloGame) {
+		} else if (!_isMouseControl && _isSoloGame) {
 			scene.setOnKeyPressed(event -> {
 				switch (event.getCode()) {
 					case Z:
@@ -204,11 +193,11 @@ public class GameController {
 	 * @param e Evénement associé (inutilisé pour le moment)
 	 *
 	 */
-	private void closeWindow(WindowEvent e) {
+	private void closeWindow(WindowEvent _e) {
 		if (AlertUtilities.confirmYesCancel(this.primaryStage, "Quitter l'application",
 				"Etes vous sur de vouloir quitter le jeu ?", null, AlertType.CONFIRMATION)) {
 			this.primaryStage.close();
 		}
-		e.consume();
+		_e.consume();
 	}
 }

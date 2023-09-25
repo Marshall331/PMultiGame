@@ -20,12 +20,11 @@ public class Game {
 	public Game(Stage _parentStage) {
 
 		try {
-
 			this.primaryStage = _parentStage;
 
 			// Chargement du source fxml
 			FXMLLoader loader = new FXMLLoader(
-					GameController.class.getResource("Game.fxml"));
+					GameController.class.getResource("Game2.fxml"));
 			BorderPane root = loader.load();
 
 			// Paramétrage du Stage : feuille de style, titre
@@ -48,5 +47,9 @@ public class Game {
 			e.printStackTrace();
 			System.exit(-1);
 		}
+	}
+
+	public void setWindowSize(int _size) {
+
 	}
 }
