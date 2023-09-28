@@ -5,6 +5,9 @@ import application.tools.AlertUtilities;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -24,11 +27,25 @@ public class SettingsMenuController {
 	public void initContext(Stage _containingStage) {
 		this.primaryStage = _containingStage;
 		this.primaryStage.setOnCloseRequest(e -> this.closeWindow(e));
-		this.boxSon.selectedProperty().addListener((observable, oldValue, newValue) -> {
+
+		ToggleGroup controlChoice = new ToggleGroup();
+		keyboardButt.setToggleGroup(controlChoice);
+		mouseButt.setToggleGroup(controlChoice);
+
+		sizeChoice.getItems().addAll("1024 x 768","1280 x 1024","1680 x 1050");
+		sizeChoice.setStyle("-fx-font-size: 18px;");
+
+		if(this.soundBox.isPressed()){
+			soundBox.setText("Activé");
+		}
+		else{
+			soundBox.setText("Désactivé");
+		}
+		this.soundBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
 		    if (newValue) {
-		    	boxSon.setText("Activé");
+		    	soundBox.setText("Activé");
 		    } else {
-		    	boxSon.setText("Désactivé");
+		    	soundBox.setText("Désactivé");
 		    }
 		});
 	}
@@ -41,7 +58,16 @@ public class SettingsMenuController {
 	}
 
 	@FXML
-	private CheckBox boxSon;
+	private RadioButton keyboardButt;
+
+	@FXML
+	private RadioButton mouseButt;
+
+	@FXML
+	private ChoiceBox sizeChoice;
+
+	@FXML
+	private CheckBox soundBox;
 	
 	/*
 	 * Action menu retour. Retourne à la fenêtre précédente.

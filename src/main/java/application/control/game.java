@@ -3,7 +3,6 @@ package application.control;
 import application.PMultiApp;
 import application.tools.Utilities;
 import application.view.GameController;
-import application.view.MultiplayerMenuController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -24,7 +23,7 @@ public class Game {
 
 			// Chargement du source fxml
 			FXMLLoader loader = new FXMLLoader(
-					GameController.class.getResource("Game1.fxml"));
+					GameController.class.getResource("Game3.fxml"));
 			BorderPane root = loader.load();
 
 			// Paramétrage du Stage : feuille de style, titre

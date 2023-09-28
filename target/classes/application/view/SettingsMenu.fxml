@@ -32,10 +32,14 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -46,25 +50,17 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.SettingsMenuController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.SettingsMenuController">
    <top>
-      <Label alignment="CENTER" prefHeight="110.0" prefWidth="800.0" text="PONG GAME" BorderPane.alignment="CENTER">
+      <Label alignment="CENTER" prefHeight="68.0" prefWidth="600.0" text="PONG GAME" BorderPane.alignment="CENTER">
          <font>
             <Font name="DejaVu Sans Bold" size="70.0" />
          </font>
          <textFill>
             <LinearGradient endX="1.0" endY="1.0">
                <stops>
-                  <Stop>
-                     <color>
-                        <Color red="0.02250000089406967" green="0.050214286893606186" blue="0.75" />
-                     </color>
-                  </Stop>
-                  <Stop offset="1.0">
-                     <color>
-                        <Color red="0.75" green="0.13335713744163513" blue="0.02250000089406967" />
-                     </color>
-                  </Stop>
+                  <Stop color="#060dbf" />
+                  <Stop color="#00b500" offset="1.0" />
                </stops>
             </LinearGradient>
          </textFill>
@@ -76,120 +72,187 @@
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="55.0" minHeight="45.0" prefHeight="55.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="55.0" minHeight="45.0" prefHeight="55.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="55.0" minHeight="45.0" prefHeight="55.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="55.0" minHeight="45.0" prefHeight="55.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="55.0" minHeight="45.0" prefHeight="55.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="55.0" minHeight="45.0" prefHeight="55.0" vgrow="SOMETIMES" />
+          <RowConstraints vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label alignment="CENTER" prefHeight="78.0" prefWidth="180.0" text="Taille fenêtre " GridPane.halignment="LEFT">
-               <font>
-                  <Font name="Carlito Bold" size="30.0" />
-               </font>
-               <textFill>
-                  <LinearGradient endX="1.0" endY="1.0">
-                     <stops>
-                        <Stop>
-                           <color>
-                              <Color red="0.8600000143051147" green="0.8206856846809387" blue="0.03440000116825104" />
-                           </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                           <color>
-                              <Color red="1.0" green="1.0" blue="1.0" />
-                           </color>
-                        </Stop>
-                     </stops>
-                  </LinearGradient>
-               </textFill>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="265.0" text="Contrôle Joueur 1" textFill="#007fb5">
+                     <font>
+                        <Font name="System Bold" size="26.0" />
+                     </font>
+                  </Label>
+                  <RadioButton fx:id="keyboardButt" mnemonicParsing="false" prefHeight="41.0" prefWidth="147.0" text="Clavier (Z/S)" textFill="#fcfcfc" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="30.0" top="2.0" />
+                     </HBox.margin>
+                  </RadioButton>
+                  <RadioButton fx:id="mouseButt" mnemonicParsing="false" prefHeight="41.0" prefWidth="91.0" text="Souris" textFill="#fcfcfc">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="2.0" />
+                     </HBox.margin>
+                  </RadioButton>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
                <GridPane.margin>
-                  <Insets left="15.0" />
+                  <Insets left="10.0" />
                </GridPane.margin>
-            </Label>
-            <Label alignment="CENTER" prefHeight="78.0" prefWidth="180.0" text="Son" GridPane.halignment="LEFT" GridPane.rowIndex="1">
-               <font>
-                  <Font name="Carlito Bold" size="30.0" />
-               </font>
-               <textFill>
-                  <LinearGradient endX="1.0" endY="1.0">
-                     <stops>
-                        <Stop>
-                           <color>
-                              <Color red="0.8600000143051147" green="0.8206856846809387" blue="0.03440000116825104" />
-                           </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                           <color>
-                              <Color red="1.0" green="1.0" blue="1.0" />
-                           </color>
-                        </Stop>
-                     </stops>
-                  </LinearGradient>
-               </textFill>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+               <children>
+                  <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="265.0" text="Taille du jeu (fenêtre)" textFill="#007fb5">
+                     <font>
+                        <Font name="System Bold" size="26.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="sizeChoice" prefHeight="25.0" prefWidth="195.0" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </ChoiceBox>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
                <GridPane.margin>
-                  <Insets left="15.0" />
+                  <Insets left="10.0" />
                </GridPane.margin>
-            </Label>
-            <CheckBox fx:id="boxSon" mnemonicParsing="false" selected="true" text="Activé" textFill="#5d11fa" GridPane.rowIndex="1">
-               <font>
-                  <Font name="Corbel" size="26.0" />
-               </font>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+               <children>
+                  <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="265.0" text="Son " textFill="#007fb5">
+                     <font>
+                        <Font name="System Bold" size="26.0" />
+                     </font>
+                  </Label>
+                  <CheckBox fx:id="soundBox" mnemonicParsing="false" prefHeight="47.0" prefWidth="125.0" textFill="WHITE">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </CheckBox>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
                <GridPane.margin>
-                  <Insets left="300.0" />
+                  <Insets left="10.0" />
                </GridPane.margin>
-            </CheckBox>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
+               <children>
+                  <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="265.0" text="Vitesse de la balle " textFill="#007fb5">
+                     <font>
+                        <Font name="System Bold" size="26.0" />
+                     </font>
+                  </Label>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
+               <children>
+                  <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="372.0" text="Vitesse de la raquette J1 et J2" textFill="#007fb5">
+                     <font>
+                        <Font name="System Bold" size="26.0" />
+                     </font>
+                  </Label>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="5">
+               <children>
+                  <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="265.0" text="TEST" textFill="#007fb5">
+                     <font>
+                        <Font name="System Bold" size="26.0" />
+                     </font>
+                  </Label>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </HBox>
+            <HBox prefHeight="66.0" prefWidth="600.0" GridPane.rowIndex="6">
+               <children>
+                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="120.0" text="Reset" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop color="#060dbf" />
+                              <Stop color="#84138f" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                     <HBox.margin>
+                        <Insets left="40.0" right="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#doRetour" prefHeight="50.0" prefWidth="180.0" text="Annuler" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop color="#060dbf" />
+                              <Stop color="#84138f" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                     <HBox.margin>
+                        <Insets left="25.0" right="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="180.0" text="Valider" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop color="#060dbf" />
+                              <Stop color="#84138f" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
          </children>
       </GridPane>
    </center>
-   <bottom>
-      <ButtonBar prefHeight="59.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <buttons>
-            <Button maxHeight="88.0" minHeight="50.0" mnemonicParsing="false" onAction="#doRetour" prefHeight="88.0" prefWidth="406.0" text="Annuler">
-               <font>
-                  <Font name="DejaVu Sans Bold" size="30.0" />
-               </font>
-               <textFill>
-                  <LinearGradient endX="1.0" endY="1.0">
-                     <stops>
-                        <Stop>
-                           <color>
-                              <Color red="0.02250000089406967" green="0.050214286893606186" blue="0.75" />
-                           </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                           <color>
-                              <Color red="0.7599999904632568" green="0.07599999755620956" blue="0.07599999755620956" />
-                           </color>
-                        </Stop>
-                     </stops>
-                  </LinearGradient>
-               </textFill>
-            </Button>
-            <Button maxHeight="135.0" minHeight="50.0" mnemonicParsing="false" onAction="#doRetour" prefHeight="135.0" prefWidth="180.0" text="Valider">
-               <font>
-                  <Font name="DejaVu Sans Bold" size="30.0" />
-               </font>
-               <textFill>
-                  <LinearGradient endX="1.0" endY="1.0">
-                     <stops>
-                        <Stop>
-                           <color>
-                              <Color red="0.02250000089406967" green="0.050214286893606186" blue="0.75" />
-                           </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                           <color>
-                              <Color red="0.7599999904632568" green="0.07599999755620956" blue="0.07599999755620956" />
-                           </color>
-                        </Stop>
-                     </stops>
-                  </LinearGradient>
-               </textFill>
-            </Button>
-         </buttons>
-         <BorderPane.margin>
-            <Insets bottom="10.0" right="20.0" top="10.0" />
-         </BorderPane.margin>
-      </ButtonBar>
-   </bottom>
 </BorderPane>
