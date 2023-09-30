@@ -234,7 +234,7 @@
                         <Insets left="25.0" right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="180.0" text="Valider" HBox.hgrow="ALWAYS">
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#doValider" prefHeight="50.0" prefWidth="180.0" text="Valider" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="26.0" />
                      </font>

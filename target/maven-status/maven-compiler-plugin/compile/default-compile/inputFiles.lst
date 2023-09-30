@@ -3,6 +3,7 @@ c:\Users\1\Documents\PMultiGame\src\main\java\application\control\SettingsMenu.j
 c:\Users\1\Documents\PMultiGame\src\main\java\application\tools\StageManagement.java
 c:\Users\1\Documents\PMultiGame\src\main\java\application\control\DifficultyMenu.java
 c:\Users\1\Documents\PMultiGame\src\main\java\application\control\Game.java
+c:\Users\1\Documents\PMultiGame\src\main\java\application\tools\ConfigurationManager.java
 c:\Users\1\Documents\PMultiGame\src\main\java\model\Constants.java
 c:\Users\1\Documents\PMultiGame\src\main\java\application\view\SettingsMenuController.java
 c:\Users\1\Documents\PMultiGame\src\main\java\application\view\DifficultyMenuController.java
@@ -11,6 +12,7 @@ c:\Users\1\Documents\PMultiGame\src\main\java\application\view\MultiplayerMenuCo
 c:\Users\1\Documents\PMultiGame\src\main\java\model\player.java
 c:\Users\1\Documents\PMultiGame\src\main\java\model\game.java
 c:\Users\1\Documents\PMultiGame\src\main\java\application\view\MainMenuController.java
+c:\Users\1\Documents\PMultiGame\src\main\java\model\gameConfiguration.java
 c:\Users\1\Documents\PMultiGame\src\main\java\application\tools\Utilities.java
 c:\Users\1\Documents\PMultiGame\src\main\java\application\control\MultiplayerMenu.java
 c:\Users\1\Documents\PMultiGame\src\main\java\application\PMultiApp.java
