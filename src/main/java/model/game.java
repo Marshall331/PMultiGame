@@ -60,8 +60,9 @@ public final class game extends AnimationTimer {
         if (checkPlayerBorderCollision(player1) && !player1.isComputer) {
             if (player1.mouseControl) {
                 player1.mouseMove();
+            } else {
+                player1.move();
             }
-            player1.move();
         }
         if (checkPlayerBorderCollision(player2) && !player2.isComputer) {
             player2.move();

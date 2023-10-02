@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import model.gameConfiguration;
 
 /**
  * Classe de controleur de Dialogue de la scène du jeu.
@@ -22,8 +23,25 @@ public class Game {
 			this.primaryStage = _parentStage;
 
 			// Chargement du source fxml
+			gameConfiguration conf = Utilities.chargerConfiguration();
+			String sizeGame;
+			switch (conf.gameSize) {
+				case 1:
+					sizeGame = "Game1.fxml";
+					break;
+				case 2:
+					sizeGame = "Game2.fxml";
+					break;
+				case 3:
+					sizeGame = "Game3.fxml";
+					break;
+				default:
+					sizeGame = "";
+					break;
+			}
+
 			FXMLLoader loader = new FXMLLoader(
-					GameController.class.getResource("Game3.fxml"));
+					GameController.class.getResource(sizeGame));
 			BorderPane root = loader.load();
 
 			// Paramétrage du Stage : feuille de style, titre

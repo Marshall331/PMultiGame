@@ -33,29 +33,8 @@ public class SettingsMenuController {
 		this.primaryStage.setOnCloseRequest(e -> this.closeWindow(e));
 		this.conf = Utilities.chargerConfiguration();
 
-		ToggleGroup controlChoice = new ToggleGroup();
-		keyboardButt.setToggleGroup(controlChoice);
-		mouseButt.setToggleGroup(controlChoice);
-
-		sizeChoice.getItems().addAll("1024 x 768", "1280 x 1024", "1680 x 1050");
-		sizeChoice.setStyle("-fx-font-size: 18px;");
-
-		if (this.conf.soundOn) {
-			soundBox.setSelected(true);
-			soundBox.setText("Activé");
-		} else {
-			soundBox.setSelected(false);
-			soundBox.setText("Désactivé");
-		}
-		this.soundBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
-			if (newValue) {
-				soundBox.setText("Activé");
-				this.conf.soundOn = true;
-			} else {
-				soundBox.setText("Désactivé");
-				this.conf.soundOn = false;
-			}
-		});
+		setItemsProperty();
+		setItemsByConf();
 	}
 
 	/**
@@ -72,22 +51,72 @@ public class SettingsMenuController {
 	private RadioButton mouseButt;
 
 	@FXML
-	private ChoiceBox sizeChoice;
+	private ChoiceBox<String> sizeChoice;
 
 	@FXML
 	private CheckBox soundBox;
 
+	private void setItemsProperty() {
+		ToggleGroup controlChoice = new ToggleGroup();
+		keyboardButt.setToggleGroup(controlChoice);
+		mouseButt.setToggleGroup(controlChoice);
+
+		sizeChoice.getItems().addAll("1024 x 768", "1280 x 1024", "1680 x 1050");
+		sizeChoice.setStyle("-fx-font-size: 18px;");
+
+		this.soundBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue) {
+				soundBox.setText("Activé");
+			} else {
+				soundBox.setText("Désactivé");
+			}
+		});
+	}
+
+	private void setItemsByConf() {
+		if (this.conf.player1MouseControl) {
+			mouseButt.setSelected(true);
+		} else {
+			keyboardButt.setSelected(true);
+		}
+		if (this.conf.soundOn) {
+			soundBox.setSelected(true);
+			soundBox.setText("Activé");
+		} else {
+			soundBox.setSelected(false);
+			soundBox.setText("Désactivé");
+		}
+		if (this.conf.gameSize == 1) {
+			sizeChoice.setValue("1024 x 768");
+		} else if (this.conf.gameSize == 2) {
+			sizeChoice.setValue("1280 x 1024");
+		} else {
+			sizeChoice.setValue("1680 x 1050");
+		}
+	}
+
 	@FXML
-	private gameConfiguration doValider() {
-		System.out.println("clavier " + conf.controlPlayer1Keyboard);
-		System.out.println("son " + conf.soundOn);
-		if (keyboardButt.isPressed()) {
-			this.conf.controlPlayer1Keyboard = true;
-		} else if (mouseButt.isPressed()) {
-			this.conf.controlPlayer1Keyboard = false;
+	private void doValider() {
+		if (keyboardButt.isSelected()) {
+			this.conf.player1MouseControl = false;
+		} else if (mouseButt.isSelected()) {
+			this.conf.player1MouseControl = true;
+		}
+		if (soundBox.isSelected()) {
+			this.conf.soundOn = true;
+		} else {
+			this.conf.soundOn = false;
+		}
+		if (sizeChoice.getValue().equals("1024 x 768")) {
+			this.conf.gameSize = 1;
+		} else if (sizeChoice.getValue().equals("1280 x 1024")) {
+			this.conf.gameSize = 2;
+		} else if (sizeChoice.getValue().equals("1680 x 1050")) {
+			this.conf.gameSize = 3;
 		}
 		Utilities.sauvegarderConfiguration(this.conf);
-		return conf;
+		MainMenu mM = new MainMenu();
+		mM.start(primaryStage);
 	}
 
 	/*
@@ -97,6 +126,19 @@ public class SettingsMenuController {
 	private void doRetour() {
 		MainMenu mM = new MainMenu();
 		mM.start(primaryStage);
+		System.out.println("souris " + conf.player1MouseControl);
+		System.out.println("son " + conf.soundOn);
+	}
+
+	@FXML
+	private void doReset() {
+		if (AlertUtilities.confirmYesCancel(this.primaryStage, "Réinitialiser les paramètres ?",
+				"Voulez vous vraiment réinitialiser les paramètres du jeu ?",
+				null, AlertType.CONFIRMATION)) {
+			this.conf = new gameConfiguration();
+			Utilities.sauvegarderConfiguration(conf);
+			this.setItemsByConf();
+		}
 	}
 
 	/*

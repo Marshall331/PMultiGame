@@ -172,7 +172,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
                <children>
-                  <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="372.0" text="Vitesse de la raquette J1 et J2" textFill="#007fb5">
+                  <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="265.0" text="Vitesse des raquettes" textFill="#007fb5">
                      <font>
                         <Font name="System Bold" size="26.0" />
                      </font>
@@ -202,7 +202,7 @@
             </HBox>
             <HBox prefHeight="66.0" prefWidth="600.0" GridPane.rowIndex="6">
                <children>
-                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="120.0" text="Reset" HBox.hgrow="ALWAYS">
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#doReset" prefHeight="50.0" prefWidth="120.0" text="Reset" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="26.0" />
                      </font>
