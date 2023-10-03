@@ -47,8 +47,7 @@ public class Game {
 			// Paramétrage du Stage : feuille de style, titre
 			Scene scene = new Scene(root, root.getPrefWidth() + 20, root.getPrefHeight() + 10);
 			scene.getStylesheets().add(PMultiApp.class.getResource("application.css").toExternalForm());
-
-			// Placement de la fenêtre au milieu de l'écran
+			
 			Utilities.setCenterStage(primaryStage, scene);
 
 			GameController dbmfcViewController = loader.getController();

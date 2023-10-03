@@ -9,6 +9,8 @@ import java.util.Random;
 
 public final class game extends AnimationTimer {
 
+    private gameConfiguration conf;
+
     public IntegerProperty scorePlayer1 = new SimpleIntegerProperty(0);
     public IntegerProperty scorePlayer2 = new SimpleIntegerProperty(0);
 
@@ -18,38 +20,62 @@ public final class game extends AnimationTimer {
     private final Circle ball;
 
     // Dimensions des éléments de la scène
-    private static final int WIDTH = 1680 / 2;
-    private static final int HEIGHT = 972 / 2;
-    private static final int BALL_RADIUS = 30;
-    private static final int PADDLE_WIDTH = 25;
-    private static final int PADDLE_HEIGHT = 160;
+    public int WIDTH;
+    public int HEIGHT;
+    public int BALL_RADIUS;
+    public int PADDLE_WIDTH;
+    private int PADDLE_HEIGHT;
+    public int paddleMinY;
+    public int paddleMaxY;
+    private int ballMinX;
+    private int ballMaxX;
+    private int ballMinY;
+    private int ballMaxY;
 
     Random rand = new Random();
 
-    double acc;
-    double mag;
-    double dX;
-    double dY;
+    private double acc;
+    private double mag;
+    private double dX;
+    private double dY;
 
-    public game(player _player1, player _player2, Circle _ball) {
+    public game(player _player1, player _player2, Circle _ball, gameConfiguration _conf) {
+        this.conf = _conf;
         this.player1 = _player1;
         this.player2 = _player2;
         this.ball = _ball;
+        setSizeValues();
 
         reset();
     }
 
-    @Override
-    public void handle(long now) {
-        updateGame();
+    private void setSizeValues() {
+        this.WIDTH = this.conf.WIDTH;
+        this.HEIGHT = this.conf.HEIGHT;
+        this.BALL_RADIUS = this.conf.BALL_RADIUS;
+        this.PADDLE_WIDTH = this.conf.PADDLE_WIDTH;
+        this.PADDLE_HEIGHT = this.conf.PADDLE_HEIGHT;
+        this.paddleMaxY = this.HEIGHT - this.PADDLE_HEIGHT / 2;
+        this.paddleMinY = -HEIGHT + PADDLE_HEIGHT / 2;
+        this.ballMinX = -WIDTH + 5;
+        this.ballMaxX = WIDTH - 5;
+        this.ballMinY = -HEIGHT + BALL_RADIUS;
+        this.ballMaxY = HEIGHT - BALL_RADIUS;
     }
 
-    private void updateGame() {
+    @Override
+    public void handle(long now) {
         checkEndGame();
         checkBallCollision();
         checkPaddleCollision();
         movePlayer();
+        // System.out.println("PADDLE Y : " + this.player2.paddle.getTranslateY());
         moveBall();
+        // System.out.println(this.conf.WIDTH);
+        // System.out.println(this.conf.HEIGHT);
+        // System.out.println(this.conf.BALL_RADIUS);
+        // System.out.println(this.conf.PADDLE_WIDTH);
+        // System.out.println(this.conf.PADDLE_HEIGHT);
     }
 
     private void checkEndGame() {
@@ -83,22 +109,22 @@ public final class game extends AnimationTimer {
 
             double mouvementBot = currentY + direction * distance;
 
-            if (mouvementBot < -405) {
-                mouvementBot = -405;
-            } else if (mouvementBot > 415) {
-                mouvementBot = 415;
+            if (mouvementBot < this.paddleMinY) {
+                mouvementBot = this.paddleMinY;
+            } else if (mouvementBot > this.paddleMaxY) {
+                mouvementBot = this.paddleMaxY;
             }
 
-            if (player2.paddle.getTranslateY() <= HEIGHT - PADDLE_HEIGHT / 2 + 9
-                    && player2.paddle.getTranslateY() >= -HEIGHT + PADDLE_HEIGHT / 2) {
+            if (player2.paddle.getTranslateY() <= this.paddleMaxY
+                    && player2.paddle.getTranslateY() >= this.paddleMinY) {
                 player2.paddle.setTranslateY(mouvementBot);
             }
         }
     }
 
     public boolean checkPlayerBorderCollision(player _player) {
-        return _player.paddle.getTranslateY() + _player.vel <= HEIGHT - PADDLE_HEIGHT / 2 + 9
-                && _player.paddle.getTranslateY() + _player.vel >= -HEIGHT + PADDLE_HEIGHT / 2;
+        return _player.paddle.getTranslateY() + _player.vel <= this.paddleMaxY
+                && _player.paddle.getTranslateY() + _player.vel >= this.paddleMinY;
     }
 
     private void reset() {
@@ -115,7 +141,8 @@ public final class game extends AnimationTimer {
         this.dX = 0;
         this.dY = 0;
 
-        double randomAngle = rand.nextDouble() * Math.PI * 2; // Entre 0 et 2*pi radians
+        double randomAngle = rand.nextDouble() * Math.PI * 2; // Entre 0 et 2*pi
+        // radians
         dX = mag * Math.cos(randomAngle);
         dY = mag * Math.sin(randomAngle);
     }
@@ -134,15 +161,15 @@ public final class game extends AnimationTimer {
     }
 
     private void checkBallCollision() {
-        if (ball.getTranslateY() >= HEIGHT - BALL_RADIUS + 5) {
+        if (ball.getTranslateY() >= ballMaxY) {
             dY = -dY;
-        } else if (ball.getTranslateY() <= -HEIGHT + BALL_RADIUS) {
+        } else if (ball.getTranslateY() <= ballMinY) {
             dY = -dY;
         }
-        if (ball.getTranslateX() <= -WIDTH + BALL_RADIUS - 5) {
+        if (ball.getTranslateX() <= this.ballMinX) {
             scorePlayer1.set(scorePlayer1.getValue() + 1);
             reset();
-        } else if (ball.getTranslateX() >= WIDTH - 5) {
+        } else if (ball.getTranslateX() >= this.ballMaxX) {
             scorePlayer2.set(scorePlayer2.getValue() + 1);
             reset();
         }

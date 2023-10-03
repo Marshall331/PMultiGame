@@ -1,14 +1,19 @@
 package application.view;
 
-import application.control.DifficultyMenu;
+import application.control.MainMenu;
+import application.control.SettingsMenu;
 import application.tools.AlertUtilities;
 import application.tools.Utilities;
+import javafx.animation.ScaleTransition;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -17,6 +22,7 @@ import javafx.stage.WindowEvent;
 import model.game;
 import model.gameConfiguration;
 import model.player;
+import javafx.util.Duration; // Assurez-vous d'importer Duration de javafx.util
 
 /**
  * Controller JavaFX de la scène du jeu.
@@ -31,14 +37,6 @@ public class GameController {
 
 	private game game;
 
-	private static final int WIDTH = 1680 / 2;
-	private static final int HEIGHT = 972 / 2;
-	private static final int PADDLE_WIDTH = 30;
-	private static final int PADDLE_HEIGHT = 160;
-	private static final int BALL_RADIUS = 30;
-	private static final double PADDLE_SPEED = 7;
-	private static final double BALL_SPEED = 5;
-
 	@FXML
 	private GridPane board;
 	@FXML
@@ -52,6 +50,11 @@ public class GameController {
 	@FXML
 	private Circle balle;
 
+	@FXML
+	private Button menuButton;
+	@FXML
+	private Button settingsButton;
+
 	private player player1;
 	private player player2;
 
@@ -63,13 +66,25 @@ public class GameController {
 	public void initContext(Stage _containingStage, Scene _scene) {
 		this.primaryStage = _containingStage;
 		this.scene = _scene;
-		this.primaryStage.setOnCloseRequest(e -> this.closeWindow(e));
 
+		initViewItems();
+
+		createGame();
+	}
+
+	/**
+	 * Affichage de la fenêtre.
+	 */
+	public void displayDialog() {
+		this.primaryStage.show();
+	}
+
+	private void createGame() {
 		gameConfiguration conf = Utilities.chargerConfiguration();
 
-		player1 = new player(paddle1, false, 5, false, conf.player1MouseControl);
+		player1 = new player(paddle1, false, 5, true, conf.player1MouseControl);
 		player2 = new player(paddle2, true, 5, true, false);
-		game = new game(player1, player2, balle);
+		game = new game(player1, player2, balle, conf);
 
 		// Mises à jour automatique des scores
 		labScrPlayer1.textProperty().bind(Bindings.convert(Bindings.concat(game.scorePlayer2)));
@@ -82,28 +97,53 @@ public class GameController {
 		game.start();
 	}
 
-	/**
-	 * Affichage de la fenêtre.
-	 */
-	public void displayDialog() {
-		this.primaryStage.show();
+	private void initViewItems() {
+
+		this.primaryStage.setOnCloseRequest(e -> this.closeWindow(e));
+
+		ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(200), settingsButton);
+		scaleTransition.setToX(1.1); // horizontal zoom
+		scaleTransition.setToY(1.1); // vertical zoom
+
+		settingsButton.setOnMouseEntered(event -> {
+			scaleTransition.playFromStart();
+			this.settingsButton.setStyle("-fx-background-color: white;");
+		});
+
+		Image image = new Image(
+				MultiplayerMenuController.class.getResource("images/SettingsIcon.png").toExternalForm());
+		ImageView imageView = new ImageView(image);
+		imageView.setFitWidth(35);
+		imageView.setFitHeight(35);
+		settingsButton.setGraphic(imageView);
+
+		settingsButton.setOnMouseExited(event -> {
+			scaleTransition.stop();
+			settingsButton.setScaleX(1);
+			settingsButton.setScaleY(1);
+		});
 	}
 
 	private void setControls(boolean _isMouseControl, boolean _isSoloGame) {
+		// scene.setOnMouseMoved(event -> {
+		// 	double x = event.getSceneX();
+		// 	double y = event.getSceneY();
+		// 	System.out.println("Coordonnées X : " + x + ", Y : " + y);
+		// });
 		if (_isMouseControl && _isSoloGame) {
 			board.setOnMouseEntered(event -> {
 				board.setCursor(Cursor.NONE);
 			});
 			board.setOnMouseMoved(event -> {
 				// Calculez la position Y souhaitée pour le centre de la raquette
-				double desiredRacketY = event.getY() - HEIGHT;
-				double maxY = -HEIGHT + PADDLE_HEIGHT / 2;
-				double minY = HEIGHT - PADDLE_HEIGHT / 2 + 10;
+				double desiredRacketY = event.getY() - game.HEIGHT;
+				double maxY = game.paddleMaxY;
+				double minY = game.paddleMinY;
 
-				if (desiredRacketY <= maxY) {
-					desiredRacketY = maxY + 1;
-				} else if (desiredRacketY >= minY) {
-					desiredRacketY = minY - 1;
+				if (desiredRacketY <= minY) {
+					desiredRacketY = minY;
+				} else if (desiredRacketY >= maxY) {
+					desiredRacketY = maxY;
 				}
 
 				player1.mouseMove = desiredRacketY;
@@ -184,10 +224,26 @@ public class GameController {
 	 * Action menu retour. Retourne à la fenêtre précédente.
 	 */
 	@FXML
-	private void doRetour() {
+	private void doMenu() {
 		this.primaryStage.close();
 		game.stop();
-		DifficultyMenu mD = new DifficultyMenu(primaryStage);
+		MainMenu mM = new MainMenu();
+		mM.inGame = true;
+		mM.start(primaryStage);
+	}
+
+	@FXML
+	private void doSettings() {
+		game.stop();
+		disableButtons(true);
+		SettingsMenu sS = new SettingsMenu(primaryStage, true);
+		disableButtons(false);
+		game.start();
+	}
+
+	private void disableButtons(boolean _disable) {
+		menuButton.setDisable(_disable);
+		settingsButton.setDisable(_disable);
 	}
 
 	/*
@@ -197,10 +253,12 @@ public class GameController {
 	 *
 	 */
 	private void closeWindow(WindowEvent _e) {
+		game.stop();
 		if (AlertUtilities.confirmYesCancel(this.primaryStage, "Quitter l'application",
 				"Etes vous sur de vouloir quitter le jeu ?", null, AlertType.CONFIRMATION)) {
 			this.primaryStage.close();
 		}
 		_e.consume();
+		game.start();
 	}
 }

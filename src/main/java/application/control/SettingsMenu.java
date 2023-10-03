@@ -14,16 +14,12 @@ import javafx.stage.Stage;
  */
 public class SettingsMenu {
 
-
-	// Stage de la fenêtre principale construite par DailyBankMainFrame
 	private Stage primaryStage;
 
-	public SettingsMenu(Stage _parentStage) {
+	public SettingsMenu(Stage _parentStage, boolean inGame) {
 
 		try {
-			
-			this.primaryStage = _parentStage;
-			
+
 			// Chargement du source fxml
 			FXMLLoader loader = new FXMLLoader(
 					SettingsMenuController.class.getResource("SettingsMenu.fxml"));
@@ -31,17 +27,23 @@ public class SettingsMenu {
 
 			// Paramétrage du Stage : feuille de style, titre
 			Scene scene = new Scene(root, root.getPrefWidth() + 20, root.getPrefHeight() + 10);
-	        scene.getStylesheets().add(PMultiApp.class.getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(PMultiApp.class.getResource("application.css").toExternalForm());
 
+			if (!inGame) {
+				this.primaryStage = _parentStage;
+			} else {
+				this.primaryStage = new Stage();
+				Utilities.setCenterStage(primaryStage, scene);
+			}
 			// Removing all keyEvents
 			Utilities.removeKeysEvents(scene);
 
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Game settings");
 			primaryStage.setResizable(false);
-			
+
 			SettingsMenuController dbmfcViewController = loader.getController();
-			dbmfcViewController.initContext(primaryStage);
+			dbmfcViewController.initContext(primaryStage, inGame);
 
 			dbmfcViewController.displayDialog();
 

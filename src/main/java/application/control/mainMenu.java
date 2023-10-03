@@ -17,6 +17,8 @@ public class MainMenu extends Application {
 	// Stage de la fenêtre principale construite par DailyBankMainFrame
 	private Stage primaryStage;
 
+	public boolean inGame = false;
+
 	/**
 	 * Méthode de démarrage (JavaFX).
 	 */
@@ -36,6 +38,10 @@ public class MainMenu extends Application {
 			Scene scene = new Scene(root, root.getPrefWidth() + 20, root.getPrefHeight() + 10);
 			scene.getStylesheets().add(PMultiApp.class.getResource("application.css").toExternalForm());
 
+			if (inGame) {
+				// Placement de la fenêtre au milieu de l'écran
+				Utilities.setCenterStage(primaryStage, scene);
+			}
 			// Removing all keyEvents
 			Utilities.removeKeysEvents(scene);
 
@@ -48,6 +54,8 @@ public class MainMenu extends Application {
 			scene.getStylesheets().add("application.css");
 
 			dbmfcViewController.displayDialog();
+
+			// Game g = new Game(primaryStage);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -80,6 +88,6 @@ public class MainMenu extends Application {
 	 * Méthode principale de lancement de la scène des paramètres.
 	 */
 	public void menuSettings() {
-		SettingsMenu sS = new SettingsMenu(primaryStage);
+		SettingsMenu sS = new SettingsMenu(primaryStage, false);
 	}
 }

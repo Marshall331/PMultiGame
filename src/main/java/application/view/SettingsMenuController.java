@@ -23,17 +23,21 @@ public class SettingsMenuController {
 
 	public gameConfiguration conf;
 
+	private boolean inGame;
+
 	/**
 	 * Initialisation du contrôleur de vue DailyBankMainFrameController.
 	 *
 	 * @param _containingStage Stage qui contient la fenêtre précédente.
 	 */
-	public void initContext(Stage _containingStage) {
+	public void initContext(Stage _containingStage, boolean _inGame) {
 		this.primaryStage = _containingStage;
 		this.primaryStage.setOnCloseRequest(e -> this.closeWindow(e));
 		this.conf = Utilities.chargerConfiguration();
+		this.inGame = _inGame;
 
-		setItemsProperty();
+		itemsConfigure();
+
 		setItemsByConf();
 	}
 
@@ -41,7 +45,11 @@ public class SettingsMenuController {
 	 * Affichage de la fenêtre.
 	 */
 	public void displayDialog() {
-		this.primaryStage.show();
+		if (inGame) {
+			this.primaryStage.showAndWait();
+		} else {
+			this.primaryStage.show();
+		}
 	}
 
 	@FXML
@@ -56,7 +64,7 @@ public class SettingsMenuController {
 	@FXML
 	private CheckBox soundBox;
 
-	private void setItemsProperty() {
+	private void itemsConfigure() {
 		ToggleGroup controlChoice = new ToggleGroup();
 		keyboardButt.setToggleGroup(controlChoice);
 		mouseButt.setToggleGroup(controlChoice);
@@ -114,9 +122,18 @@ public class SettingsMenuController {
 		} else if (sizeChoice.getValue().equals("1680 x 1050")) {
 			this.conf.gameSize = 3;
 		}
+		this.conf.setSizeValues();
 		Utilities.sauvegarderConfiguration(this.conf);
-		MainMenu mM = new MainMenu();
-		mM.start(primaryStage);
+		this.closeWindow();
+	}
+
+	private void closeWindow() {
+		if (inGame) {
+			this.primaryStage.close();
+		} else {
+			MainMenu mM = new MainMenu();
+			mM.start(primaryStage);
+		}
 	}
 
 	/*
@@ -124,10 +141,7 @@ public class SettingsMenuController {
 	 */
 	@FXML
 	private void doRetour() {
-		MainMenu mM = new MainMenu();
-		mM.start(primaryStage);
-		System.out.println("souris " + conf.player1MouseControl);
-		System.out.println("son " + conf.soundOn);
+		this.closeWindow();
 	}
 
 	@FXML

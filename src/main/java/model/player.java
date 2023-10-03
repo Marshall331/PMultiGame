@@ -28,8 +28,10 @@ public final class player {
         if (isSpeedLimited) {
             if (paddle.getTranslateY() - maxSpeed > mouseMove) {
                 this.vel = -maxSpeed;
+                this.move();
             } else if (paddle.getTranslateY() + maxSpeed < mouseMove) {
                 this.vel = maxSpeed;
+                this.move();
             } else {
                 this.vel = 0;
             }
