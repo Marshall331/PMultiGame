@@ -179,6 +179,12 @@ public final class game extends AnimationTimer {
         } else if (ball.getTranslateY() <= ballMinY) {
             dY = -dY;
         }
+        if (this.ball.getTranslateY() < ballMinY) {
+            this.ball.setTranslateY(ballMinY);
+        }
+        if (this.ball.getTranslateY() > ballMaxY) {
+            this.ball.setTranslateY(ballMaxY);
+        }
         if (ball.getTranslateX() <= this.ballMinX) {
             scorePlayer1.set(scorePlayer1.getValue() + 1);
             reset();

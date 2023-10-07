@@ -5,12 +5,9 @@ import application.control.MainMenu;
 import application.control.SettingsMenu;
 import application.tools.AlertUtilities;
 import application.tools.Utilities;
-import javafx.animation.ScaleTransition;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
@@ -23,7 +20,6 @@ import javafx.stage.WindowEvent;
 import model.game;
 import model.gameConfiguration;
 import model.player;
-import javafx.util.Duration; // Assurez-vous d'importer Duration de javafx.util
 
 /**
  * Controller JavaFX de la scène du jeu.
