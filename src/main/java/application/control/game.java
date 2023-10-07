@@ -21,7 +21,6 @@ public class Game {
 
 		try {
 			this.primaryStage = _parentStage;
-
 			// Chargement du source fxml
 			gameConfiguration conf = Utilities.chargerConfiguration();
 			String sizeGame;
@@ -47,7 +46,7 @@ public class Game {
 			// Paramétrage du Stage : feuille de style, titre
 			Scene scene = new Scene(root, root.getPrefWidth() + 20, root.getPrefHeight() + 10);
 			scene.getStylesheets().add(PMultiApp.class.getResource("application.css").toExternalForm());
-			
+
 			Utilities.setCenterStage(primaryStage, scene);
 
 			GameController dbmfcViewController = loader.getController();

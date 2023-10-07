@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import model.gameConfiguration;
 
 /**
  * Classe de controleur de Dialogue de la scène des choix de la difficulté.
@@ -43,7 +44,7 @@ public class SettingsMenu {
 			primaryStage.setResizable(false);
 
 			SettingsMenuController dbmfcViewController = loader.getController();
-			dbmfcViewController.initContext(primaryStage, inGame);
+			dbmfcViewController.initContext(_parentStage, primaryStage, inGame);
 
 			dbmfcViewController.displayDialog();
 

@@ -1,5 +1,6 @@
 package application.view;
 
+import application.control.Game;
 import application.control.MainMenu;
 import application.control.SettingsMenu;
 import application.tools.AlertUtilities;
@@ -49,14 +50,22 @@ public class GameController {
 	private Rectangle paddle2;
 	@FXML
 	private Circle balle;
-
 	@FXML
 	private Button menuButton;
 	@FXML
 	private Button settingsButton;
 
+	private gameConfiguration conf;
+
 	private player player1;
 	private player player2;
+
+	/**
+	 * Affichage de la fenêtre.
+	 */
+	public void displayDialog() {
+		this.primaryStage.show();
+	}
 
 	/**
 	 * Initialisation du contrôleur de vue GameController.
@@ -67,38 +76,22 @@ public class GameController {
 		this.primaryStage = _containingStage;
 		this.scene = _scene;
 
+		initValues();
 		initViewItems();
-
 		createGame();
 	}
 
-	/**
-	 * Affichage de la fenêtre.
-	 */
-	public void displayDialog() {
-		this.primaryStage.show();
-	}
+	private void initValues() {
+		gameConfiguration _conf = Utilities.chargerConfiguration();
+		this.conf = _conf;
 
-	private void createGame() {
-		gameConfiguration conf = Utilities.chargerConfiguration();
-
-		player1 = new player(paddle1, false, 5, true, conf.player1MouseControl);
-		player2 = new player(paddle2, true, 5, true, false);
-		game = new game(player1, player2, balle, conf);
-
-		// Mises à jour automatique des scores
-		labScrPlayer1.textProperty().bind(Bindings.convert(Bindings.concat(game.scorePlayer2)));
-		labScrPlayer2.textProperty().bind(Bindings.convert(Bindings.concat(game.scorePlayer1)));
-
-		// Configuration des évenements du clavier
-		setControls(conf.player1MouseControl, true);
-
-		// Lancement du jeu
-		game.start();
+		this.player1 = new player(paddle1, this.conf.player1isComputer, this.conf.player1MaxSpeed,
+				this.conf.player1isSpeedLimited, this.conf.player1MouseControl);
+		this.player2 = new player(paddle2, this.conf.player2isComputer, this.conf.player2MaxSpeed,
+				this.conf.player2isSpeedLimited, this.conf.player2MouseControl);
 	}
 
 	private void initViewItems() {
-
 		this.primaryStage.setOnCloseRequest(e -> this.closeWindow(e));
 
 		ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(200), settingsButton);
@@ -124,11 +117,24 @@ public class GameController {
 		});
 	}
 
+	private void createGame() {
+		setControls(player1.mouseControl, conf.isSoloGame);
+		game = new game(player1, player2, balle, conf);
+
+		// Mises à jour automatique des scores
+		labScrPlayer1.textProperty().bind(Bindings.convert(Bindings.concat(game.scorePlayer2)));
+		labScrPlayer2.textProperty().bind(Bindings.convert(Bindings.concat(game.scorePlayer1)));
+
+		// Lancement du jeu
+		game.start();
+	}
+
 	private void setControls(boolean _isMouseControl, boolean _isSoloGame) {
+		// System.out.println(this.conf.player1MouseControl);
 		// scene.setOnMouseMoved(event -> {
-		// 	double x = event.getSceneX();
-		// 	double y = event.getSceneY();
-		// 	System.out.println("Coordonnées X : " + x + ", Y : " + y);
+		// double x = event.getSceneX();
+		// double y = event.getSceneY();
+		// System.out.println("Coordonnées X : " + x + ", Y : " + y);
 		// });
 		if (_isMouseControl && _isSoloGame) {
 			board.setOnMouseEntered(event -> {
@@ -236,9 +242,19 @@ public class GameController {
 	private void doSettings() {
 		game.stop();
 		disableButtons(true);
-		SettingsMenu sS = new SettingsMenu(primaryStage, true);
+		this.conf.scr1 = Integer.parseInt(this.labScrPlayer1.getText());
+		this.conf.scr2 = Integer.parseInt(this.labScrPlayer2.getText());
+		System.out.println("SCR1 : " + this.conf.scr1);
+		System.out.println("SCR2 : " + this.conf.scr2);
+		Utilities.sauvegarderConfiguration(conf);
+		SettingsMenu sM = new SettingsMenu(primaryStage, true);
 		disableButtons(false);
-		game.start();
+		updateGameSettings();
+	}
+
+	private void updateGameSettings() {
+		this.conf = Utilities.chargerConfiguration();
+		Game g = new Game(this.primaryStage);
 	}
 
 	private void disableButtons(boolean _disable) {

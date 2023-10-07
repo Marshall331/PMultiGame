@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import model.gameConfiguration;
 
 /**
  * Classe de controleur de Dialogue de la scène du menu principale.
@@ -42,6 +43,11 @@ public class MainMenu extends Application {
 				// Placement de la fenêtre au milieu de l'écran
 				Utilities.setCenterStage(primaryStage, scene);
 			}
+
+			gameConfiguration conf = Utilities.chargerConfiguration();
+			conf.resetScore();
+			Utilities.sauvegarderConfiguration(conf);
+
 			// Removing all keyEvents
 			Utilities.removeKeysEvents(scene);
 

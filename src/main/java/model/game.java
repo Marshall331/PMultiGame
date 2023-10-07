@@ -11,8 +11,10 @@ public final class game extends AnimationTimer {
 
     private gameConfiguration conf;
 
-    public IntegerProperty scorePlayer1 = new SimpleIntegerProperty(0);
-    public IntegerProperty scorePlayer2 = new SimpleIntegerProperty(0);
+    public int scr1;
+    public int scr2;
+    public IntegerProperty scorePlayer1;
+    public IntegerProperty scorePlayer2;
 
     // Elements de la scène
     private final player player1;
@@ -44,6 +46,10 @@ public final class game extends AnimationTimer {
         this.player1 = _player1;
         this.player2 = _player2;
         this.ball = _ball;
+        this.scr1 = this.conf.scr1;
+        this.scr2 = this.conf.scr2;
+        this.scorePlayer1 = new SimpleIntegerProperty(scr2);
+        this.scorePlayer2 = new SimpleIntegerProperty(scr1);
         setSizeValues();
 
         reset();
@@ -83,46 +89,52 @@ public final class game extends AnimationTimer {
     }
 
     private void movePlayer() {
-        if (checkPlayerBorderCollision(player1) && !player1.isComputer) {
+        if (checkPlayerBorderCollision(player1, player1.vel) && !player1.isComputer) {
             if (player1.mouseControl) {
                 player1.mouseMove();
             } else {
                 player1.move();
             }
         }
-        if (checkPlayerBorderCollision(player2) && !player2.isComputer) {
+        if (checkPlayerBorderCollision(player2, player2.vel) && !player2.isComputer) {
             player2.move();
         }
+        if (player1.isComputer) {
+            moveComputer(player1);
+        }
         if (player2.isComputer) {
-            double targetY = ball.getTranslateY(); // Position verticale cible du joueur 2
-            double speed = 20; // Vitesse maximale du joueur 2
-            double currentY = player2.paddle.getTranslateY();
-
-            // Calculer la direction et la distance vers la cible
-            double direction = (targetY > currentY) ? 1 : -1;
-            double distance = Math.abs(targetY - currentY);
-
-            // Limiter la vitesse du joueur 2 à 10
-            if (distance > speed) {
-                distance = speed;
-            }
-
-            double mouvementBot = currentY + direction * distance;
-
-            if (mouvementBot < this.paddleMinY) {
-                mouvementBot = this.paddleMinY;
-            } else if (mouvementBot > this.paddleMaxY) {
-                mouvementBot = this.paddleMaxY;
-            }
-
-            if (player2.paddle.getTranslateY() <= this.paddleMaxY
-                    && player2.paddle.getTranslateY() >= this.paddleMinY) {
-                player2.paddle.setTranslateY(mouvementBot);
-            }
+            moveComputer(player2);
         }
     }
 
-    public boolean checkPlayerBorderCollision(player _player) {
+    private void moveComputer(player _player) {
+        double targetY = ball.getTranslateY(); // Position verticale cible du joueur 2
+        double speed = 20; // Vitesse maximale du joueur 2
+        double currentY = _player.paddle.getTranslateY();
+
+        // Calculer la direction et la distance vers la cible
+        double direction = (targetY > currentY) ? 1 : -1;
+        double distance = Math.abs(targetY - currentY);
+
+        // Limiter la vitesse du joueur 2 à 10
+        if (distance > speed) {
+            distance = speed;
+        }
+
+        double mouvementBot = currentY + direction * distance;
+
+        if (mouvementBot < this.paddleMinY) {
+            mouvementBot = this.paddleMinY;
+        } else if (mouvementBot > this.paddleMaxY) {
+            mouvementBot = this.paddleMaxY;
+        }
+
+        if (checkPlayerBorderCollision(_player, 0)) {
+            _player.paddle.setTranslateY(mouvementBot);
+        }
+    }
+
+    public boolean checkPlayerBorderCollision(player _player, double _vel) {
         return _player.paddle.getTranslateY() + _player.vel <= this.paddleMaxY
                 && _player.paddle.getTranslateY() + _player.vel >= this.paddleMinY;
     }

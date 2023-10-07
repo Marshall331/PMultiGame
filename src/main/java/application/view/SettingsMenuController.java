@@ -1,5 +1,6 @@
 package application.view;
 
+import application.control.Game;
 import application.control.MainMenu;
 import application.tools.AlertUtilities;
 import application.tools.Utilities;
@@ -21,20 +22,27 @@ public class SettingsMenuController {
 	// Fenêtre physique ou est la scène contenant le fichier xml contrôlé par this
 	private Stage primaryStage;
 
+	private Stage parentStage;
+
 	public gameConfiguration conf;
 
-	private boolean inGame;
+	public boolean inGame;
+	public int oldGameSize;
 
 	/**
 	 * Initialisation du contrôleur de vue DailyBankMainFrameController.
 	 *
 	 * @param _containingStage Stage qui contient la fenêtre précédente.
 	 */
-	public void initContext(Stage _containingStage, boolean _inGame) {
+	public void initContext(Stage _parentStage, Stage _containingStage, boolean _inGame) {
+		this.parentStage = _parentStage;
 		this.primaryStage = _containingStage;
-		this.primaryStage.setOnCloseRequest(e -> this.closeWindow(e));
-		this.conf = Utilities.chargerConfiguration();
 		this.inGame = _inGame;
+
+		this.primaryStage.setOnCloseRequest(e -> this.closeWindow(e));
+		// this.conf = new gameConfiguration();
+		// Utilities.sauvegarderConfiguration(conf);
+		this.conf = Utilities.chargerConfiguration();
 
 		itemsConfigure();
 
@@ -45,7 +53,7 @@ public class SettingsMenuController {
 	 * Affichage de la fenêtre.
 	 */
 	public void displayDialog() {
-		if (inGame) {
+		if (this.inGame) {
 			this.primaryStage.showAndWait();
 		} else {
 			this.primaryStage.show();
@@ -65,6 +73,8 @@ public class SettingsMenuController {
 	private CheckBox soundBox;
 
 	private void itemsConfigure() {
+		this.oldGameSize = this.conf.gameSize;
+
 		ToggleGroup controlChoice = new ToggleGroup();
 		keyboardButt.setToggleGroup(controlChoice);
 		mouseButt.setToggleGroup(controlChoice);
@@ -124,16 +134,7 @@ public class SettingsMenuController {
 		}
 		this.conf.setSizeValues();
 		Utilities.sauvegarderConfiguration(this.conf);
-		this.closeWindow();
-	}
-
-	private void closeWindow() {
-		if (inGame) {
-			this.primaryStage.close();
-		} else {
-			MainMenu mM = new MainMenu();
-			mM.start(primaryStage);
-		}
+		this.doRetour();
 	}
 
 	/*
@@ -141,7 +142,12 @@ public class SettingsMenuController {
 	 */
 	@FXML
 	private void doRetour() {
-		this.closeWindow();
+		if (this.inGame) {
+			this.primaryStage.close();
+		} else {
+			MainMenu mM = new MainMenu();
+			mM.start(primaryStage);
+		}
 	}
 
 	@FXML

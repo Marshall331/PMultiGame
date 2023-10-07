@@ -6,12 +6,24 @@ public class gameConfiguration implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public double player1MaxSpeed;
     public boolean player1MouseControl;
+    public boolean player1isComputer;
+    public boolean player1isSpeedLimited;
+
+    public double player2MaxSpeed;
+    public boolean player2MouseControl;
+    public boolean player2isComputer;
+    public boolean player2isSpeedLimited;
+
+    public boolean gameSizeChanged;
     public boolean isSoloGame;
     public int gameSize;
     public boolean soundOn;
-    public double ballSpeed;
-    public double playerSpeed;
+    // public double ballSpeed;
+    // public double playerSpeed;
+    public int scr1;
+    public int scr2;
 
     public int WIDTH;
     public int HEIGHT;
@@ -22,27 +34,32 @@ public class gameConfiguration implements Serializable {
     public double BALL_SPEED;
 
     public gameConfiguration() {
+
+        this.player1MaxSpeed = 5;
         this.player1MouseControl = false;
+        this.player1isComputer = false;
+        this.player1isSpeedLimited = false;
+
+        this.player2MaxSpeed = 5;
+        this.player2MouseControl = false;
+        this.player2isComputer = true;
+        this.player2isSpeedLimited = false;
+
         this.isSoloGame = true;
         this.gameSize = 2;
         this.soundOn = true;
-        this.ballSpeed = 0;
-        this.playerSpeed = 0;
+        // this.ballSpeed = 0;
+        // this.playerSpeed = 0;
+        this.scr1 = 0;
+        this.scr2 = 0;
     }
 
-    public gameConfiguration(boolean _player1MouseControl, boolean _player2IsComputer, int _gameSize,
-            boolean _soundOn, double _ballSpeed,
-            double _playerSpeed) {
-        this.isSoloGame = true;
-        this.player1MouseControl = _player1MouseControl;
-        this.gameSize = _gameSize;
-        this.soundOn = _soundOn;
-        this.ballSpeed = _ballSpeed;
-        this.playerSpeed = _playerSpeed;
+    public void resetScore() {
+        this.scr1 = 0;
+        this.scr2 = 0;
     }
 
     public void setSizeValues() {
-
         switch (gameSize) {
             case 3:
                 this.WIDTH = 1699 / 2;
