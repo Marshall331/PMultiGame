@@ -4,11 +4,14 @@ import application.control.MainMenu;
 import application.control.PlayerSettings;
 import application.tools.AlertUtilities;
 import application.tools.Utilities;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.stage.Stage;
 import model.gameConfiguration;
@@ -64,6 +67,8 @@ public class SettingsMenuController {
 	private Button buttPlayer2;
 	@FXML
 	private Slider ballSpeed;
+	@FXML
+	private Label labBallSpeed;
 
 	// @FXML
 	// private RadioButton keyboardButt;
@@ -80,6 +85,9 @@ public class SettingsMenuController {
 	private void itemsConfigure() {
 		Utilities.setAnimatedIcon(buttPlayer1);
 		Utilities.setAnimatedIcon(buttPlayer2);
+		DoubleProperty sliderValueProperty = new SimpleDoubleProperty(0.0);
+		labBallSpeed.textProperty().bind(sliderValueProperty.asString("%.1f"));
+		sliderValueProperty.bind(ballSpeed.valueProperty());
 
 		this.oldGameSize = this.conf.gameSize;
 

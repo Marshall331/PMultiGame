@@ -198,9 +198,25 @@
                   <Insets left="10.0" />
                </GridPane.margin>
                <children>
-                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="653.0" text="Vitesse de la balle ">
+                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="249.0" text="Vitesse de la balle ">
                      <font>
                         <Font name="System Bold" size="26.0" />
+                     </font>
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop color="#060dbf" />
+                              <Stop color="#bf262a" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                     <HBox.margin>
+                        <Insets left="150.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="labBallSpeed" alignment="CENTER" prefHeight="50.0" prefWidth="121.0" text="0">
+                     <font>
+                        <Font name="System Bold" size="39.0" />
                      </font>
                      <textFill>
                         <LinearGradient endX="1.0" endY="1.0">

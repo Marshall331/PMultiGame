@@ -2,6 +2,9 @@ package application.view;
 
 import application.tools.AlertUtilities;
 import application.tools.Utilities;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -70,12 +73,30 @@ public class PlayerSettingsController {
 	@FXML
 	private CheckBox isSpeedLimited;
 
+	@FXML
+	private Label labPaddleSpeed;
+
 	private void itemsConfigure() {
+		this.isSpeedLimited.selectedProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue) {
+				isSpeedLimited.setText("Oui");
+			} else {
+				isSpeedLimited.setText("Non");
+			}
+		});
 		this.labPlayer.setText("Joueur " + (this.playerSettings == 1 ? "1" : "2"));
 		ToggleGroup controlChoice = new ToggleGroup();
 		keyboardButt.setToggleGroup(controlChoice);
 		mouseButt.setToggleGroup(controlChoice);
 		botButt.setToggleGroup(controlChoice);
+
+		DoubleProperty sliderValueProperty = new SimpleDoubleProperty(0.0);
+		labPaddleSpeed.textProperty().bind(sliderValueProperty.asString("%.1f"));
+		sliderValueProperty.bind(paddleSpeed.valueProperty());
+
+		// if (this.paddleSpeed.getValue() == 100) {
+		// 	this.labSpeed.setText("illimité");
+		// }
 	}
 
 	private void setItemsByConf() {
