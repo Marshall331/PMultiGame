@@ -42,7 +42,7 @@ public class gameConfiguration implements Serializable {
 
         this.player2MaxSpeed = 5;
         this.player2MouseControl = false;
-        this.player2isComputer = true;
+        this.player2isComputer = false;
         this.player2isSpeedLimited = false;
 
         this.isSoloGame = true;

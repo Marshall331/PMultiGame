@@ -13,6 +13,6 @@ public class Constants {
     public static final double VY = 1.0;
 
     public static final double MAG = Math.sqrt(26);
-    public static final double SPEED = 30;
-    public static final double ACC = 1.2;
+    public static final double SPEED = 85; // 30
+    public static final double ACC = 1.5; // 1.2
 }

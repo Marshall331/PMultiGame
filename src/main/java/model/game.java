@@ -71,6 +71,7 @@ public final class game extends AnimationTimer {
 
     @Override
     public void handle(long now) {
+        System.out.println("X :" + ball.getTranslateX() + "   Y :" + ball.getTranslateY());
         checkEndGame();
         checkBallCollision();
         checkPaddleCollision();
@@ -109,7 +110,7 @@ public final class game extends AnimationTimer {
 
     private void moveComputer(player _player) {
         double targetY = ball.getTranslateY(); // Position verticale cible du joueur 2
-        double speed = 20; // Vitesse maximale du joueur 2
+        double speed = 10000; // Vitesse maximale du joueur 2
         double currentY = _player.paddle.getTranslateY();
 
         // Calculer la direction et la distance vers la cible

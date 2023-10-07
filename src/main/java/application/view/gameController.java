@@ -94,27 +94,7 @@ public class GameController {
 	private void initViewItems() {
 		this.primaryStage.setOnCloseRequest(e -> this.closeWindow(e));
 
-		ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(200), settingsButton);
-		scaleTransition.setToX(1.1); // horizontal zoom
-		scaleTransition.setToY(1.1); // vertical zoom
-
-		settingsButton.setOnMouseEntered(event -> {
-			scaleTransition.playFromStart();
-			this.settingsButton.setStyle("-fx-background-color: white;");
-		});
-
-		Image image = new Image(
-				MultiplayerMenuController.class.getResource("images/SettingsIcon.png").toExternalForm());
-		ImageView imageView = new ImageView(image);
-		imageView.setFitWidth(35);
-		imageView.setFitHeight(35);
-		settingsButton.setGraphic(imageView);
-
-		settingsButton.setOnMouseExited(event -> {
-			scaleTransition.stop();
-			settingsButton.setScaleX(1);
-			settingsButton.setScaleY(1);
-		});
+		Utilities.setAnimatedIcon(settingsButton);
 	}
 
 	private void createGame() {

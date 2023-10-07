@@ -1,17 +1,16 @@
 package application.view;
 
-import application.control.Game;
 import application.control.MainMenu;
+import application.control.PlayerSettings;
 import application.tools.AlertUtilities;
 import application.tools.Utilities;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Slider;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import model.gameConfiguration;
 
 /**
@@ -39,7 +38,6 @@ public class SettingsMenuController {
 		this.primaryStage = _containingStage;
 		this.inGame = _inGame;
 
-		this.primaryStage.setOnCloseRequest(e -> this.closeWindow(e));
 		// this.conf = new gameConfiguration();
 		// Utilities.sauvegarderConfiguration(conf);
 		this.conf = Utilities.chargerConfiguration();
@@ -61,10 +59,17 @@ public class SettingsMenuController {
 	}
 
 	@FXML
-	private RadioButton keyboardButt;
-
+	private Button buttPlayer1;
 	@FXML
-	private RadioButton mouseButt;
+	private Button buttPlayer2;
+	@FXML
+	private Slider ballSpeed;
+
+	// @FXML
+	// private RadioButton keyboardButt;
+
+	// @FXML
+	// private RadioButton mouseButt;
 
 	@FXML
 	private ChoiceBox<String> sizeChoice;
@@ -73,11 +78,14 @@ public class SettingsMenuController {
 	private CheckBox soundBox;
 
 	private void itemsConfigure() {
+		Utilities.setAnimatedIcon(buttPlayer1);
+		Utilities.setAnimatedIcon(buttPlayer2);
+
 		this.oldGameSize = this.conf.gameSize;
 
-		ToggleGroup controlChoice = new ToggleGroup();
-		keyboardButt.setToggleGroup(controlChoice);
-		mouseButt.setToggleGroup(controlChoice);
+		// ToggleGroup controlChoice = new ToggleGroup();
+		// keyboardButt.setToggleGroup(controlChoice);
+		// mouseButt.setToggleGroup(controlChoice);
 
 		sizeChoice.getItems().addAll("1024 x 768", "1280 x 1024", "1680 x 1050");
 		sizeChoice.setStyle("-fx-font-size: 18px;");
@@ -93,9 +101,9 @@ public class SettingsMenuController {
 
 	private void setItemsByConf() {
 		if (this.conf.player1MouseControl) {
-			mouseButt.setSelected(true);
+			// mouseButt.setSelected(true);
 		} else {
-			keyboardButt.setSelected(true);
+			// keyboardButt.setSelected(true);
 		}
 		if (this.conf.soundOn) {
 			soundBox.setSelected(true);
@@ -114,12 +122,28 @@ public class SettingsMenuController {
 	}
 
 	@FXML
+	private void doSettingsPlayer1() {
+		this.buttPlayer1.setDisable(true);
+		PlayerSettings ps = new PlayerSettings(this.primaryStage, 1);
+		this.buttPlayer1.setDisable(false);
+		this.conf = Utilities.chargerConfiguration();
+	}
+
+	@FXML
+	private void doSettingsPlayer2() {
+		this.buttPlayer2.setDisable(true);
+		PlayerSettings ps = new PlayerSettings(this.primaryStage, 2);
+		this.buttPlayer2.setDisable(false);
+		this.conf = Utilities.chargerConfiguration();
+	}
+
+	@FXML
 	private void doValider() {
-		if (keyboardButt.isSelected()) {
-			this.conf.player1MouseControl = false;
-		} else if (mouseButt.isSelected()) {
-			this.conf.player1MouseControl = true;
-		}
+		// if (keyboardButt.isSelected()) {
+		// this.conf.player1MouseControl = false;
+		// } else if (mouseButt.isSelected()) {
+		// this.conf.player1MouseControl = true;
+		// }
 		if (soundBox.isSelected()) {
 			this.conf.soundOn = true;
 		} else {
@@ -159,19 +183,5 @@ public class SettingsMenuController {
 			Utilities.sauvegarderConfiguration(conf);
 			this.setItemsByConf();
 		}
-	}
-
-	/*
-	 * Méthode de fermeture de la fenêtre par la croix.
-	 *
-	 * @param e Evénement associé (inutilisé pour le moment)
-	 *
-	 */
-	private void closeWindow(WindowEvent e) {
-		if (AlertUtilities.confirmYesCancel(this.primaryStage, "Quitter l'application",
-				"Etes vous sur de vouloir quitter le jeu ?", null, AlertType.CONFIRMATION)) {
-			this.primaryStage.close();
-		}
-		e.consume();
 	}
 }

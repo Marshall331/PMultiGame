@@ -6,17 +6,23 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import application.view.MultiplayerMenuController;
+import javafx.animation.ScaleTransition;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.gameConfiguration;
 
 public class Utilities {
 
     public static void setCenterStage(Stage _Stage, Scene _scene) {
-        
+
         // Obtenez les dimensions de la scène au lieu de primaryStage
         double sceneWidth = _scene.getWidth();
         double sceneHeight = _scene.getHeight();
@@ -65,5 +71,29 @@ public class Utilities {
             e.printStackTrace();
         }
         return config;
+    }
+
+    public static void setAnimatedIcon(Button _butt) {
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(200), _butt);
+        scaleTransition.setToX(1.1); // horizontal zoom
+        scaleTransition.setToY(1.1); // vertical zoom
+
+        _butt.setOnMouseEntered(event -> {
+            scaleTransition.playFromStart();
+            _butt.setStyle("-fx-background-color: white;");
+        });
+
+        Image image = new Image(
+                MultiplayerMenuController.class.getResource("images/SettingsIcon.png").toExternalForm());
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(35);
+        imageView.setFitHeight(35);
+        _butt.setGraphic(imageView);
+
+        _butt.setOnMouseExited(event -> {
+            scaleTransition.stop();
+            _butt.setScaleX(1);
+            _butt.setScaleY(1);
+        });
     }
 }
