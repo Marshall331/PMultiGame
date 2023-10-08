@@ -63,8 +63,8 @@ public final class game extends AnimationTimer {
         this.PADDLE_HEIGHT = this.conf.PADDLE_HEIGHT;
         this.paddleMaxY = this.HEIGHT - this.PADDLE_HEIGHT / 2;
         this.paddleMinY = -HEIGHT + PADDLE_HEIGHT / 2;
-        this.ballMinX = -WIDTH + 5;
-        this.ballMaxX = WIDTH - 5;
+        this.ballMinX = -WIDTH + BALL_RADIUS - 2;
+        this.ballMaxX = WIDTH - BALL_RADIUS + 2;
         this.ballMinY = -HEIGHT + BALL_RADIUS;
         this.ballMaxY = HEIGHT - BALL_RADIUS;
     }
@@ -90,14 +90,14 @@ public final class game extends AnimationTimer {
     }
 
     private void movePlayer() {
-        if (checkPlayerBorderCollision(player1, player1.vel) && !player1.isComputer) {
+        if (checkPlayerBorderCollision(player1) && !player1.isComputer) {
             if (player1.mouseControl) {
                 player1.mouseMove();
             } else {
                 player1.move();
             }
         }
-        if (checkPlayerBorderCollision(player2, player2.vel) && !player2.isComputer) {
+        if (checkPlayerBorderCollision(player2) && !player2.isComputer) {
             player2.move();
         }
         if (player1.isComputer) {
@@ -109,15 +109,13 @@ public final class game extends AnimationTimer {
     }
 
     private void moveComputer(player _player) {
-        double targetY = ball.getTranslateY(); // Position verticale cible du joueur 2
-        double speed = 1500; // Vitesse maximale du joueur 2
+        double targetY = ball.getTranslateY();
+        double speed = (_player.id == 1) ? this.conf.player1MaxSpeed : this.conf.player2MaxSpeed;
         double currentY = _player.paddle.getTranslateY();
 
-        // Calculer la direction et la distance vers la cible
         double direction = (targetY > currentY) ? 1 : -1;
         double distance = Math.abs(targetY - currentY);
 
-        // Limiter la vitesse du joueur 2 à 10
         if (distance > speed) {
             distance = speed;
         }
@@ -130,12 +128,12 @@ public final class game extends AnimationTimer {
             mouvementBot = this.paddleMaxY;
         }
 
-        if (checkPlayerBorderCollision(_player, 0)) {
+        if (checkPlayerBorderCollision(_player)) {
             _player.paddle.setTranslateY(mouvementBot);
         }
     }
 
-    public boolean checkPlayerBorderCollision(player _player, double _vel) {
+    public boolean checkPlayerBorderCollision(player _player) {
         return _player.paddle.getTranslateY() + _player.vel <= this.paddleMaxY
                 && _player.paddle.getTranslateY() + _player.vel >= this.paddleMinY;
     }
@@ -156,7 +154,7 @@ public final class game extends AnimationTimer {
 
         double randomAngle = rand.nextDouble() * Math.PI * 2; // Entre 0 et 2*pi
         // radians
-        dX = mag * Math.cos(randomAngle);
+        dX = mag * Math.sin(randomAngle);
         dY = mag * Math.sin(randomAngle);
     }
 

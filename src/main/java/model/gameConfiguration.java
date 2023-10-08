@@ -45,7 +45,7 @@ public class gameConfiguration implements Serializable {
         this.player2isComputer = false;
         this.player2isSpeedLimited = false;
 
-        this.isSoloGame = true;
+        this.isSoloGame = false;
         this.gameSize = 2;
         this.soundOn = true;
         // this.ballSpeed = 0;

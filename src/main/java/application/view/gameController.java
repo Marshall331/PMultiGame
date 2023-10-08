@@ -81,9 +81,9 @@ public class GameController {
 		gameConfiguration _conf = Utilities.chargerConfiguration();
 		this.conf = _conf;
 
-		this.player1 = new player(paddle1, this.conf.player1isComputer, this.conf.player1MaxSpeed,
+		this.player1 = new player(1, paddle1, this.conf.player1isComputer, this.conf.player1MaxSpeed,
 				this.conf.player1isSpeedLimited, this.conf.player1MouseControl);
-		this.player2 = new player(paddle2, this.conf.player2isComputer, this.conf.player2MaxSpeed,
+		this.player2 = new player(2, paddle2, this.conf.player2isComputer, this.conf.player2MaxSpeed,
 				this.conf.player2isSpeedLimited, this.conf.player2MouseControl);
 	}
 
@@ -106,41 +106,141 @@ public class GameController {
 	}
 
 	private void setControls(boolean _isMouseControl, boolean _isSoloGame) {
-		// System.out.println(this.conf.player1MouseControl);
-		// scene.setOnMouseMoved(event -> {
-		// double x = event.getSceneX();
-		// double y = event.getSceneY();
-		// System.out.println("Coordonnées X : " + x + ", Y : " + y);
+		if (!this.conf.player1isComputer) {
+			if (this.conf.player1MouseControl) {
+				this.setMouseControl(player1);
+			} else {
+				this.setKeyboardControl(player1);
+			}
+		}
+		if (!this.conf.player2isComputer) {
+			if (this.conf.player2MouseControl) {
+				this.setMouseControl(player2);
+			} else {
+				this.setKeyboardControl(player2);
+			}
+		}
+		// if (_isMouseControl && _isSoloGame) {
+		// board.setOnMouseEntered(event -> {
+		// board.setCursor(Cursor.NONE);
 		// });
-		if (_isMouseControl && _isSoloGame) {
-			board.setOnMouseEntered(event -> {
-				board.setCursor(Cursor.NONE);
-			});
-			board.setOnMouseMoved(event -> {
-				// Calculez la position Y souhaitée pour le centre de la raquette
-				double desiredRacketY = event.getY() - game.HEIGHT;
-				double maxY = game.paddleMaxY;
-				double minY = game.paddleMinY;
+		// board.setOnMouseMoved(event -> {
+		// // Calculez la position Y souhaitée pour le centre de la raquette
+		// double desiredRacketY = event.getY() - game.HEIGHT;
+		// double maxY = game.paddleMaxY;
+		// double minY = game.paddleMinY;
 
-				if (desiredRacketY <= minY) {
-					desiredRacketY = minY;
-				} else if (desiredRacketY >= maxY) {
-					desiredRacketY = maxY;
-				}
+		// if (desiredRacketY <= minY) {
+		// desiredRacketY = minY;
+		// } else if (desiredRacketY >= maxY) {
+		// desiredRacketY = maxY;
+		// }
 
-				player1.mouseMove = desiredRacketY;
-			});
-			board.setOnMouseExited(event -> {
-				board.setCursor(Cursor.DEFAULT);
-			});
-		} else if (!_isMouseControl && _isSoloGame) {
+		// player1.mouseMove = desiredRacketY;
+		// });
+		// board.setOnMouseExited(event -> {
+		// board.setCursor(Cursor.DEFAULT);
+		// });
+		// } else if (!_isMouseControl && _isSoloGame) {
+		// scene.setOnKeyPressed(event -> {
+		// switch (event.getCode()) {
+		// case Z:
+		// player1.vel = -player1.maxSpeed;
+		// break;
+		// case S:
+		// player1.vel = player1.maxSpeed;
+		// break;
+		// default:
+		// event.consume();
+		// break;
+		// }
+		// });
+		// scene.setOnKeyReleased(event -> {
+		// switch (event.getCode()) {
+		// case Z:
+		// player1.vel = 0;
+		// break;
+		// case S:
+		// player1.vel = 0;
+		// break;
+		// default:
+		// event.consume();
+		// break;
+		// }
+		// });
+		// } else {
+		// scene.setOnKeyPressed(event -> {
+		// switch (event.getCode()) {
+		// case Z:
+		// player1.vel = -player1.maxSpeed;
+		// break;
+		// case S:
+		// player1.vel = player1.maxSpeed;
+		// break;
+		// case P:
+		// player2.vel = -player2.maxSpeed;
+		// break;
+		// case L:
+		// player2.vel = player2.maxSpeed;
+		// break;
+		// default:
+		// event.consume();
+		// break;
+		// }
+		// });
+		// scene.setOnKeyReleased(event -> {
+		// switch (event.getCode()) {
+		// case Z:
+		// player1.vel = 0;
+		// break;
+		// case S:
+		// player1.vel = 0;
+		// break;
+		// case P:
+		// player2.vel = 0;
+		// break;
+		// case L:
+		// player2.vel = 0;
+		// break;
+		// default:
+		// event.consume();
+		// break;
+		// }
+		// });
+		// }
+	}
+
+	private void setMouseControl(player _Player) {
+		board.setOnMouseEntered(event -> {
+			board.setCursor(Cursor.NONE);
+		});
+		board.setOnMouseMoved(event -> {
+			double desiredRacketY = event.getY() - game.HEIGHT;
+			double maxY = game.paddleMaxY;
+			double minY = game.paddleMinY;
+
+			if (desiredRacketY <= minY) {
+				desiredRacketY = minY;
+			} else if (desiredRacketY >= maxY) {
+				desiredRacketY = maxY;
+			}
+
+			_Player.mouseMove = desiredRacketY;
+		});
+		board.setOnMouseExited(event -> {
+			board.setCursor(Cursor.DEFAULT);
+		});
+	}
+
+	private void setKeyboardControl(player _Player) {
+		if (_Player.id == 1) {
 			scene.setOnKeyPressed(event -> {
 				switch (event.getCode()) {
 					case Z:
-						player1.vel = -player1.maxSpeed;
+						_Player.vel = -_Player.maxSpeed;
 						break;
 					case S:
-						player1.vel = player1.maxSpeed;
+						_Player.vel = _Player.maxSpeed;
 						break;
 					default:
 						event.consume();
@@ -150,10 +250,10 @@ public class GameController {
 			scene.setOnKeyReleased(event -> {
 				switch (event.getCode()) {
 					case Z:
-						player1.vel = 0;
+						_Player.vel = 0;
 						break;
 					case S:
-						player1.vel = 0;
+						_Player.vel = 0;
 						break;
 					default:
 						event.consume();
@@ -163,17 +263,11 @@ public class GameController {
 		} else {
 			scene.setOnKeyPressed(event -> {
 				switch (event.getCode()) {
-					case Z:
-						player1.vel = -player1.maxSpeed;
-						break;
-					case S:
-						player1.vel = player1.maxSpeed;
-						break;
 					case P:
-						player2.vel = -player2.maxSpeed;
+						_Player.vel = -_Player.maxSpeed;
 						break;
 					case L:
-						player2.vel = player2.maxSpeed;
+						_Player.vel = _Player.maxSpeed;
 						break;
 					default:
 						event.consume();
@@ -182,17 +276,11 @@ public class GameController {
 			});
 			scene.setOnKeyReleased(event -> {
 				switch (event.getCode()) {
-					case Z:
-						player1.vel = 0;
-						break;
-					case S:
-						player1.vel = 0;
-						break;
 					case P:
-						player2.vel = 0;
+						_Player.vel = 0;
 						break;
 					case L:
-						player2.vel = 0;
+						_Player.vel = 0;
 						break;
 					default:
 						event.consume();

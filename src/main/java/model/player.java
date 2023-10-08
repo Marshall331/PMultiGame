@@ -4,6 +4,7 @@ import javafx.scene.shape.Rectangle;
 
 public final class player {
 
+    public final int id;
     public Rectangle paddle;
     public double vel;
     public double maxSpeed;
@@ -12,7 +13,9 @@ public final class player {
     public boolean mouseControl;
     public double mouseMove;
 
-    public player(Rectangle _paddle, boolean _isCPU, double _maxSpeed, boolean _speedLimit, boolean _mouseControl) {
+    public player(int _playerId, Rectangle _paddle, boolean _isCPU, double _maxSpeed, boolean _speedLimit,
+            boolean _mouseControl) {
+        this.id = _playerId;
         this.paddle = _paddle;
         this.isComputer = _isCPU;
         this.maxSpeed = _maxSpeed;

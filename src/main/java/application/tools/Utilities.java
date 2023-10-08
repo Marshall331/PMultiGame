@@ -75,8 +75,9 @@ public class Utilities {
 
     public static void setAnimatedIcon(Button _butt) {
         ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(200), _butt);
-        scaleTransition.setToX(1.1); // horizontal zoom
-        scaleTransition.setToY(1.1); // vertical zoom
+        scaleTransition.setToX(1.15);
+        scaleTransition.setToY(1.15);
+        _butt.setStyle("-fx-background-color: white;");
 
         _butt.setOnMouseEntered(event -> {
             scaleTransition.playFromStart();
