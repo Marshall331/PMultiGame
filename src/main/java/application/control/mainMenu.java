@@ -1,14 +1,7 @@
 package application.control;
 
-import application.PMultiApp;
-import application.tools.Utilities;
-import application.view.MainMenuController;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.gameConfiguration;
 
 /**
  * Classe de controleur de Dialogue de la scène du menu principale.
@@ -28,40 +21,43 @@ public class MainMenu extends Application {
 
 		try {
 
-			this.primaryStage = _parentStage;
+			DifficultyMenu m = new DifficultyMenu(new Stage());
+			m.lancerJeu(1);
+			// this.primaryStage = _parentStage;
 
-			// Chargement du source fxml
-			FXMLLoader loader = new FXMLLoader(
-					MainMenuController.class.getResource("MainMenu.fxml"));
-			BorderPane root = loader.load();
+			// // Chargement du source fxml
+			// FXMLLoader loader = new FXMLLoader(
+			// MainMenuController.class.getResource("MainMenu.fxml"));
+			// BorderPane root = loader.load();
 
-			// Paramétrage du Stage : feuille de style, titre
-			Scene scene = new Scene(root, root.getPrefWidth() + 20, root.getPrefHeight() + 10);
-			scene.getStylesheets().add(PMultiApp.class.getResource("application.css").toExternalForm());
+			// // Paramétrage du Stage : feuille de style, titre
+			// Scene scene = new Scene(root, root.getPrefWidth() + 20, root.getPrefHeight()
+			// + 10);
+			// scene.getStylesheets().add(PMultiApp.class.getResource("application.css").toExternalForm());
 
-			if (inGame) {
-				// Placement de la fenêtre au milieu de l'écran
-				Utilities.setCenterStage(primaryStage, scene);
-			}
+			// if (inGame) {
+			// // Placement de la fenêtre au milieu de l'écran
+			// Utilities.setCenterStage(primaryStage, scene);
+			// }
 
-			gameConfiguration conf = Utilities.chargerConfiguration();
-			conf.resetScore();
-			Utilities.sauvegarderConfiguration(conf);
+			// gameConfiguration conf = Utilities.chargerConfiguration();
+			// conf.resetScore();
+			// Utilities.sauvegarderConfiguration(conf);
 
-			// Removing all keyEvents
-			Utilities.removeKeysEvents(scene);
+			// // Removing all keyEvents
+			// Utilities.removeKeysEvents(scene);
 
-			primaryStage.setScene(scene);
-			primaryStage.setTitle("Menu du jeu");
-			primaryStage.setResizable(false);
+			// primaryStage.setScene(scene);
+			// primaryStage.setTitle("Menu du jeu");
+			// primaryStage.setResizable(false);
 
-			MainMenuController dbmfcViewController = loader.getController();
-			dbmfcViewController.initContext(primaryStage, this);
-			scene.getStylesheets().add("application.css");
+			// MainMenuController dbmfcViewController = loader.getController();
+			// dbmfcViewController.initContext(primaryStage, this);
+			// scene.getStylesheets().add("application.css");
 
-			dbmfcViewController.displayDialog();
+			// dbmfcViewController.displayDialog();
 
-			// Game g = new Game(primaryStage);
+			// // Game g = new Game(primaryStage);
 
 		} catch (Exception e) {
 			e.printStackTrace();

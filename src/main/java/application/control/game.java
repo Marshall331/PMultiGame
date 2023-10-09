@@ -39,6 +39,8 @@ public class Game {
 					break;
 			}
 
+			sizeGame = "1.fxml";
+
 			FXMLLoader loader = new FXMLLoader(
 					GameController.class.getResource(sizeGame));
 			BorderPane root = loader.load();

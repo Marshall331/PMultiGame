@@ -7,13 +7,16 @@ import application.tools.AlertUtilities;
 import application.tools.Utilities;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
+import javafx.geometry.HPos;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -35,7 +38,15 @@ public class GameController {
 	private game game;
 
 	@FXML
-	private GridPane board;
+	BorderPane borderpane;
+	@FXML
+	private GridPane scoreBoard;
+	@FXML
+	private GridPane boardGame;
+	@FXML
+	private Line topLine;
+	@FXML
+	private Line midLine;
 	@FXML
 	private Label labScrPlayer1;
 	@FXML
@@ -72,9 +83,16 @@ public class GameController {
 		this.primaryStage = _containingStage;
 		this.scene = _scene;
 
-		initValues();
-		initViewItems();
-		createGame();
+		setItemsSize();
+		// initValues();
+		// initViewItems();
+		// createGame();
+	}
+
+	private void setItemsSize() {
+		this.primaryStage.setWidth(1043);
+		this.primaryStage.setHeight(700+78);
+		this.borderpane.setPrefSize(1043, 700+78);
 	}
 
 	private void initValues() {
@@ -211,14 +229,14 @@ public class GameController {
 	}
 
 	private void setMouseControl(player _Player) {
-		board.setOnMouseEntered(event -> {
-			board.setCursor(Cursor.NONE);
+		boardGame.setOnMouseEntered(event -> {
+			boardGame.setCursor(Cursor.NONE);
 		});
-		board.setOnMouseMoved(event -> {
+		boardGame.setOnMouseMoved(event -> {
 			double desiredRacketY = event.getY() - game.HEIGHT;
 			double maxY = game.paddleMaxY;
 			double minY = game.paddleMinY;
-
+			System.out.println("X : " + event.getX() + "Y : " + event.getY());
 			if (desiredRacketY <= minY) {
 				desiredRacketY = minY;
 			} else if (desiredRacketY >= maxY) {
@@ -227,8 +245,8 @@ public class GameController {
 
 			_Player.mouseMove = desiredRacketY;
 		});
-		board.setOnMouseExited(event -> {
-			board.setCursor(Cursor.DEFAULT);
+		boardGame.setOnMouseExited(event -> {
+			boardGame.setCursor(Cursor.DEFAULT);
 		});
 	}
 
