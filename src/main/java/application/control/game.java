@@ -21,28 +21,9 @@ public class Game {
 
 		try {
 			this.primaryStage = _parentStage;
-			// Chargement du source fxml
-			gameConfiguration conf = Utilities.chargerConfiguration();
-			String sizeGame;
-			switch (conf.gameSize) {
-				case 1:
-					sizeGame = "Game1.fxml";
-					break;
-				case 2:
-					sizeGame = "Game2.fxml";
-					break;
-				case 3:
-					sizeGame = "Game3.fxml";
-					break;
-				default:
-					sizeGame = "";
-					break;
-			}
-
-			sizeGame = "1.fxml";
 
 			FXMLLoader loader = new FXMLLoader(
-					GameController.class.getResource(sizeGame));
+					GameController.class.getResource("game.fxml"));
 			BorderPane root = loader.load();
 
 			// Paramétrage du Stage : feuille de style, titre

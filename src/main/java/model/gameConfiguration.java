@@ -27,6 +27,7 @@ public class gameConfiguration implements Serializable {
 
     public int WIDTH;
     public int HEIGHT;
+    public int midLineY;
     public int PADDLE_WIDTH;
     public int PADDLE_HEIGHT;
     public int BALL_RADIUS;
@@ -61,27 +62,45 @@ public class gameConfiguration implements Serializable {
 
     public void setSizeValues() {
         switch (gameSize) {
-            case 3:
+            case 1:
                 this.WIDTH = 1699 / 2;
                 this.HEIGHT = 982 / 2;
+                this.midLineY = 882;
                 this.PADDLE_WIDTH = 25;
                 this.PADDLE_HEIGHT = 160;
                 this.BALL_RADIUS = 30;
                 break;
             case 2:
                 this.WIDTH = 1299 / 2;
-                this.HEIGHT = 956 / 2;
+                this.HEIGHT = 936 / 2;
+                this.midLineY = 836;
                 this.PADDLE_WIDTH = 25;
                 this.PADDLE_HEIGHT = 140;
                 this.BALL_RADIUS = 25;
                 break;
-            case 1:
+            case 3:
                 this.WIDTH = 1043 / 2;
                 this.HEIGHT = 700 / 2;
+                this.midLineY = 600;
                 this.PADDLE_WIDTH = 25;
                 this.PADDLE_HEIGHT = 120;
                 this.BALL_RADIUS = 20;
                 break;
+            case 4:
+                this.WIDTH = 800 / 2;
+                this.HEIGHT = 600 / 2;
+                this.midLineY = 500;
+                this.PADDLE_WIDTH = 25;
+                this.PADDLE_HEIGHT = 100;
+                this.BALL_RADIUS = 15;
+                break;
+            // case 5:
+            // this.WIDTH = 1043 / 2;
+            // this.HEIGHT = 700 / 2;
+            // this.PADDLE_WIDTH = 25;
+            // this.PADDLE_HEIGHT = 120;
+            // this.BALL_RADIUS = 20;
+            // break;
             default:
                 break;
         }

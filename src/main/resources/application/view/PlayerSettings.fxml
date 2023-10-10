@@ -138,9 +138,9 @@
                         </LinearGradient>
                      </textFill>
                   </Label>
-                  <Label fx:id="labPaddleSpeed" alignment="CENTER" prefHeight="46.0" prefWidth="115.0">
+                  <Label fx:id="labPaddleSpeed" alignment="CENTER" prefHeight="21.0" prefWidth="118.0">
                      <font>
-                        <Font name="Corbel Bold" size="39.0" />
+                        <Font name="Arial Bold" size="30.0" />
                      </font>
                      <textFill>
                         <LinearGradient endX="0.7952380952380953" endY="0.5238095238095238" startY="1.0">
@@ -151,7 +151,7 @@
                         </LinearGradient>
                      </textFill>
                      <HBox.margin>
-                        <Insets bottom="2.0" />
+                        <Insets bottom="5.0" top="5.0" />
                      </HBox.margin>
                   </Label>
                </children>
@@ -159,7 +159,7 @@
                   <Insets />
                </opaqueInsets>
             </HBox>
-            <Slider fx:id="paddleSpeed" max="30.0" min="1.0" prefHeight="14.0" prefWidth="245.0" value="10.0" GridPane.rowIndex="2">
+            <Slider fx:id="sliderPaddleSpeed" max="30.0" min="1.0" prefHeight="14.0" prefWidth="245.0" value="10.0" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="5.0" right="5.0" />
                </GridPane.margin>
@@ -180,7 +180,7 @@
                   </LinearGradient>
                </textFill>
             </Label>
-            <CheckBox fx:id="isSpeedLimited" alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="27.0" prefWidth="68.0" text="Non" textFill="WHITE" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+            <CheckBox fx:id="checkBoxSpeedLimited" alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="27.0" prefWidth="68.0" text="Non" textFill="WHITE" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
                <font>
                   <Font size="18.0" />
                </font>

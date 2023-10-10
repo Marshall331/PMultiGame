@@ -24,10 +24,9 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1050.0" prefWidth="1680.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.GameController">
+<BorderPane fx:id="borderpane" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.GameController">
    <top>
-      <GridPane fx:id="scoreBoard" prefHeight="78.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
+      <GridPane fx:id="scoreBoard" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
@@ -93,7 +92,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Line fx:id="midLine" endX="1449.878662109375" endY="900.0" startX="1450.0" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="8.0" GridPane.halignment="CENTER">
+            <Line fx:id="midLine" endX="1449.878662109375" endY="900.0" startX="1450.0" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="8.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
                <fill>
                   <LinearGradient endX="1.0" endY="1.0">
                      <stops>

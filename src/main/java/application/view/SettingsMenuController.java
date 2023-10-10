@@ -95,7 +95,7 @@ public class SettingsMenuController {
 		// keyboardButt.setToggleGroup(controlChoice);
 		// mouseButt.setToggleGroup(controlChoice);
 
-		sizeChoice.getItems().addAll("1024 x 768", "1280 x 1024", "1680 x 1050");
+		sizeChoice.getItems().addAll("1700 x 1060", "1300 x 1034", "1043 x 778", "800 x 600");
 		sizeChoice.setStyle("-fx-font-size: 18px;");
 
 		this.soundBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -121,11 +121,13 @@ public class SettingsMenuController {
 			soundBox.setText("Désactivé");
 		}
 		if (this.conf.gameSize == 1) {
-			sizeChoice.setValue("1024 x 768");
+			sizeChoice.setValue("1700 x 1060");
 		} else if (this.conf.gameSize == 2) {
-			sizeChoice.setValue("1280 x 1024");
-		} else {
-			sizeChoice.setValue("1680 x 1050");
+			sizeChoice.setValue("1300 x 1034");
+		} else if (this.conf.gameSize == 3) {
+			sizeChoice.setValue("1043 x 778");
+		} else if (this.conf.gameSize == 4) {
+			sizeChoice.setValue("800 x 600");
 		}
 	}
 
@@ -157,12 +159,14 @@ public class SettingsMenuController {
 		} else {
 			this.conf.soundOn = false;
 		}
-		if (sizeChoice.getValue().equals("1024 x 768")) {
-			this.conf.gameSize = 1;
-		} else if (sizeChoice.getValue().equals("1280 x 1024")) {
-			this.conf.gameSize = 2;
-		} else if (sizeChoice.getValue().equals("1680 x 1050")) {
+		if (sizeChoice.getValue().equals("800 x 600")) {
+			this.conf.gameSize = 4;
+		} else if (sizeChoice.getValue().equals("1043 x 778")) {
 			this.conf.gameSize = 3;
+		} else if (sizeChoice.getValue().equals("1300 x 1034")) {
+			this.conf.gameSize = 2;
+		} else if (sizeChoice.getValue().equals("1700 x 1060")) {
+			this.conf.gameSize = 1;
 		}
 		this.conf.setSizeValues();
 		Utilities.sauvegarderConfiguration(this.conf);

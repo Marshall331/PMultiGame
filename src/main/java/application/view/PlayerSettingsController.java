@@ -68,20 +68,20 @@ public class PlayerSettingsController {
 	private RadioButton botButt;
 
 	@FXML
-	private Slider paddleSpeed;
+	private Slider sliderPaddleSpeed;
 
 	@FXML
-	private CheckBox isSpeedLimited;
+	private CheckBox checkBoxSpeedLimited;
 
 	@FXML
 	private Label labPaddleSpeed;
 
 	private void itemsConfigure() {
-		this.isSpeedLimited.selectedProperty().addListener((observable, oldValue, newValue) -> {
+		this.checkBoxSpeedLimited.selectedProperty().addListener((observable, oldValue, newValue) -> {
 			if (newValue) {
-				isSpeedLimited.setText("Oui");
+				checkBoxSpeedLimited.setText("Oui");
 			} else {
-				isSpeedLimited.setText("Non");
+				checkBoxSpeedLimited.setText("Non");
 			}
 		});
 		this.labPlayer.setText("Joueur " + this.playerSettings);
@@ -90,10 +90,20 @@ public class PlayerSettingsController {
 		mouseButt.setToggleGroup(controlChoice);
 		botButt.setToggleGroup(controlChoice);
 
-		this.isSpeedLimited.setSelected(false);
-		DoubleProperty sliderValueProperty = new SimpleDoubleProperty(0.0);
-		labPaddleSpeed.textProperty().bind(sliderValueProperty.asString("%.1f"));
-		sliderValueProperty.bind(paddleSpeed.valueProperty());
+		// this.isSpeedLimited.setSelected(false);
+		// DoubleProperty sliderValueProperty = new SimpleDoubleProperty(0.0);
+		// labPaddleSpeed.textProperty().bind(sliderValueProperty.asString("%.1f"));
+		// sliderValueProperty.bind(paddleSpeed.valueProperty());
+		// Ajoutez un écouteur de changement de valeur au Slider
+		sliderPaddleSpeed.valueProperty().addListener((observable, oldValue, newValue) -> {
+			int speed = newValue.intValue(); // Obtenez l'entier de la valeur du Slider
+			this.labPaddleSpeed.setText(Integer.toString(speed)); // Mettez à jour le Label avec l'entier
+			if (speed == 30) {
+				if (this.botButt.isSelected()) {
+					labPaddleSpeed.setText("infini"); // Définissez le texte sur "infini" lorsque le Slider est à 30
+				}
+			}
+		});
 
 		// if (this.paddleSpeed.getValue() == 100) {
 		// this.labSpeed.setText("illimité");
@@ -110,7 +120,7 @@ public class PlayerSettingsController {
 				keyboardButt.setSelected(true);
 			}
 			if (this.conf.player1isSpeedLimited) {
-				this.isSpeedLimited.setSelected(true);
+				this.checkBoxSpeedLimited.setSelected(true);
 			}
 		} else {
 			if (this.conf.player2MouseControl) {
@@ -121,10 +131,11 @@ public class PlayerSettingsController {
 				keyboardButt.setSelected(true);
 			}
 			if (this.conf.player2isSpeedLimited) {
-				this.isSpeedLimited.setSelected(true);
+				this.checkBoxSpeedLimited.setSelected(true);
 			}
 		}
-		this.paddleSpeed.setValue(this.playerSettings == 1 ? this.conf.player1MaxSpeed : this.conf.player2MaxSpeed);
+		this.sliderPaddleSpeed
+				.setValue(this.playerSettings == 1 ? this.conf.player1MaxSpeed : this.conf.player2MaxSpeed);
 	}
 
 	@FXML
@@ -147,8 +158,9 @@ public class PlayerSettingsController {
 				this.conf.player1MouseControl = false;
 				this.conf.player1isComputer = true;
 			}
-			this.conf.player1MaxSpeed = this.paddleSpeed.getValue();
-			if (this.isSpeedLimited.isSelected()) {
+			this.conf.player1MaxSpeed = this.sliderPaddleSpeed.getValue() == 30 && this.botButt.isSelected() ? 250
+					: this.sliderPaddleSpeed.getValue();
+			if (this.checkBoxSpeedLimited.isSelected()) {
 				this.conf.player1isSpeedLimited = true;
 			} else {
 				this.conf.player1isSpeedLimited = false;
@@ -170,12 +182,13 @@ public class PlayerSettingsController {
 				this.conf.player2MouseControl = false;
 				this.conf.player2isComputer = true;
 			}
-			if (this.isSpeedLimited.isSelected()) {
+			if (this.checkBoxSpeedLimited.isSelected()) {
 				this.conf.player2isSpeedLimited = true;
 			} else {
 				this.conf.player2isSpeedLimited = false;
 			}
-			this.conf.player2MaxSpeed = this.paddleSpeed.getValue();
+			this.conf.player2MaxSpeed = this.sliderPaddleSpeed.getValue() == 30 && this.botButt.isSelected() ? 250
+					: this.sliderPaddleSpeed.getValue();
 		}
 		this.conf.setSizeValues();
 		Utilities.sauvegarderConfiguration(this.conf);

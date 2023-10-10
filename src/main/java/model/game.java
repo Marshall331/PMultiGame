@@ -55,7 +55,7 @@ public final class game extends AnimationTimer {
         reset();
     }
 
-    private void setSizeValues() {
+    public void setSizeValues() {
         this.WIDTH = this.conf.WIDTH;
         this.HEIGHT = this.conf.HEIGHT;
         this.BALL_RADIUS = this.conf.BALL_RADIUS;

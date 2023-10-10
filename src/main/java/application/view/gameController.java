@@ -8,6 +8,9 @@ import application.tools.Utilities;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -82,23 +85,35 @@ public class GameController {
 	public void initContext(Stage _containingStage, Scene _scene) {
 		this.primaryStage = _containingStage;
 		this.scene = _scene;
+		this.conf = Utilities.chargerConfiguration();
 
 		setItemsSize();
-		// initValues();
-		// initViewItems();
-		// createGame();
+		initValues();
+		initViewItems();
+		createGame();
 	}
 
 	private void setItemsSize() {
-		this.primaryStage.setWidth(1043);
-		this.primaryStage.setHeight(700+78);
-		this.borderpane.setPrefSize(1043, 700+78);
+		double borderWidth = primaryStage.getWidth() - primaryStage.getScene().getWidth() + 1;
+		double titleBarHeight = primaryStage.getHeight() - primaryStage.getScene().getHeight();
+
+		this.primaryStage.setWidth(this.conf.WIDTH * 2 + borderWidth);
+		this.primaryStage.setHeight(this.conf.HEIGHT * 2 + 78 + titleBarHeight);
+		this.borderpane.setPrefSize(this.conf.WIDTH * 2, this.conf.HEIGHT * 2 + 78);
+		this.scoreBoard.setPrefSize(this.conf.WIDTH * 2, 78);
+		this.boardGame.setPrefSize(this.conf.WIDTH * 2, this.conf.HEIGHT * 2);
+		this.midLine.setEndY(this.conf.midLineY);
+		this.paddle1.setHeight(this.conf.PADDLE_HEIGHT);
+		this.paddle2.setHeight(this.conf.PADDLE_HEIGHT);
+		this.balle.setRadius(this.conf.BALL_RADIUS);
+		if (this.conf.gameSize == 4) {
+			this.scoreBoard.setHalignment(this.settingsButton, HPos.LEFT);
+			this.scoreBoard.setValignment(this.settingsButton, VPos.CENTER);
+			this.scoreBoard.setMargin(this.settingsButton, new Insets(0, 0, 0, 10));
+		}
 	}
 
 	private void initValues() {
-		gameConfiguration _conf = Utilities.chargerConfiguration();
-		this.conf = _conf;
-
 		this.player1 = new player(1, paddle1, this.conf.player1isComputer, this.conf.player1MaxSpeed,
 				this.conf.player1isSpeedLimited, this.conf.player1MouseControl);
 		this.player2 = new player(2, paddle2, this.conf.player2isComputer, this.conf.player2MaxSpeed,
@@ -326,8 +341,8 @@ public class GameController {
 		disableButtons(true);
 		this.conf.scr1 = Integer.parseInt(this.labScrPlayer1.getText());
 		this.conf.scr2 = Integer.parseInt(this.labScrPlayer2.getText());
-		System.out.println("SCR1 : " + this.conf.scr1);
-		System.out.println("SCR2 : " + this.conf.scr2);
+		// System.out.println("SCR1 : " + this.conf.scr1);
+		// System.out.println("SCR2 : " + this.conf.scr2);
 		Utilities.sauvegarderConfiguration(conf);
 		SettingsMenu sM = new SettingsMenu(primaryStage, true);
 		disableButtons(false);
