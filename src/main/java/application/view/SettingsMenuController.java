@@ -99,7 +99,7 @@ public class SettingsMenuController {
 		// keyboardButt.setToggleGroup(controlChoice);
 		// mouseButt.setToggleGroup(controlChoice);
 
-		sizeChoice.getItems().addAll("1700 x 1060", "1300 x 1034", "1043 x 778", "800 x 600");
+		sizeChoice.getItems().addAll("1700 x 1060", "1300 x 1034", "1043 x 778", "800 x 600", "600 x 400");
 		sizeChoice.setStyle("-fx-font-size: 18px;");
 
 		this.soundBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -132,6 +132,8 @@ public class SettingsMenuController {
 			sizeChoice.setValue("1043 x 778");
 		} else if (this.conf.gameSize == 4) {
 			sizeChoice.setValue("800 x 600");
+		} else if (this.conf.gameSize == 5) {
+			sizeChoice.setValue("600 x 400");
 		}
 	}
 
@@ -163,7 +165,9 @@ public class SettingsMenuController {
 		} else {
 			this.conf.soundOn = false;
 		}
-		if (sizeChoice.getValue().equals("800 x 600")) {
+		if (sizeChoice.getValue().equals("600 x 400")) {
+			this.conf.gameSize = 5;
+		} else if (sizeChoice.getValue().equals("800 x 600")) {
 			this.conf.gameSize = 4;
 		} else if (sizeChoice.getValue().equals("1043 x 778")) {
 			this.conf.gameSize = 3;

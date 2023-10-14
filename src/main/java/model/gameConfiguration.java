@@ -86,7 +86,6 @@ public class gameConfiguration implements Serializable {
                 this.HEIGHT = 982 / 2;
                 this.midLineY = 882;
                 this.PADDLE_WIDTH = 25;
-                // this.PADDLE_HEIGHT = 160;
                 this.BALL_RADIUS = 25;
                 break;
             case 2:
@@ -94,7 +93,6 @@ public class gameConfiguration implements Serializable {
                 this.HEIGHT = 936 / 2;
                 this.midLineY = 836;
                 this.PADDLE_WIDTH = 25;
-                // this.PADDLE_HEIGHT = 140;
                 this.BALL_RADIUS = 25;
                 break;
             case 3:
@@ -102,7 +100,6 @@ public class gameConfiguration implements Serializable {
                 this.HEIGHT = 700 / 2;
                 this.midLineY = 600;
                 this.PADDLE_WIDTH = 25;
-                // this.PADDLE_HEIGHT = 120;
                 this.BALL_RADIUS = 20;
                 break;
             case 4:
@@ -110,7 +107,13 @@ public class gameConfiguration implements Serializable {
                 this.HEIGHT = 600 / 2;
                 this.midLineY = 500;
                 this.PADDLE_WIDTH = 22;
-                // this.PADDLE_HEIGHT = 100;
+                this.BALL_RADIUS = 18;
+                break;
+            case 5:
+                this.WIDTH = 600 / 2;
+                this.HEIGHT = 400 / 2;
+                this.midLineY = 300;
+                this.PADDLE_WIDTH = 20;
                 this.BALL_RADIUS = 15;
                 break;
             default:

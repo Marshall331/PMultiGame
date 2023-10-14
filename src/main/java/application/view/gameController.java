@@ -95,6 +95,7 @@ public class GameController {
 	}
 
 	private void setItemsSize() {
+
 		double borderWidth = primaryStage.getWidth() - primaryStage.getScene().getWidth() + 1;
 		double titleBarHeight = primaryStage.getHeight() - primaryStage.getScene().getHeight();
 
@@ -103,12 +104,22 @@ public class GameController {
 		this.borderpane.setPrefSize(this.conf.WIDTH * 2, this.conf.HEIGHT * 2 + 78);
 		this.scoreBoard.setPrefSize(this.conf.WIDTH * 2, 78);
 		this.boardGame.setPrefSize(this.conf.WIDTH * 2, this.conf.HEIGHT * 2);
+		this.borderpane.setMinSize(this.conf.WIDTH * 2, this.conf.HEIGHT * 2 + 78);
+		this.scoreBoard.setMinSize(this.conf.WIDTH * 2, 78);
+		this.boardGame.setMinSize(this.conf.WIDTH * 2, this.conf.HEIGHT * 2);
+		this.borderpane.setMaxSize(this.conf.WIDTH * 2, this.conf.HEIGHT * 2 + 78);
+		this.scoreBoard.setMaxSize(this.conf.WIDTH * 2, 78);
+		this.boardGame.setMaxSize(this.conf.WIDTH * 2, this.conf.HEIGHT * 2);
 		this.midLine.setEndY(this.conf.midLineY);
 		this.paddle1.setHeight(this.conf.player1PaddleSize);
 		this.paddle2.setHeight(this.conf.player2PaddleSize);
 		this.paddle1.setWidth(this.conf.PADDLE_WIDTH);
 		this.paddle2.setWidth(this.conf.PADDLE_WIDTH);
 		this.balle.setRadius(this.conf.BALL_RADIUS);
+		this.menuButton.setPrefWidth(250);
+		// this.scoreBoard.setHalignment(this.settingsButton, HPos.CENTER);
+		// this.scoreBoard.setValignment(this.settingsButton, VPos.CENTER);
+		// this.scoreBoard.setMargin(this.settingsButton, new Insets(0, 0, 0, 10));
 		if (this.conf.gameSize == 4) {
 			this.scoreBoard.setHalignment(this.settingsButton, HPos.LEFT);
 			this.scoreBoard.setValignment(this.settingsButton, VPos.CENTER);

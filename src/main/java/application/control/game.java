@@ -1,5 +1,7 @@
 package application.control;
 
+import java.nio.channels.NetworkChannel;
+
 import application.PMultiApp;
 import application.tools.StageManagement;
 import application.view.GameController;
@@ -20,6 +22,7 @@ public class Game {
 
 		try {
 			this.primaryStage = _parentStage;
+			// this.primaryStage = new Stage();
 
 			FXMLLoader loader = new FXMLLoader(
 					GameController.class.getResource("game.fxml"));
@@ -29,7 +32,7 @@ public class Game {
 			Scene scene = new Scene(root, root.getPrefWidth() + 20, root.getPrefHeight() + 10);
 			scene.getStylesheets().add(PMultiApp.class.getResource("application.css").toExternalForm());
 
-			StageManagement.setCenterStageOnStage(primaryStage, scene);
+			// StageManagement.setCenterStageOnStage(primaryStage, scene);
 
 			GameController dbmfcViewController = loader.getController();
 			dbmfcViewController.initContext(primaryStage, scene);
@@ -44,9 +47,5 @@ public class Game {
 			e.printStackTrace();
 			System.exit(-1);
 		}
-	}
-
-	public void setWindowSize(int _size) {
-
 	}
 }
