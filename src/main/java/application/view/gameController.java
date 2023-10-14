@@ -4,12 +4,13 @@ import application.control.Game;
 import application.control.MainMenu;
 import application.control.SettingsMenu;
 import application.tools.AlertUtilities;
-import application.tools.Utilities;
+import application.tools.Animations;
+import application.tools.ConfigurationSave;
+import application.tools.StageManagement;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
@@ -85,7 +86,7 @@ public class GameController {
 	public void initContext(Stage _containingStage, Scene _scene) {
 		this.primaryStage = _containingStage;
 		this.scene = _scene;
-		this.conf = Utilities.chargerConfiguration();
+		this.conf = ConfigurationSave.chargerConfiguration();
 
 		setItemsSize();
 		initValues();
@@ -103,8 +104,10 @@ public class GameController {
 		this.scoreBoard.setPrefSize(this.conf.WIDTH * 2, 78);
 		this.boardGame.setPrefSize(this.conf.WIDTH * 2, this.conf.HEIGHT * 2);
 		this.midLine.setEndY(this.conf.midLineY);
-		this.paddle1.setHeight(this.conf.PADDLE_HEIGHT);
-		this.paddle2.setHeight(this.conf.PADDLE_HEIGHT);
+		this.paddle1.setHeight(this.conf.player1PaddleSize);
+		this.paddle2.setHeight(this.conf.player2PaddleSize);
+		this.paddle1.setWidth(this.conf.PADDLE_WIDTH);
+		this.paddle2.setWidth(this.conf.PADDLE_WIDTH);
 		this.balle.setRadius(this.conf.BALL_RADIUS);
 		if (this.conf.gameSize == 4) {
 			this.scoreBoard.setHalignment(this.settingsButton, HPos.LEFT);
@@ -115,15 +118,15 @@ public class GameController {
 
 	private void initValues() {
 		this.player1 = new player(1, paddle1, this.conf.player1isComputer, this.conf.player1MaxSpeed,
-				this.conf.player1isSpeedLimited, this.conf.player1MouseControl);
+				this.conf.player1MouseControl);
 		this.player2 = new player(2, paddle2, this.conf.player2isComputer, this.conf.player2MaxSpeed,
-				this.conf.player2isSpeedLimited, this.conf.player2MouseControl);
+				this.conf.player2MouseControl);
 	}
 
 	private void initViewItems() {
 		this.primaryStage.setOnCloseRequest(e -> this.closeWindow(e));
 
-		Utilities.setAnimatedIcon(settingsButton);
+		Animations.setAnimatedIcon(settingsButton);
 	}
 
 	private void createGame() {
@@ -243,14 +246,14 @@ public class GameController {
 		// }
 	}
 
-	private void setMouseControl(player _Player) {
+	private void setMouseControl(player _player) {
 		boardGame.setOnMouseEntered(event -> {
 			boardGame.setCursor(Cursor.NONE);
 		});
 		boardGame.setOnMouseMoved(event -> {
 			double desiredRacketY = event.getY() - game.HEIGHT;
-			double maxY = game.paddleMaxY;
-			double minY = game.paddleMinY;
+			double maxY = _player.paddleMaxY;
+			double minY = _player.paddleMinY;
 			System.out.println("X : " + event.getX() + "Y : " + event.getY());
 			if (desiredRacketY <= minY) {
 				desiredRacketY = minY;
@@ -258,7 +261,7 @@ public class GameController {
 				desiredRacketY = maxY;
 			}
 
-			_Player.mouseMove = desiredRacketY;
+			_player.mouseMove = desiredRacketY;
 		});
 		boardGame.setOnMouseExited(event -> {
 			boardGame.setCursor(Cursor.DEFAULT);
@@ -338,25 +341,20 @@ public class GameController {
 	@FXML
 	private void doSettings() {
 		game.stop();
-		disableButtons(true);
+		StageManagement.disableItems(this.primaryStage.getScene(), true);
 		this.conf.scr1 = Integer.parseInt(this.labScrPlayer1.getText());
 		this.conf.scr2 = Integer.parseInt(this.labScrPlayer2.getText());
 		// System.out.println("SCR1 : " + this.conf.scr1);
 		// System.out.println("SCR2 : " + this.conf.scr2);
-		Utilities.sauvegarderConfiguration(conf);
+		ConfigurationSave.sauvegarderConfiguration(conf);
 		SettingsMenu sM = new SettingsMenu(primaryStage, true);
-		disableButtons(false);
+		StageManagement.disableItems(this.primaryStage.getScene(), true);
 		updateGameSettings();
 	}
 
 	private void updateGameSettings() {
-		this.conf = Utilities.chargerConfiguration();
+		this.conf = ConfigurationSave.chargerConfiguration();
 		Game g = new Game(this.primaryStage);
-	}
-
-	private void disableButtons(boolean _disable) {
-		menuButton.setDisable(_disable);
-		settingsButton.setDisable(_disable);
 	}
 
 	/*
@@ -366,12 +364,10 @@ public class GameController {
 	 *
 	 */
 	private void closeWindow(WindowEvent _e) {
-		game.stop();
 		if (AlertUtilities.confirmYesCancel(this.primaryStage, "Quitter l'application",
 				"Etes vous sur de vouloir quitter le jeu ?", null, AlertType.CONFIRMATION)) {
 			this.primaryStage.close();
 		}
 		_e.consume();
-		game.start();
 	}
 }

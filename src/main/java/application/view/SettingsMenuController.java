@@ -3,11 +3,15 @@ package application.view;
 import application.control.MainMenu;
 import application.control.PlayerSettings;
 import application.tools.AlertUtilities;
-import application.tools.Utilities;
+import application.tools.Animations;
+import application.tools.ConfigurationSave;
+import application.tools.StageManagement;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -43,7 +47,7 @@ public class SettingsMenuController {
 
 		// this.conf = new gameConfiguration();
 		// Utilities.sauvegarderConfiguration(conf);
-		this.conf = Utilities.chargerConfiguration();
+		this.conf = ConfigurationSave.chargerConfiguration();
 
 		itemsConfigure();
 
@@ -83,8 +87,8 @@ public class SettingsMenuController {
 	private CheckBox soundBox;
 
 	private void itemsConfigure() {
-		Utilities.setAnimatedIcon(buttPlayer1);
-		Utilities.setAnimatedIcon(buttPlayer2);
+		Animations.setAnimatedIcon(buttPlayer1);
+		Animations.setAnimatedIcon(buttPlayer2);
 		DoubleProperty sliderValueProperty = new SimpleDoubleProperty(0.0);
 		labBallSpeed.textProperty().bind(sliderValueProperty.asString("%.1f"));
 		sliderValueProperty.bind(ballSpeed.valueProperty());
@@ -133,18 +137,18 @@ public class SettingsMenuController {
 
 	@FXML
 	private void doSettingsPlayer1() {
-		this.buttPlayer1.setDisable(true);
+		StageManagement.disableItems(this.primaryStage.getScene(), true);
 		PlayerSettings ps = new PlayerSettings(this.primaryStage, 1);
-		this.buttPlayer1.setDisable(false);
-		this.conf = Utilities.chargerConfiguration();
+		StageManagement.disableItems(this.primaryStage.getScene(), false);
+		this.conf = ConfigurationSave.chargerConfiguration();
 	}
 
 	@FXML
 	private void doSettingsPlayer2() {
-		this.buttPlayer2.setDisable(true);
+		StageManagement.disableItems(this.primaryStage.getScene(), true);
 		PlayerSettings ps = new PlayerSettings(this.primaryStage, 2);
-		this.buttPlayer2.setDisable(false);
-		this.conf = Utilities.chargerConfiguration();
+		StageManagement.disableItems(this.primaryStage.getScene(), false);
+		this.conf = ConfigurationSave.chargerConfiguration();
 	}
 
 	@FXML
@@ -169,7 +173,7 @@ public class SettingsMenuController {
 			this.conf.gameSize = 1;
 		}
 		this.conf.setSizeValues();
-		Utilities.sauvegarderConfiguration(this.conf);
+		ConfigurationSave.sauvegarderConfiguration(this.conf);
 		this.doRetour();
 	}
 
@@ -192,7 +196,7 @@ public class SettingsMenuController {
 				"Voulez vous vraiment réinitialiser les paramètres du jeu ?",
 				null, AlertType.CONFIRMATION)) {
 			this.conf = new gameConfiguration();
-			Utilities.sauvegarderConfiguration(conf);
+			ConfigurationSave.sauvegarderConfiguration(conf);
 			this.setItemsByConf();
 		}
 	}

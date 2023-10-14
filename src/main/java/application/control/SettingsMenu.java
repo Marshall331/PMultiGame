@@ -1,7 +1,8 @@
 package application.control;
 
 import application.PMultiApp;
-import application.tools.Utilities;
+import application.tools.StageManagement;
+import application.tools.ConfigurationSave;
 import application.view.MultiplayerMenuController;
 import application.view.SettingsMenuController;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +22,13 @@ public class SettingsMenu {
 
 		try {
 
+			if (!inGame) {
+				this.primaryStage = _parentStage;
+			} else {
+				this.primaryStage = new Stage();
+				// StageManagement.manageCenteringStage(_parentStage, primaryStage);
+			}
+
 			// Chargement du source fxml
 			FXMLLoader loader = new FXMLLoader(
 					SettingsMenuController.class.getResource("SettingsMenu.fxml"));
@@ -30,16 +38,13 @@ public class SettingsMenu {
 			Scene scene = new Scene(root, root.getPrefWidth() + 20, root.getPrefHeight() + 10);
 			scene.getStylesheets().add(PMultiApp.class.getResource("application.css").toExternalForm());
 
-			if (!inGame) {
-				this.primaryStage = _parentStage;
-			} else {
-				this.primaryStage = new Stage();
-				Utilities.setCenterStage(primaryStage, scene);
-			}
 			// Removing all keyEvents
-			Utilities.removeKeysEvents(scene);
+			StageManagement.removeKeysEvents(scene);
 
 			primaryStage.setScene(scene);
+			if (inGame) {
+				StageManagement.setCenterStageOnScreen(primaryStage, scene);
+			}
 			primaryStage.setTitle("Game settings");
 			primaryStage.setResizable(false);
 

@@ -1,7 +1,8 @@
 package application.control;
 
 import application.PMultiApp;
-import application.tools.Utilities;
+import application.tools.ConfigurationSave;
+import application.tools.StageManagement;
 import application.view.MultiplayerMenuController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -29,7 +30,7 @@ public class MultiplayerMenu {
 			Scene scene = new Scene(root, root.getPrefWidth() + 20, root.getPrefHeight() + 10);
 			scene.getStylesheets().add(PMultiApp.class.getResource("application.css").toExternalForm());
 
-			Utilities.removeKeysEvents(scene);
+			StageManagement.removeKeysEvents(scene);
 
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Multiplayer Game");

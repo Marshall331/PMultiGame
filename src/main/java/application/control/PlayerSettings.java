@@ -1,7 +1,8 @@
 package application.control;
 
 import application.PMultiApp;
-import application.tools.Utilities;
+import application.tools.StageManagement;
+import application.tools.ConfigurationSave;
 import application.view.PlayerSettingsController;
 import application.view.SettingsMenuController;
 import javafx.fxml.FXMLLoader;
@@ -30,13 +31,15 @@ public class PlayerSettings {
             scene.getStylesheets().add(PMultiApp.class.getResource("application.css").toExternalForm());
 
             this.primaryStage = new Stage();
+            
+            StageManagement.manageCenteringStage(_parentStage, primaryStage);
 
             // Removing all keyEvents
-            Utilities.removeKeysEvents(scene);
+            StageManagement.removeKeysEvents(scene);
 
             primaryStage.setScene(scene);
             primaryStage.setTitle("Player settings");
-            primaryStage.setResizable(true);
+            primaryStage.setResizable(false);
 
             PlayerSettingsController dbmfcViewController = loader.getController();
             dbmfcViewController.initContext(primaryStage, _player);

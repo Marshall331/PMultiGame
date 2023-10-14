@@ -1,13 +1,12 @@
 package application.control;
 
 import application.PMultiApp;
-import application.tools.Utilities;
+import application.tools.StageManagement;
 import application.view.GameController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.gameConfiguration;
 
 /**
  * Classe de controleur de Dialogue de la scène du jeu.
@@ -30,7 +29,7 @@ public class Game {
 			Scene scene = new Scene(root, root.getPrefWidth() + 20, root.getPrefHeight() + 10);
 			scene.getStylesheets().add(PMultiApp.class.getResource("application.css").toExternalForm());
 
-			Utilities.setCenterStage(primaryStage, scene);
+			StageManagement.setCenterStageOnStage(primaryStage, scene);
 
 			GameController dbmfcViewController = loader.getController();
 			dbmfcViewController.initContext(primaryStage, scene);

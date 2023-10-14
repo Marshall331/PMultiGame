@@ -1,7 +1,8 @@
 package application.control;
 
 import application.PMultiApp;
-import application.tools.Utilities;
+import application.tools.ConfigurationSave;
+import application.tools.StageManagement;
 import application.view.DifficultyMenuController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -33,7 +34,7 @@ public class DifficultyMenu {
 	        scene.getStylesheets().add(PMultiApp.class.getResource("application.css").toExternalForm());
 
 			// Removing all keyEvents
-			Utilities.removeKeysEvents(scene);
+			StageManagement.removeKeysEvents(scene);
 
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Configuration de la partie");
