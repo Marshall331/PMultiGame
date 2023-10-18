@@ -116,11 +116,11 @@ public class GameController {
 		this.paddle1.setWidth(this.conf.PADDLE_WIDTH);
 		this.paddle2.setWidth(this.conf.PADDLE_WIDTH);
 		this.balle.setRadius(this.conf.BALL_RADIUS);
-		this.menuButton.setPrefWidth(250);
+		this.menuButton.setPrefWidth(150);
 		// this.scoreBoard.setHalignment(this.settingsButton, HPos.CENTER);
 		// this.scoreBoard.setValignment(this.settingsButton, VPos.CENTER);
 		// this.scoreBoard.setMargin(this.settingsButton, new Insets(0, 0, 0, 10));
-		if (this.conf.gameSize == 4) {
+		if (this.conf.gameSize == 4 || this.conf.gameSize == 5) {
 			this.scoreBoard.setHalignment(this.settingsButton, HPos.LEFT);
 			this.scoreBoard.setValignment(this.settingsButton, VPos.CENTER);
 			this.scoreBoard.setMargin(this.settingsButton, new Insets(0, 0, 0, 10));

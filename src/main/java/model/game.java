@@ -154,13 +154,14 @@ public final class game extends AnimationTimer {
 
     private void setRandomDirection() {
         mag = Constants.MAG;
-        this.dX = 0;
-        this.dY = 0;
+        this.dX = 2;
+        this.dY = 2;
 
-        double randomAngle = rand.nextDouble() * Math.PI * 2; // Entre 0 et 2*pi
-        // radians
-        dX = mag * Math.sin(randomAngle);
-        dY = mag * Math.sin(randomAngle);
+        // double randomAngle = rand.nextDouble() * Math.PI * 2; // Entre 0 et 2*pi
+        // // radians
+        // dX += mag * Math.sin(randomAngle) + 1;
+        // dY += mag * Math.sin(randomAngle) + 1;
+
     }
 
     private void checkPaddleCollision() {

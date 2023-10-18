@@ -73,6 +73,8 @@ public class SettingsMenuController {
 	private Slider ballSpeed;
 	@FXML
 	private Label labBallSpeed;
+	@FXML
+	private Label labSound;
 
 	// @FXML
 	// private RadioButton keyboardButt;
@@ -104,9 +106,9 @@ public class SettingsMenuController {
 
 		this.soundBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
 			if (newValue) {
-				soundBox.setText("Activé");
+				labSound.setText("Activé");
 			} else {
-				soundBox.setText("Désactivé");
+				labSound.setText("Désactivé");
 			}
 		});
 	}
@@ -119,10 +121,10 @@ public class SettingsMenuController {
 		}
 		if (this.conf.soundOn) {
 			soundBox.setSelected(true);
-			soundBox.setText("Activé");
+			labSound.setText("Activé");
 		} else {
 			soundBox.setSelected(false);
-			soundBox.setText("Désactivé");
+			labSound.setText("Désactivé");
 		}
 		if (this.conf.gameSize == 1) {
 			sizeChoice.setValue("1700 x 1060");

@@ -27,12 +27,12 @@ public class Game {
 			FXMLLoader loader = new FXMLLoader(
 					GameController.class.getResource("game.fxml"));
 			BorderPane root = loader.load();
-
+			
 			// Paramétrage du Stage : feuille de style, titre
 			Scene scene = new Scene(root, root.getPrefWidth() + 20, root.getPrefHeight() + 10);
 			scene.getStylesheets().add(PMultiApp.class.getResource("application.css").toExternalForm());
 
-			// StageManagement.setCenterStageOnStage(primaryStage, scene);
+			StageManagement.setCenterStageOnStage(primaryStage, scene);
 
 			GameController dbmfcViewController = loader.getController();
 			dbmfcViewController.initContext(primaryStage, scene);
