@@ -32,6 +32,12 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -44,9 +50,9 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.DifficultyMenuController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.DifficultyMenuController">
    <top>
-      <Label alignment="CENTER" prefHeight="110.0" prefWidth="800.0" text="PONG GAME" BorderPane.alignment="CENTER">
+      <Label alignment="CENTER" prefHeight="110.0" prefWidth="800.0" text="Solo" BorderPane.alignment="CENTER">
          <font>
             <Font name="DejaVu Sans Bold" size="70.0" />
          </font>
@@ -55,12 +61,12 @@
                <stops>
                   <Stop>
                      <color>
-                        <Color red="0.02250000089406967" green="0.050214286893606186" blue="0.75" />
+                        <Color blue="0.75" green="0.050214286893606186" red="0.02250000089406967" />
                      </color>
                   </Stop>
                   <Stop offset="1.0">
                      <color>
-                        <Color red="0.75" green="0.13335713744163513" blue="0.02250000089406967" />
+                        <Color blue="0.02250000089406967" green="0.13335713744163513" red="0.75" />
                      </color>
                   </Stop>
                </stops>
@@ -92,12 +98,12 @@
                      <stops>
                         <Stop>
                            <color>
-                              <Color red="0.02250000089406967" green="0.050214286893606186" blue="0.75" />
+                              <Color blue="0.75" green="0.050214286893606186" red="0.02250000089406967" />
                            </color>
                         </Stop>
                         <Stop offset="1.0">
                            <color>
-                              <Color red="0.8899999856948853" green="0.035599999129772186" blue="0.247165709733963" />
+                              <Color blue="0.247165709733963" green="0.035599999129772186" red="0.8899999856948853" />
                            </color>
                         </Stop>
                      </stops>
@@ -116,12 +122,12 @@
                      <stops>
                         <Stop>
                            <color>
-                              <Color red="0.02250000089406967" green="0.050214286893606186" blue="0.75" />
+                              <Color blue="0.75" green="0.050214286893606186" red="0.02250000089406967" />
                            </color>
                         </Stop>
                         <Stop offset="1.0">
                            <color>
-                              <Color red="0.8899999856948853" green="0.035599999129772186" blue="0.247165709733963" />
+                              <Color blue="0.247165709733963" green="0.035599999129772186" red="0.8899999856948853" />
                            </color>
                         </Stop>
                      </stops>
@@ -137,12 +143,12 @@
                      <stops>
                         <Stop>
                            <color>
-                              <Color red="0.02250000089406967" green="0.050214286893606186" blue="0.75" />
+                              <Color blue="0.75" green="0.050214286893606186" red="0.02250000089406967" />
                            </color>
                         </Stop>
                         <Stop offset="1.0">
                            <color>
-                              <Color red="0.8899999856948853" green="0.035599999129772186" blue="0.247165709733963" />
+                              <Color blue="0.247165709733963" green="0.035599999129772186" red="0.8899999856948853" />
                            </color>
                         </Stop>
                      </stops>
@@ -158,12 +164,12 @@
                      <stops>
                         <Stop>
                            <color>
-                              <Color red="0.02250000089406967" green="0.050214286893606186" blue="0.75" />
+                              <Color blue="0.75" green="0.050214286893606186" red="0.02250000089406967" />
                            </color>
                         </Stop>
                         <Stop offset="1.0">
                            <color>
-                              <Color red="0.7599999904632568" green="0.07599999755620956" blue="0.07599999755620956" />
+                              <Color blue="0.07599999755620956" green="0.07599999755620956" red="0.7599999904632568" />
                            </color>
                         </Stop>
                      </stops>

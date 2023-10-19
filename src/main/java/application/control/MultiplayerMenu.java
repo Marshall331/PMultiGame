@@ -33,7 +33,7 @@ public class MultiplayerMenu {
 			StageManagement.removeKeysEvents(scene);
 
 			primaryStage.setScene(scene);
-			primaryStage.setTitle("Multiplayer Game");
+			primaryStage.setTitle("Multi-Joueurs");
 			primaryStage.setResizable(false);
 
 			MultiplayerMenuController mmc = loader.getController();

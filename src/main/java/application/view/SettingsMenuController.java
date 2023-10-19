@@ -10,6 +10,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.ImageView;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -66,13 +67,15 @@ public class SettingsMenuController {
 	}
 
 	@FXML
-	private Button buttPlayer1;
+	private ImageView buttPlayer1;
 	@FXML
-	private Button buttPlayer2;
+	private ImageView buttPlayer2;
 	@FXML
-	private Slider ballSpeed;
-	@FXML
-	private Label labBallSpeed;
+	private ImageView buttBallSettings;
+	// @FXML
+	// private Slider ballSpeed;
+	// @FXML
+	// private Label labBallSpeed;
 	@FXML
 	private Label labSound;
 
@@ -91,9 +94,10 @@ public class SettingsMenuController {
 	private void itemsConfigure() {
 		Animations.setAnimatedIcon(buttPlayer1);
 		Animations.setAnimatedIcon(buttPlayer2);
-		DoubleProperty sliderValueProperty = new SimpleDoubleProperty(0.0);
-		labBallSpeed.textProperty().bind(sliderValueProperty.asString("%.1f"));
-		sliderValueProperty.bind(ballSpeed.valueProperty());
+		Animations.setAnimatedIcon(buttBallSettings);
+		// DoubleProperty sliderValueProperty = new SimpleDoubleProperty(0.0);
+		// labBallSpeed.textProperty().bind(sliderValueProperty.asString("%.1f"));
+		// sliderValueProperty.bind(ballSpeed.valueProperty());
 
 		this.oldGameSize = this.conf.gameSize;
 

@@ -45,7 +45,7 @@ public class SettingsMenu {
 			if (inGame) {
 				StageManagement.setCenterStageOnScreen(primaryStage, scene);
 			}
-			primaryStage.setTitle("Game settings");
+			primaryStage.setTitle("Paramètres");
 			primaryStage.setResizable(false);
 
 			SettingsMenuController dbmfcViewController = loader.getController();

@@ -37,7 +37,7 @@ public class DifficultyMenu {
 			StageManagement.removeKeysEvents(scene);
 
 			primaryStage.setScene(scene);
-			primaryStage.setTitle("Configuration de la partie");
+			primaryStage.setTitle("Mode Solo");
 			primaryStage.setResizable(false);
 			
 			DifficultyMenuController dmc = loader.getController();

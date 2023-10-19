@@ -137,7 +137,7 @@ public class GameController {
 	private void initViewItems() {
 		this.primaryStage.setOnCloseRequest(e -> this.closeWindow(e));
 
-		Animations.setAnimatedIcon(settingsButton);
+		// Animations.setAnimatedIcon(settingsButton, "SettingsIcon.png");
 	}
 
 	private void createGame() {
