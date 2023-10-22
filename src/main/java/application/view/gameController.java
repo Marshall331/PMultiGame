@@ -67,6 +67,7 @@ public class GameController {
 	private Button settingsButton;
 
 	private gameConfiguration conf;
+	private SettingsMenu settingsMenu;
 
 	private player player1;
 	private player player2;
@@ -89,7 +90,7 @@ public class GameController {
 		this.conf = ConfigurationSave.chargerConfiguration();
 
 		setItemsSize();
-		initValues();
+		setupPlayers();
 		initViewItems();
 		createGame();
 	}
@@ -117,27 +118,24 @@ public class GameController {
 		this.paddle2.setWidth(this.conf.PADDLE_WIDTH);
 		this.balle.setRadius(this.conf.BALL_RADIUS);
 		this.menuButton.setPrefWidth(150);
-		// this.scoreBoard.setHalignment(this.settingsButton, HPos.CENTER);
-		// this.scoreBoard.setValignment(this.settingsButton, VPos.CENTER);
-		// this.scoreBoard.setMargin(this.settingsButton, new Insets(0, 0, 0, 10));
 		if (this.conf.gameSize == 4 || this.conf.gameSize == 5) {
-			this.scoreBoard.setHalignment(this.settingsButton, HPos.LEFT);
-			this.scoreBoard.setValignment(this.settingsButton, VPos.CENTER);
-			this.scoreBoard.setMargin(this.settingsButton, new Insets(0, 0, 0, 10));
+			GridPane.setHalignment(this.settingsButton, HPos.LEFT);
+			GridPane.setValignment(this.settingsButton, VPos.CENTER);
+			GridPane.setMargin(this.settingsButton, new Insets(0, 0, 0, 10));
 		}
 	}
 
-	private void initValues() {
-		this.player1 = new player(1, paddle1, this.conf.player1isComputer, this.conf.player1MaxSpeed,
-				this.conf.player1MouseControl);
-		this.player2 = new player(2, paddle2, this.conf.player2isComputer, this.conf.player2MaxSpeed,
-				this.conf.player2MouseControl);
+	private void setupPlayers() {
+		this.player1 = new player(1, paddle1, this.conf.isPlayer1Computer, this.conf.player1MaxSpeed,
+				this.conf.isPlayer1MouseControl);
+		this.player2 = new player(2, paddle2, this.conf.isPlayer2Computer, this.conf.player2MaxSpeed,
+				this.conf.isPlayer2MouseControl);
 	}
 
 	private void initViewItems() {
 		this.primaryStage.setOnCloseRequest(e -> this.closeWindow(e));
 
-		// Animations.setAnimatedIcon(settingsButton, "SettingsIcon.png");
+		Animations.setAnimatedIcon(settingsButton, 1.15, "grey");
 	}
 
 	private void createGame() {
@@ -153,15 +151,15 @@ public class GameController {
 	}
 
 	private void setControls(boolean _isMouseControl, boolean _isSoloGame) {
-		if (!this.conf.player1isComputer) {
-			if (this.conf.player1MouseControl) {
+		if (!this.conf.isPlayer1Computer) {
+			if (this.conf.isPlayer1MouseControl) {
 				this.setMouseControl(player1);
 			} else {
 				this.setKeyboardControl(player1);
 			}
 		}
-		if (!this.conf.player2isComputer) {
-			if (this.conf.player2MouseControl) {
+		if (!this.conf.isPlayer2Computer) {
+			if (this.conf.isPlayer2MouseControl) {
 				this.setMouseControl(player2);
 			} else {
 				this.setKeyboardControl(player2);
@@ -342,8 +340,11 @@ public class GameController {
 	 */
 	@FXML
 	private void doMenu() {
-		this.primaryStage.close();
 		game.stop();
+		if (this.settingsMenu != null) {
+			this.settingsMenu.closeMenu();
+		}
+		this.primaryStage.close();
 		MainMenu mM = new MainMenu();
 		mM.inGame = true;
 		mM.start(primaryStage);
@@ -355,30 +356,39 @@ public class GameController {
 		StageManagement.disableItems(this.primaryStage.getScene(), true);
 		this.conf.scr1 = Integer.parseInt(this.labScrPlayer1.getText());
 		this.conf.scr2 = Integer.parseInt(this.labScrPlayer2.getText());
-		// System.out.println("SCR1 : " + this.conf.scr1);
-		// System.out.println("SCR2 : " + this.conf.scr2);
 		ConfigurationSave.sauvegarderConfiguration(conf);
-		SettingsMenu sM = new SettingsMenu(primaryStage, true);
-		StageManagement.disableItems(this.primaryStage.getScene(), true);
+		this.settingsMenu = new SettingsMenu(primaryStage, true);
+		this.settingsMenu.startMenu();
 		updateGameSettings();
 	}
 
 	private void updateGameSettings() {
 		this.conf = ConfigurationSave.chargerConfiguration();
-		Game g = new Game(this.primaryStage);
+		System.out.println(this.conf.isConfHasChanged);
+		if (this.conf.isConfHasChanged) {
+			Game g = new Game(this.primaryStage);
+		} else {
+			StageManagement.disableItems(this.primaryStage.getScene(), false);
+			this.game.start();
+		}
 	}
 
 	/*
 	 * Méthode de fermeture de la fenêtre par la croix.
 	 *
-	 * @param e Evénement associé (inutilisé pour le moment)
+	 * @param e Evénement associé
 	 *
 	 */
 	private void closeWindow(WindowEvent _e) {
+		this.game.stop();
 		if (AlertUtilities.confirmYesCancel(this.primaryStage, "Quitter l'application",
 				"Etes vous sur de vouloir quitter le jeu ?", null, AlertType.CONFIRMATION)) {
+			if (this.settingsMenu != null) {
+				this.settingsMenu.closeMenu();
+			}
 			this.primaryStage.close();
 		}
+		this.game.start();
 		_e.consume();
 	}
 }

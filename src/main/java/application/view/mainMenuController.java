@@ -1,6 +1,9 @@
 package application.view;
 
+import application.control.DifficultyMenu;
 import application.control.MainMenu;
+import application.control.MultiplayerMenu;
+import application.control.SettingsMenu;
 import application.tools.AlertUtilities;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -11,20 +14,17 @@ import javafx.stage.WindowEvent;
  * Controller JavaFX de la vue du menu principale.
  */
 public class MainMenuController {
-	
-	private MainMenu mM;
-	
+
 	// Fenêtre physique ou est la scène contenant le fichier xml contrôlé par this
 	private Stage primaryStage;
 
 	/**
 	 * Initialisation du contrôleur de vue DailyBankMainFrameController.
 	 *
-     *@param _containingStage Stage qui contient la fenêtre précédente.
+	 * @param _containingStage Stage qui contient la fenêtre précédente.
 	 */
 	public void initContext(Stage _containingStage, MainMenu mM) {
 		this.primaryStage = _containingStage;
-		this.mM = mM;
 		this.primaryStage.setOnCloseRequest(e -> this.closeWindow(e));
 	}
 
@@ -37,19 +37,20 @@ public class MainMenuController {
 
 	@FXML
 	private void doSolo() {
-		this.mM.menuSolo();
+		DifficultyMenu dM = new DifficultyMenu(primaryStage);
 	}
-	
+
 	@FXML
 	private void doMulti() {
-		this.mM.menuMulti();
+		MultiplayerMenu mM = new MultiplayerMenu(primaryStage);
 	}
-	
+
 	@FXML
 	private void doSettings() {
-		this.mM.menuSettings();
+		SettingsMenu sS = new SettingsMenu(primaryStage, false);
+		sS.startMenu();
 	}
-	
+
 	/*
 	 * Action menu quitter. Demander une confirmation puis fermer la fenêtre (donc
 	 * l'application car fenêtre principale).
@@ -58,7 +59,7 @@ public class MainMenuController {
 	private void doQuit() {
 		this.primaryStage.close();
 	}
-	
+
 	/*
 	 * Méthode de fermeture de la fenêtre par la croix.
 	 *

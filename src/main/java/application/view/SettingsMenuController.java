@@ -6,18 +6,12 @@ import application.tools.AlertUtilities;
 import application.tools.Animations;
 import application.tools.ConfigurationSave;
 import application.tools.StageManagement;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.ImageView;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
 import javafx.stage.Stage;
 import model.gameConfiguration;
 
@@ -34,7 +28,11 @@ public class SettingsMenuController {
 	public gameConfiguration conf;
 
 	public boolean inGame;
+
 	public int oldGameSize;
+	public boolean oldSoundSetting;
+
+	public PlayerSettings playerSettings;
 
 	/**
 	 * Initialisation du contrôleur de vue DailyBankMainFrameController.
@@ -44,11 +42,15 @@ public class SettingsMenuController {
 	public void initContext(Stage _parentStage, Stage _containingStage, boolean _inGame) {
 		this.parentStage = _parentStage;
 		this.primaryStage = _containingStage;
+		this.primaryStage.setOnCloseRequest(e -> this.doRetour());
+		
 		this.inGame = _inGame;
 
-		// this.conf = new gameConfiguration();
-		// Utilities.sauvegarderConfiguration(conf);
 		this.conf = ConfigurationSave.chargerConfiguration();
+		this.conf.isConfHasChanged = false;
+		ConfigurationSave.sauvegarderConfiguration(conf);
+		this.oldGameSize = conf.gameSize;
+		this.oldSoundSetting = conf.isSoundOn;
 
 		itemsConfigure();
 
@@ -67,11 +69,11 @@ public class SettingsMenuController {
 	}
 
 	@FXML
-	private ImageView buttPlayer1;
+	private Button buttPlayer1;
 	@FXML
-	private ImageView buttPlayer2;
+	private Button buttPlayer2;
 	@FXML
-	private ImageView buttBallSettings;
+	private Button buttBallSettings;
 	// @FXML
 	// private Slider ballSpeed;
 	// @FXML
@@ -92,18 +94,12 @@ public class SettingsMenuController {
 	private CheckBox soundBox;
 
 	private void itemsConfigure() {
-		Animations.setAnimatedIcon(buttPlayer1);
-		Animations.setAnimatedIcon(buttPlayer2);
-		Animations.setAnimatedIcon(buttBallSettings);
+		Animations.setAnimatedIcon(buttPlayer1, 1.2, "black");
+		Animations.setAnimatedIcon(buttPlayer2, 1.2, "black");
+		Animations.setAnimatedIcon(buttBallSettings, 1.2, "black");
 		// DoubleProperty sliderValueProperty = new SimpleDoubleProperty(0.0);
 		// labBallSpeed.textProperty().bind(sliderValueProperty.asString("%.1f"));
 		// sliderValueProperty.bind(ballSpeed.valueProperty());
-
-		this.oldGameSize = this.conf.gameSize;
-
-		// ToggleGroup controlChoice = new ToggleGroup();
-		// keyboardButt.setToggleGroup(controlChoice);
-		// mouseButt.setToggleGroup(controlChoice);
 
 		sizeChoice.getItems().addAll("1700 x 1060", "1300 x 1034", "1043 x 778", "800 x 600", "600 x 400");
 		sizeChoice.setStyle("-fx-font-size: 18px;");
@@ -118,12 +114,7 @@ public class SettingsMenuController {
 	}
 
 	private void setItemsByConf() {
-		if (this.conf.player1MouseControl) {
-			// mouseButt.setSelected(true);
-		} else {
-			// keyboardButt.setSelected(true);
-		}
-		if (this.conf.soundOn) {
+		if (this.conf.isSoundOn) {
 			soundBox.setSelected(true);
 			labSound.setText("Activé");
 		} else {
@@ -146,7 +137,8 @@ public class SettingsMenuController {
 	@FXML
 	private void doSettingsPlayer1() {
 		StageManagement.disableItems(this.primaryStage.getScene(), true);
-		PlayerSettings ps = new PlayerSettings(this.primaryStage, 1);
+		playerSettings = new PlayerSettings(this.primaryStage, 1);
+		playerSettings.startMenu();
 		StageManagement.disableItems(this.primaryStage.getScene(), false);
 		this.conf = ConfigurationSave.chargerConfiguration();
 	}
@@ -154,22 +146,18 @@ public class SettingsMenuController {
 	@FXML
 	private void doSettingsPlayer2() {
 		StageManagement.disableItems(this.primaryStage.getScene(), true);
-		PlayerSettings ps = new PlayerSettings(this.primaryStage, 2);
+		playerSettings = new PlayerSettings(this.primaryStage, 2);
+		playerSettings.startMenu();
 		StageManagement.disableItems(this.primaryStage.getScene(), false);
 		this.conf = ConfigurationSave.chargerConfiguration();
 	}
 
 	@FXML
 	private void doValider() {
-		// if (keyboardButt.isSelected()) {
-		// this.conf.player1MouseControl = false;
-		// } else if (mouseButt.isSelected()) {
-		// this.conf.player1MouseControl = true;
-		// }
 		if (soundBox.isSelected()) {
-			this.conf.soundOn = true;
+			this.conf.isSoundOn = true;
 		} else {
-			this.conf.soundOn = false;
+			this.conf.isSoundOn = false;
 		}
 		if (sizeChoice.getValue().equals("600 x 400")) {
 			this.conf.gameSize = 5;
@@ -183,8 +171,18 @@ public class SettingsMenuController {
 			this.conf.gameSize = 1;
 		}
 		this.conf.setSizeValues();
+		this.checkSettingsChanged();
 		ConfigurationSave.sauvegarderConfiguration(this.conf);
+		// this.conf = ConfigurationSave.chargerConfiguration();
+		System.out.println("OLD  = " + this.oldGameSize + " NEW = " + this.conf.gameSize);
+		System.out.println(this.conf.isConfHasChanged);
 		this.doRetour();
+	}
+
+	private void checkSettingsChanged() {
+		if (this.oldSoundSetting != this.conf.isSoundOn || this.oldGameSize != this.conf.gameSize) {
+			this.conf.isConfHasChanged = true;
+		}
 	}
 
 	/*
@@ -192,7 +190,11 @@ public class SettingsMenuController {
 	 */
 	@FXML
 	private void doRetour() {
+		if (this.playerSettings != null) {
+			this.playerSettings.closeMenu();
+		}
 		if (this.inGame) {
+			ConfigurationSave.sauvegarderConfiguration(this.conf);
 			this.primaryStage.close();
 		} else {
 			MainMenu mM = new MainMenu();
@@ -206,7 +208,6 @@ public class SettingsMenuController {
 				"Voulez vous vraiment réinitialiser les paramètres du jeu ?",
 				null, AlertType.CONFIRMATION)) {
 			this.conf = new gameConfiguration();
-			ConfigurationSave.sauvegarderConfiguration(conf);
 			this.setItemsByConf();
 		}
 	}

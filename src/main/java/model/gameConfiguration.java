@@ -7,22 +7,22 @@ public class gameConfiguration implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public double player1MaxSpeed;
-    public boolean player1MouseControl;
-    public boolean player1isComputer;
+    public boolean isPlayer1MouseControl;
+    public boolean isPlayer1Computer;
     public int player1PaddleSize;
 
     public double player2MaxSpeed;
-    public boolean player2MouseControl;
-    public boolean player2isComputer;
+    public boolean isPlayer2MouseControl;
+    public boolean isPlayer2Computer;
     public int player2PaddleSize;
 
     public int gameMaxSpeed;
     public double gameAcc;
 
-    public boolean gameSizeChanged;
+    public boolean isGameSizeChanged;
     public boolean isSoloGame;
     public int gameSize;
-    public boolean soundOn;
+    public boolean isSoundOn;
 
     public int scr1;
     public int scr2;
@@ -35,24 +35,26 @@ public class gameConfiguration implements Serializable {
     public double PADDLE_SPEED;
     public double BALL_SPEED;
 
+    public boolean isConfHasChanged;
+
     public gameConfiguration() {
 
         this.gameMaxSpeed = 30;
         this.gameAcc = 1.1;
 
         this.player1MaxSpeed = 5;
-        this.player1MouseControl = false;
-        this.player1isComputer = false;
+        this.isPlayer1MouseControl = false;
+        this.isPlayer1Computer = false;
         this.player1PaddleSize = 140;
 
         this.player2MaxSpeed = 5;
-        this.player2MouseControl = false;
-        this.player2isComputer = false;
-        this.player1PaddleSize = 140;
+        this.isPlayer2MouseControl = false;
+        this.isPlayer2Computer = true;
+        this.player2PaddleSize = 140;
 
         this.isSoloGame = false;
         this.gameSize = 2;
-        this.soundOn = true;
+        this.isSoundOn = true;
         // this.ballSpeed = 0;
         // this.playerSpeed = 0;
         this.scr1 = 0;
@@ -68,13 +70,13 @@ public class gameConfiguration implements Serializable {
             int _paddleSize) {
         if (_playerId == 1) {
             this.player1MaxSpeed = _maxSpeed;
-            this.player1MouseControl = _mouseControl;
-            this.player1isComputer = _isComputer;
+            this.isPlayer1MouseControl = _mouseControl;
+            this.isPlayer1Computer = _isComputer;
             this.player1PaddleSize = _paddleSize;
         } else {
             this.player2MaxSpeed = _maxSpeed;
-            this.player2MouseControl = _mouseControl;
-            this.player2isComputer = _isComputer;
+            this.isPlayer2MouseControl = _mouseControl;
+            this.isPlayer2Computer = _isComputer;
             this.player2PaddleSize = _paddleSize;
         }
     }

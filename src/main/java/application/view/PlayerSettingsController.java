@@ -4,8 +4,6 @@ import java.text.DecimalFormat;
 
 import application.tools.AlertUtilities;
 import application.tools.ConfigurationSave;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -86,13 +84,13 @@ public class PlayerSettingsController {
 
 	private void initPlayerSettings() {
 		if (this.playerId == 1) {
-			this.isComputer = this.conf.player1isComputer;
-			this.mouseControl = this.conf.player1MouseControl;
+			this.isComputer = this.conf.isPlayer1Computer;
+			this.mouseControl = this.conf.isPlayer1MouseControl;
 			this.maxSpeed = this.conf.player1MaxSpeed;
 			this.paddleSize = this.conf.player1PaddleSize;
 		} else {
-			this.isComputer = this.conf.player2isComputer;
-			this.mouseControl = this.conf.player2MouseControl;
+			this.isComputer = this.conf.isPlayer2Computer;
+			this.mouseControl = this.conf.isPlayer1MouseControl;
 			this.maxSpeed = this.conf.player2MaxSpeed;
 			this.paddleSize = this.conf.player2PaddleSize;
 		}
@@ -165,9 +163,15 @@ public class PlayerSettingsController {
 			this.mouseControl = false;
 			this.isComputer = false;
 		} else if (mouseButt.isSelected()) {
-			if (this.conf.player2MouseControl) {
+			if (this.playerId == 1 && this.conf.isPlayer2MouseControl) {
 				AlertUtilities.showAlert(primaryStage, "Option impossible",
-						"La souris est déjà attribuée au joueur 1.", null, AlertType.INFORMATION);
+						"La souris est déjà attribuée au joueur 2.", null,
+						AlertType.INFORMATION);
+				allOK = false;
+			} else if (this.playerId == 2 && this.conf.isPlayer1MouseControl) {
+				AlertUtilities.showAlert(primaryStage, "Option impossible",
+						"La souris est déjà attribuée au joueur 1.", null,
+						AlertType.INFORMATION);
 				allOK = false;
 			} else {
 				this.mouseControl = true;

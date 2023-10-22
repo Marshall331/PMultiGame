@@ -2,14 +2,11 @@ package application.control;
 
 import application.PMultiApp;
 import application.tools.StageManagement;
-import application.tools.ConfigurationSave;
-import application.view.MultiplayerMenuController;
 import application.view.SettingsMenuController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.gameConfiguration;
 
 /**
  * Classe de controleur de Dialogue de la scène des choix de la difficulté.
@@ -17,17 +14,30 @@ import model.gameConfiguration;
 public class SettingsMenu {
 
 	private Stage primaryStage;
+	private Stage parentStage;
+	SettingsMenuController dbmfcViewController;
+	private boolean inGame;
 
-	public SettingsMenu(Stage _parentStage, boolean inGame) {
+	public SettingsMenu(Stage _parentStage, boolean _inGame) {
+		if (!_inGame) {
+			this.primaryStage = _parentStage;
+		} else {
+			this.primaryStage = new Stage();
+			this.parentStage = _parentStage;
+		}
+		this.inGame = _inGame;
+	}
+
+	public void startMenu() {
 
 		try {
 
-			if (!inGame) {
-				this.primaryStage = _parentStage;
-			} else {
-				this.primaryStage = new Stage();
-				// StageManagement.manageCenteringStage(_parentStage, primaryStage);
-			}
+			// if (!inGame) {
+			// this.primaryStage = _parentStage;
+			// } else {
+			// this.primaryStage = new Stage();
+			// // StageManagement.manageCenteringStage(_parentStage, primaryStage);
+			// }
 
 			// Chargement du source fxml
 			FXMLLoader loader = new FXMLLoader(
@@ -48,8 +58,8 @@ public class SettingsMenu {
 			primaryStage.setTitle("Paramètres");
 			primaryStage.setResizable(false);
 
-			SettingsMenuController dbmfcViewController = loader.getController();
-			dbmfcViewController.initContext(_parentStage, primaryStage, inGame);
+			dbmfcViewController = loader.getController();
+			dbmfcViewController.initContext(this.parentStage, this.primaryStage, this.inGame);
 
 			dbmfcViewController.displayDialog();
 
@@ -57,5 +67,12 @@ public class SettingsMenu {
 			e.printStackTrace();
 			System.exit(-1);
 		}
+	}
+
+	public void closeMenu() {
+		if (this.dbmfcViewController.playerSettings != null) {
+			this.dbmfcViewController.playerSettings.closeMenu();
+		}
+		this.primaryStage.close();
 	}
 }

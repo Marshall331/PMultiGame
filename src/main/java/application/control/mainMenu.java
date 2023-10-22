@@ -81,25 +81,4 @@ public class MainMenu extends Application {
 	public static void runApp() {
 		Application.launch();
 	}
-
-	/**
-	 * Méthode principale de lancement du menu des choix de la difficulté.
-	 */
-	public void menuSolo() {
-		DifficultyMenu dM = new DifficultyMenu(primaryStage);
-	}
-
-	/**
-	 * Méthode principale de lancement du menu multijoueur.
-	 */
-	public void menuMulti() {
-		MultiplayerMenu mM = new MultiplayerMenu(primaryStage);
-	}
-
-	/**
-	 * Méthode principale de lancement de la scène des paramètres.
-	 */
-	public void menuSettings() {
-		SettingsMenu sS = new SettingsMenu(primaryStage, false);
-	}
 }
