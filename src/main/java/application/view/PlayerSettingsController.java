@@ -32,6 +32,8 @@ public class PlayerSettingsController {
 	public boolean mouseControl;
 	public int paddleSize;
 
+	public boolean isSettingsChanged;
+
 	/**
 	 * Initialisation du contrôleur de vue DailyBankMainFrameController.
 	 *
@@ -186,13 +188,26 @@ public class PlayerSettingsController {
 				: this.sliderPaddleSpeed.getValue();
 		this.paddleSize = Integer.valueOf(this.labPaddleSize.getText());
 
-		this.setNewSettings();
-		ConfigurationSave.sauvegarderConfiguration(this.conf);
-
 		if (allOK) {
+			this.checkSettingsChanged();
+			this.setNewSettings();
 			ConfigurationSave.sauvegarderConfiguration(conf);
 			this.conf = ConfigurationSave.chargerConfiguration();
 			this.doRetour();
+		}
+	}
+
+	private void checkSettingsChanged() {
+		if (this.playerId == 1) {
+			if (this.isComputer != this.conf.isPlayer1Computer || this.mouseControl != this.conf.isPlayer1MouseControl
+					|| this.maxSpeed != this.conf.player1MaxSpeed || this.paddleSize != this.conf.player1PaddleSize) {
+				this.conf.isConfHasChanged = true;
+			}
+		} else {
+			if (this.isComputer != this.conf.isPlayer2Computer || this.mouseControl != this.conf.isPlayer2MouseControl
+					|| this.maxSpeed != this.conf.player2MaxSpeed || this.paddleSize != this.conf.player2PaddleSize) {
+				this.conf.isConfHasChanged = true;
+			}
 		}
 	}
 
