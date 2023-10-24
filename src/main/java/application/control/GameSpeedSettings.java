@@ -2,6 +2,7 @@ package application.control;
 
 import application.PMultiApp;
 import application.tools.StageManagement;
+import application.view.GameSpeedSettingsController;
 import application.view.PlayerSettingsController;
 import application.view.SettingsMenuController;
 import javafx.fxml.FXMLLoader;
@@ -12,13 +13,13 @@ import javafx.stage.Stage;
 /**
  * Classe de controleur de Dialogue de la scène des choix de la difficulté.
  */
-public class PlayerSettings {
+public class GameSpeedSettings {
 
     private Stage primaryStage;
     private Stage parentStage;
     private int player;
 
-    public PlayerSettings(Stage _parentStage, int _player) {
+    public GameSpeedSettings(Stage _parentStage, int _player) {
         this.primaryStage = new Stage();
         this.parentStage = _parentStage;
         this.player = _player;
@@ -29,7 +30,7 @@ public class PlayerSettings {
         try {
             // Chargement du source fxml
             FXMLLoader loader = new FXMLLoader(
-                    SettingsMenuController.class.getResource("PlayerSettings.fxml"));
+                    SettingsMenuController.class.getResource("GameSpeedSettings.fxml"));
             BorderPane root = loader.load();
 
             // Paramétrage du Stage : feuille de style, titre
@@ -47,7 +48,7 @@ public class PlayerSettings {
             primaryStage.setTitle("Player settings");
             primaryStage.setResizable(false);
 
-            PlayerSettingsController dbmfcViewController = loader.getController();
+            GameSpeedSettingsController dbmfcViewController = loader.getController();
             dbmfcViewController.initContext(primaryStage, this.player);
 
             dbmfcViewController.displayDialog();

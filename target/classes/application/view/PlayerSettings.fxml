@@ -64,6 +64,9 @@
                </stops>
             </LinearGradient>
          </textFill>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </Label>
    </top>
    <center>
@@ -81,7 +84,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="450.0">
                <children>
-                  <Label alignment="CENTER_RIGHT" prefHeight="43.0" prefWidth="132.0" text="Contrôle :">
+                  <Label alignment="CENTER" prefHeight="43.0" prefWidth="131.0" text="Contrôle :">
                      <font>
                         <Font name="Corbel Bold" size="24.0" />
                      </font>
@@ -94,7 +97,7 @@
                         </LinearGradient>
                      </textFill>
                      <HBox.margin>
-                        <Insets left="5.0" />
+                        <Insets left="10.0" />
                      </HBox.margin>
                   </Label>
                   <RadioButton fx:id="keyboardButt" mnemonicParsing="false" prefHeight="41.0" prefWidth="167.0" text="Clavier (Z/S)" textFill="#fcfcfc" HBox.hgrow="ALWAYS">
@@ -113,7 +116,7 @@
                         <Insets left="10.0" />
                      </HBox.margin>
                   </RadioButton>
-                  <RadioButton fx:id="botButt" mnemonicParsing="false" prefHeight="41.0" prefWidth="115.0" text="bot" textFill="#fcfcfc" HBox.hgrow="ALWAYS">
+                  <RadioButton fx:id="botButt" mnemonicParsing="false" prefHeight="41.0" prefWidth="113.0" text="bot" textFill="#fcfcfc" HBox.hgrow="ALWAYS">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -128,7 +131,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="450.0" GridPane.rowIndex="1">
                <children>
-                  <Label alignment="CENTER" prefHeight="42.0" prefWidth="337.0" text="Vitesse du paddle (clavier / bot) :">
+                  <Label alignment="CENTER" prefHeight="42.0" prefWidth="336.0" text="Vitesse du paddle (clavier / bot) :">
                      <font>
                         <Font name="Corbel Bold" size="24.0" />
                      </font>
@@ -141,7 +144,7 @@
                         </LinearGradient>
                      </textFill>
                      <HBox.margin>
-                        <Insets left="5.0" />
+                        <Insets left="10.0" />
                      </HBox.margin>
                   </Label>
                   <Label fx:id="labPaddleSpeed" alignment="CENTER" contentDisplay="CENTER" prefHeight="36.0" prefWidth="102.0">
@@ -237,7 +240,7 @@
                         </LinearGradient>
                      </textFill>
                      <HBox.margin>
-                        <Insets left="5.0" />
+                        <Insets left="10.0" />
                      </HBox.margin>
                   </Label>
                   <Label fx:id="labPaddleSize" alignment="CENTER" contentDisplay="CENTER" prefHeight="36.0" prefWidth="67.0">

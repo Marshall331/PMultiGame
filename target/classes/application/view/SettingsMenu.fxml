@@ -202,12 +202,12 @@
                         <Insets left="100.0" right="5.0" />
                      </HBox.margin>
                   </Label>
-                  <Button fx:id="buttBallSettings" mnemonicParsing="false" onAction="#doSettingsPlayer1" prefHeight="60.0" prefWidth="60.0">
+                  <Button fx:id="buttBallSettings" mnemonicParsing="false" onAction="#doSettingsGameSpeed" prefHeight="60.0" prefWidth="60.0">
                      <HBox.margin>
                         <Insets left="10.0" right="15.0" />
                      </HBox.margin>
                      <graphic>
-                        <ImageView fitHeight="60.0" fitWidth="60.0">
+                        <ImageView fitHeight="50.0" fitWidth="50.0">
                            <image>
                               <Image url="@images/BallSettingsIcon.png" />
                            </image>

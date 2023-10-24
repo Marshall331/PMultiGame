@@ -1,5 +1,6 @@
 package application.view;
 
+import application.control.GameSpeedSettings;
 import application.control.MainMenu;
 import application.control.PlayerSettings;
 import application.tools.AlertUtilities;
@@ -33,6 +34,7 @@ public class SettingsMenuController {
 	public boolean oldSoundSetting;
 
 	public PlayerSettings playerSettings;
+	public GameSpeedSettings gameSpeedSettings;
 
 	/**
 	 * Initialisation du contrôleur de vue DailyBankMainFrameController.
@@ -43,7 +45,7 @@ public class SettingsMenuController {
 		this.parentStage = _parentStage;
 		this.primaryStage = _containingStage;
 		this.primaryStage.setOnCloseRequest(e -> this.doRetour());
-		
+
 		this.inGame = _inGame;
 
 		this.conf = ConfigurationSave.chargerConfiguration();
@@ -148,6 +150,15 @@ public class SettingsMenuController {
 		StageManagement.disableItems(this.primaryStage.getScene(), true);
 		playerSettings = new PlayerSettings(this.primaryStage, 2);
 		playerSettings.startMenu();
+		StageManagement.disableItems(this.primaryStage.getScene(), false);
+		this.conf = ConfigurationSave.chargerConfiguration();
+	}
+
+	@FXML
+	private void doSettingsGameSpeed() {
+		StageManagement.disableItems(this.primaryStage.getScene(), true);
+		gameSpeedSettings = new GameSpeedSettings(this.primaryStage, 2);
+		gameSpeedSettings.startMenu();
 		StageManagement.disableItems(this.primaryStage.getScene(), false);
 		this.conf = ConfigurationSave.chargerConfiguration();
 	}

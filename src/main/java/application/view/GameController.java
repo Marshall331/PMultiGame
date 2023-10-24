@@ -27,6 +27,9 @@ import javafx.stage.WindowEvent;
 import model.game;
 import model.gameConfiguration;
 import model.player;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
 
 /**
  * Controller JavaFX de la scène du jeu.
@@ -116,7 +119,14 @@ public class GameController {
 		this.paddle2.setHeight(this.conf.player2PaddleSize);
 		this.paddle1.setWidth(this.conf.PADDLE_WIDTH);
 		this.paddle2.setWidth(this.conf.PADDLE_WIDTH);
-		this.balle.setRadius(this.conf.BALL_RADIUS);
+		this.balle.setRadius(this.conf.ballSize);
+		RadialGradient radialGradient = new RadialGradient(0, 0, 0.5, 0.5, 0.5, true,
+				javafx.scene.paint.CycleMethod.NO_CYCLE,
+				new Stop(0, Color.web("#000000")),
+				new Stop(1, Color.web(this.conf.ballColor)));
+
+		// Appliquez l'effet RadialGradient au cercle
+		balle.setFill(radialGradient);
 		this.menuButton.setPrefWidth(150);
 		if (this.conf.gameSize == 4 || this.conf.gameSize == 5) {
 			GridPane.setHalignment(this.settingsButton, HPos.LEFT);

@@ -1,10 +1,14 @@
 package model;
 
 import java.io.Serializable;
+import static java.lang.Math.PI;
 
 public class gameConfiguration implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    public final double C = PI / 4.0;
+    public final double MAG = Math.sqrt(26);
 
     public double player1MaxSpeed;
     public boolean isPlayer1MouseControl;
@@ -16,8 +20,12 @@ public class gameConfiguration implements Serializable {
     public boolean isPlayer2Computer;
     public int player2PaddleSize;
 
-    public int gameMaxSpeed;
-    public double gameAcc;
+    public double ballBaseSpeedY;
+    public double ballBaseSpeedX;
+    public double ballMaxSpeed;
+    public double ballAcc;
+    public double ballSize;
+    public String ballColor;
 
     public boolean isGameSizeChanged;
     public boolean isSoloGame;
@@ -31,16 +39,13 @@ public class gameConfiguration implements Serializable {
     public int HEIGHT;
     public int midLineY;
     public int PADDLE_WIDTH;
-    public int BALL_RADIUS;
+    // public int BALL_RADIUS;
     public double PADDLE_SPEED;
-    public double BALL_SPEED;
+    // public double BALL_SPEED;
 
     public boolean isConfHasChanged;
 
     public gameConfiguration() {
-
-        this.gameMaxSpeed = 30;
-        this.gameAcc = 1.1;
 
         this.player1MaxSpeed = 5;
         this.isPlayer1MouseControl = false;
@@ -52,11 +57,15 @@ public class gameConfiguration implements Serializable {
         this.isPlayer2Computer = true;
         this.player2PaddleSize = 140;
 
+        this.ballMaxSpeed = 30;
+        this.ballAcc = 1.1;
+        this.ballSize = 25;
+        this.ballColor = "#4000ff";
+
         this.isSoloGame = false;
         this.gameSize = 2;
         this.isSoundOn = true;
-        // this.ballSpeed = 0;
-        // this.playerSpeed = 0;
+
         this.scr1 = 0;
         this.scr2 = 0;
     }
@@ -88,38 +97,43 @@ public class gameConfiguration implements Serializable {
                 this.HEIGHT = 982 / 2;
                 this.midLineY = 882;
                 this.PADDLE_WIDTH = 25;
-                this.BALL_RADIUS = 25;
                 break;
             case 2:
                 this.WIDTH = 1299 / 2;
                 this.HEIGHT = 936 / 2;
                 this.midLineY = 836;
                 this.PADDLE_WIDTH = 25;
-                this.BALL_RADIUS = 25;
                 break;
             case 3:
                 this.WIDTH = 1043 / 2;
                 this.HEIGHT = 700 / 2;
                 this.midLineY = 600;
                 this.PADDLE_WIDTH = 25;
-                this.BALL_RADIUS = 20;
                 break;
             case 4:
                 this.WIDTH = 800 / 2;
                 this.HEIGHT = 600 / 2;
                 this.midLineY = 500;
                 this.PADDLE_WIDTH = 22;
-                this.BALL_RADIUS = 18;
                 break;
             case 5:
                 this.WIDTH = 600 / 2;
                 this.HEIGHT = 400 / 2;
                 this.midLineY = 300;
                 this.PADDLE_WIDTH = 20;
-                this.BALL_RADIUS = 15;
                 break;
             default:
                 break;
         }
+    }
+
+    public void setNewGameSpeedSettings(double _ballBaseSpeedY, double _ballBaseSpeedX, double _maxSpeed, double _acc,
+            double _size, String _color) {
+        this.ballBaseSpeedY = _ballBaseSpeedY;
+        this.ballBaseSpeedX = _ballBaseSpeedX;
+        this.ballMaxSpeed = _maxSpeed;
+        this.ballAcc = _acc;
+        this.ballSize = _size;
+        this.ballColor = _color;
     }
 }

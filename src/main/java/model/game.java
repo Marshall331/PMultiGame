@@ -11,6 +11,11 @@ public final class game extends AnimationTimer {
 
     private gameConfiguration conf;
 
+    private double C;
+    private double MAG;
+    private double SPEED;
+    private double ACC;
+
     public int scr1;
     public int scr2;
     public IntegerProperty scorePlayer1;
@@ -23,13 +28,13 @@ public final class game extends AnimationTimer {
     final int WIDTH;
     public final int HEIGHT;
 
-    final int BALL_RADIUS;
+    final double BALL_RADIUS;
     final int PADDLE_WIDTH;
 
-    final int ballMinX;
-    final int ballMaxX;
-    final int ballMinY;
-    final int ballMaxY;
+    final double ballMinX;
+    final double ballMaxX;
+    final double ballMinY;
+    final double ballMaxY;
 
     Random rand = new Random();
 
@@ -41,6 +46,11 @@ public final class game extends AnimationTimer {
     public game(player _player1, player _player2, Circle _ball, gameConfiguration _conf) {
 
         this.conf = _conf;
+
+        this.C = this.conf.C;
+        this.MAG = this.conf.MAG;
+        this.ACC = this.conf.ballAcc;
+        this.SPEED = this.conf.ballMaxSpeed;
 
         this.player1 = _player1;
         this.player2 = _player2;
@@ -56,7 +66,7 @@ public final class game extends AnimationTimer {
         this.WIDTH = this.conf.WIDTH;
         this.HEIGHT = this.conf.HEIGHT;
 
-        this.BALL_RADIUS = this.conf.BALL_RADIUS;
+        this.BALL_RADIUS = this.conf.ballSize;
         this.PADDLE_WIDTH = this.conf.PADDLE_WIDTH;
 
         this.player1.paddleSize = this.conf.player1PaddleSize;
@@ -153,28 +163,28 @@ public final class game extends AnimationTimer {
     }
 
     private void setRandomDirection() {
-        mag = Constants.MAG;
-        this.dX = 2;
-        this.dY = 2;
-
-        // double randomAngle = rand.nextDouble() * Math.PI * 2; // Entre 0 et 2*pi
-        // // radians
-        // dX += mag * Math.sin(randomAngle) + 1;
-        // dY += mag * Math.sin(randomAngle) + 1;
-
+        this.mag = this.MAG;
+        this.dX = this.conf.ballBaseSpeedX;
+        this.dY = this.conf.ballBaseSpeedY;
+        if (this.rand.nextInt(2) == 1) {
+            this.dY = -dY;
+        }
+        if (this.rand.nextInt(2) == 0) {
+            this.dX = -dX;
+        }
     }
 
     private void checkPaddleCollision() {
         if (player1.paddle.getBoundsInParent().intersects(ball.getBoundsInParent())) {
-            mag *= (mag < Constants.SPEED) ? Constants.ACC : 1;
-            acc = Constants.C * Math.abs(
+            mag *= (mag < this.SPEED) ? this.ACC : 1;
+            acc = this.C * Math.abs(
                     (player1.paddle.getTranslateY() + this.player1.paddleSize - ball.getTranslateY())
                             / this.player1.paddleSize);
             dX = mag * Math.cos(acc);
             dY = mag * Math.sin(acc);
             dY = (ball.getTranslateY() <= player1.paddle.getTranslateY() + this.player1.paddleSize) ? -dY : dY;
         } else if (player2.paddle.getBoundsInParent().intersects(ball.getBoundsInParent())) {
-            acc = Constants.C * Math.abs(
+            acc = this.C * Math.abs(
                     (player2.paddle.getTranslateY() + this.player2.paddleSize - ball.getTranslateY())
                             / this.player2.paddleSize);
             dX = -mag * Math.cos(acc);
