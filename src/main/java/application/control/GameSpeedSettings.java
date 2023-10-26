@@ -3,7 +3,6 @@ package application.control;
 import application.PMultiApp;
 import application.tools.StageManagement;
 import application.view.GameSpeedSettingsController;
-import application.view.PlayerSettingsController;
 import application.view.SettingsMenuController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -19,10 +18,9 @@ public class GameSpeedSettings {
     private Stage parentStage;
     private int player;
 
-    public GameSpeedSettings(Stage _parentStage, int _player) {
+    public GameSpeedSettings(Stage _parentStage) {
         this.primaryStage = new Stage();
         this.parentStage = _parentStage;
-        this.player = _player;
     }
 
     public void startMenu() {
@@ -45,7 +43,7 @@ public class GameSpeedSettings {
             StageManagement.removeKeysEvents(scene);
 
             primaryStage.setScene(scene);
-            primaryStage.setTitle("Player settings");
+            primaryStage.setTitle("Ball settings");
             primaryStage.setResizable(false);
 
             GameSpeedSettingsController dbmfcViewController = loader.getController();

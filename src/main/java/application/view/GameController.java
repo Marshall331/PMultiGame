@@ -7,6 +7,7 @@ import application.tools.AlertUtilities;
 import application.tools.Animations;
 import application.tools.ConfigurationSave;
 import application.tools.StageManagement;
+import application.tools.Style;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
@@ -120,14 +121,12 @@ public class GameController {
 		this.paddle1.setWidth(this.conf.PADDLE_WIDTH);
 		this.paddle2.setWidth(this.conf.PADDLE_WIDTH);
 		this.balle.setRadius(this.conf.ballSize);
-		RadialGradient radialGradient = new RadialGradient(0, 0, 0.5, 0.5, 0.5, true,
-				javafx.scene.paint.CycleMethod.NO_CYCLE,
-				new Stop(0, Color.web("#000000")),
-				new Stop(1, Color.web(this.conf.ballColor)));
-
-		// Appliquez l'effet RadialGradient au cercle
-		balle.setFill(radialGradient);
 		this.menuButton.setPrefWidth(150);
+
+		Style.setBallColor(this.balle, this.conf.ballColor);
+		Style.setPlayerColor(paddle1, this.conf.player1Color);
+		Style.setPlayerColor(paddle2, this.conf.player2Color);
+
 		if (this.conf.gameSize == 4 || this.conf.gameSize == 5) {
 			GridPane.setHalignment(this.settingsButton, HPos.LEFT);
 			GridPane.setValignment(this.settingsButton, VPos.CENTER);
@@ -354,6 +353,7 @@ public class GameController {
 		if (this.settingsMenu != null) {
 			this.settingsMenu.closeMenu();
 		}
+
 		this.primaryStage.close();
 		MainMenu mM = new MainMenu();
 		mM.inGame = true;

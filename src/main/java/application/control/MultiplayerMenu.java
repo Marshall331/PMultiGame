@@ -1,7 +1,6 @@
 package application.control;
 
 import application.PMultiApp;
-import application.tools.ConfigurationSave;
 import application.tools.StageManagement;
 import application.view.MultiplayerMenuController;
 import javafx.fxml.FXMLLoader;

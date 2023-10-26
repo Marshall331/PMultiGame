@@ -116,12 +116,12 @@
                         <Insets left="10.0" />
                      </HBox.margin>
                   </RadioButton>
-                  <RadioButton fx:id="botButt" mnemonicParsing="false" prefHeight="41.0" prefWidth="113.0" text="bot" textFill="#fcfcfc" HBox.hgrow="ALWAYS">
+                  <RadioButton fx:id="botButt" mnemonicParsing="false" prefHeight="41.0" prefWidth="87.0" text="bot" textFill="#fcfcfc" HBox.hgrow="ALWAYS">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="10.0" />
+                        <Insets left="10.0" right="10.0" />
                      </HBox.margin>
                   </RadioButton>
                </children>
@@ -135,6 +135,9 @@
                      <font>
                         <Font name="Corbel Bold" size="24.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
                      <textFill>
                         <LinearGradient endX="0.7952380952380953" endY="0.5238095238095238" startY="1.0">
                            <stops>
@@ -143,9 +146,6 @@
                            </stops>
                         </LinearGradient>
                      </textFill>
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
                   </Label>
                   <Label fx:id="labPaddleSpeed" alignment="CENTER" contentDisplay="CENTER" prefHeight="36.0" prefWidth="102.0">
                      <font>
@@ -180,7 +180,7 @@
                         <Font size="24.0" />
                      </font>
                      <HBox.margin>
-                        <Insets bottom="15.0" left="15.0" right="10.0" top="15.0" />
+                        <Insets bottom="15.0" left="10.0" right="10.0" top="15.0" />
                      </HBox.margin>
                      <textFill>
                         <LinearGradient endX="1.0" endY="1.0">
@@ -212,7 +212,7 @@
                         <Font size="24.0" />
                      </font>
                      <HBox.margin>
-                        <Insets bottom="15.0" left="10.0" right="15.0" top="15.0" />
+                        <Insets bottom="15.0" left="10.0" right="10.0" top="15.0" />
                      </HBox.margin>
                      <textFill>
                         <LinearGradient endX="1.0" endY="1.0">
@@ -227,7 +227,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="403.0" GridPane.rowIndex="3">
                <children>
-                  <Label alignment="CENTER" prefHeight="42.0" prefWidth="183.0" text="Taille du paddle :">
+                  <Label alignment="CENTER" prefHeight="42.0" prefWidth="77.0" text="Taille :">
                      <font>
                         <Font name="Corbel Bold" size="24.0" />
                      </font>
@@ -243,7 +243,7 @@
                         <Insets left="10.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="labPaddleSize" alignment="CENTER" contentDisplay="CENTER" prefHeight="36.0" prefWidth="67.0">
+                  <Label fx:id="labPaddleSize" alignment="CENTER" contentDisplay="CENTER" prefHeight="36.0" prefWidth="62.0" text="160">
                      <font>
                         <Font name="Arial Bold" size="30.0" />
                      </font>
@@ -259,11 +259,32 @@
                         <Insets />
                      </HBox.margin>
                   </Label>
-                  <Slider fx:id="sliderPaddleSize" max="280.0" min="50.0" prefHeight="14.0" prefWidth="200.0" value="140.0">
+                  <Slider fx:id="sliderPaddleSize" max="280.0" min="50.0" prefHeight="14.0" prefWidth="117.0" value="140.0">
                      <HBox.margin>
                         <Insets left="5.0" right="5.0" top="2.0" />
                      </HBox.margin>
                   </Slider>
+                  <Label alignment="CENTER" prefHeight="42.0" prefWidth="101.0" text="Couleur :">
+                     <font>
+                        <Font name="Corbel Bold" size="24.0" />
+                     </font>
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop color="#060dbf" />
+                              <Stop color="#0bba0e" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <ColorPicker fx:id="playerColor" prefHeight="25.0" prefWidth="90.0">
+                     <HBox.margin>
+                        <Insets left="5.0" right="10.0" />
+                     </HBox.margin>
+                  </ColorPicker>
                </children>
                <opaqueInsets>
                   <Insets />

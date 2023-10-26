@@ -16,8 +16,8 @@ public final class game extends AnimationTimer {
     private double SPEED;
     private double ACC;
 
-    public int scr1;
-    public int scr2;
+    private int scr1;
+    private int scr2;
     public IntegerProperty scorePlayer1;
     public IntegerProperty scorePlayer2;
 
@@ -25,16 +25,16 @@ public final class game extends AnimationTimer {
     private final player player2;
     private final Circle ball;
 
-    final int WIDTH;
+    public final int WIDTH;
     public final int HEIGHT;
 
-    final double BALL_RADIUS;
-    final int PADDLE_WIDTH;
+    public final double BALL_RADIUS;
+    public final int PADDLE_WIDTH;
 
-    final double ballMinX;
-    final double ballMaxX;
-    final double ballMinY;
-    final double ballMaxY;
+    public final double ballMinX;
+    public final double ballMaxX;
+    public final double ballMinY;
+    public final double ballMaxY;
 
     Random rand = new Random();
 

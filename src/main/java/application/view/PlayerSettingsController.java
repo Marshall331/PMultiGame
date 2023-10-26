@@ -9,7 +9,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.paint.Color;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ColorPicker;
 import javafx.stage.Stage;
 import model.gameConfiguration;
 
@@ -31,6 +33,7 @@ public class PlayerSettingsController {
 	public boolean isComputer;
 	public boolean mouseControl;
 	public int paddleSize;
+	public String color;
 
 	public boolean isSettingsChanged;
 
@@ -43,9 +46,7 @@ public class PlayerSettingsController {
 		this.primaryStage = _containingStage;
 		this.playerId = _playerId;
 
-		// this.primaryStage.requestFocus();
 		// this.conf = new gameConfiguration();
-		// Utilities.sauvegarderConfiguration(conf);
 		this.conf = ConfigurationSave.chargerConfiguration();
 
 		initPlayerSettings();
@@ -84,17 +85,22 @@ public class PlayerSettingsController {
 	@FXML
 	private Slider sliderPaddleSize;
 
+	@FXML
+	private ColorPicker playerColor;
+
 	private void initPlayerSettings() {
 		if (this.playerId == 1) {
 			this.isComputer = this.conf.isPlayer1Computer;
 			this.mouseControl = this.conf.isPlayer1MouseControl;
 			this.maxSpeed = this.conf.player1MaxSpeed;
 			this.paddleSize = this.conf.player1PaddleSize;
+			this.color = this.conf.player1Color;
 		} else {
 			this.isComputer = this.conf.isPlayer2Computer;
 			this.mouseControl = this.conf.isPlayer1MouseControl;
 			this.maxSpeed = this.conf.player2MaxSpeed;
 			this.paddleSize = this.conf.player2PaddleSize;
+			this.color = this.conf.player2Color;
 		}
 	}
 
@@ -137,6 +143,8 @@ public class PlayerSettingsController {
 			int size = newValue.intValue();
 			this.labPaddleSize.setText(Integer.toString(size));
 		});
+
+		// this.playerColor.setValue(Color.web(color));
 	}
 
 	private void setItemsByConf() {
@@ -154,6 +162,7 @@ public class PlayerSettingsController {
 		}
 		this.sliderPaddleSpeed.setValue(this.maxSpeed);
 		this.sliderPaddleSize.setValue(this.paddleSize);
+		this.playerColor.setValue(Color.web(color));
 	}
 
 	@FXML
@@ -187,6 +196,7 @@ public class PlayerSettingsController {
 		this.maxSpeed = this.sliderPaddleSpeed.getValue() == 50 && this.botButt.isSelected() ? 1000
 				: this.sliderPaddleSpeed.getValue();
 		this.paddleSize = Integer.valueOf(this.labPaddleSize.getText());
+		this.color = this.playerColor.getValue().toString();
 
 		if (allOK) {
 			this.checkSettingsChanged();
@@ -200,12 +210,14 @@ public class PlayerSettingsController {
 	private void checkSettingsChanged() {
 		if (this.playerId == 1) {
 			if (this.isComputer != this.conf.isPlayer1Computer || this.mouseControl != this.conf.isPlayer1MouseControl
-					|| this.maxSpeed != this.conf.player1MaxSpeed || this.paddleSize != this.conf.player1PaddleSize) {
+					|| this.maxSpeed != this.conf.player1MaxSpeed || this.paddleSize != this.conf.player1PaddleSize
+					|| !this.color.equals(this.conf.player1Color)) {
 				this.conf.isConfHasChanged = true;
 			}
 		} else {
 			if (this.isComputer != this.conf.isPlayer2Computer || this.mouseControl != this.conf.isPlayer2MouseControl
-					|| this.maxSpeed != this.conf.player2MaxSpeed || this.paddleSize != this.conf.player2PaddleSize) {
+					|| this.maxSpeed != this.conf.player2MaxSpeed || this.paddleSize != this.conf.player2PaddleSize
+					|| !this.color.equals(this.conf.player2Color)) {
 				this.conf.isConfHasChanged = true;
 			}
 		}
@@ -217,8 +229,6 @@ public class PlayerSettingsController {
 	@FXML
 	private void doRetour() {
 		this.primaryStage.close();
-		System.out.println("PADDLESIZE 1: " + this.conf.player1PaddleSize);
-		System.out.println("PADDLESIZE 2: " + this.conf.player2PaddleSize);
 	}
 
 	@FXML
@@ -231,7 +241,7 @@ public class PlayerSettingsController {
 	}
 
 	private void setNewSettings() {
-		this.conf.setNewPlayerSettings(playerId, maxSpeed, mouseControl, isComputer, paddleSize);
+		this.conf.setNewPlayerSettings(playerId, maxSpeed, mouseControl, isComputer, paddleSize, color);
 	}
 
 	public void resetPlayerSettings() {
@@ -239,6 +249,7 @@ public class PlayerSettingsController {
 		this.mouseControl = false;
 		this.isComputer = this.playerId == 1 ? false : true;
 		this.paddleSize = 140;
+		this.color = this.playerId == 1 ? "#8808a3" : "#18ab05";
 		this.setItemsByConf();
 	}
 }

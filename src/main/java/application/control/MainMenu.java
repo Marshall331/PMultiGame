@@ -50,7 +50,6 @@ public class MainMenu extends Application {
 			scene.getStylesheets().add(PMultiApp.class.getResource("application.css").toExternalForm());
 
 			gameConfiguration conf = ConfigurationSave.chargerConfiguration();
-			// conf = new gameConfiguration();
 			conf.resetScore();
 			ConfigurationSave.sauvegarderConfiguration(conf);
 

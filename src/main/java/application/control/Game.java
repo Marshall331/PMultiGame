@@ -1,7 +1,5 @@
 package application.control;
 
-import java.nio.channels.NetworkChannel;
-
 import application.PMultiApp;
 import application.tools.StageManagement;
 import application.view.GameController;

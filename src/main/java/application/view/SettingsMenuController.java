@@ -55,7 +55,6 @@ public class SettingsMenuController {
 		this.oldSoundSetting = conf.isSoundOn;
 
 		itemsConfigure();
-
 		setItemsByConf();
 	}
 
@@ -72,22 +71,15 @@ public class SettingsMenuController {
 
 	@FXML
 	private Button buttPlayer1;
+
 	@FXML
 	private Button buttPlayer2;
+
 	@FXML
 	private Button buttBallSettings;
-	// @FXML
-	// private Slider ballSpeed;
-	// @FXML
-	// private Label labBallSpeed;
+
 	@FXML
 	private Label labSound;
-
-	// @FXML
-	// private RadioButton keyboardButt;
-
-	// @FXML
-	// private RadioButton mouseButt;
 
 	@FXML
 	private ChoiceBox<String> sizeChoice;
@@ -99,9 +91,6 @@ public class SettingsMenuController {
 		Animations.setAnimatedIcon(buttPlayer1, 1.2, "black");
 		Animations.setAnimatedIcon(buttPlayer2, 1.2, "black");
 		Animations.setAnimatedIcon(buttBallSettings, 1.2, "black");
-		// DoubleProperty sliderValueProperty = new SimpleDoubleProperty(0.0);
-		// labBallSpeed.textProperty().bind(sliderValueProperty.asString("%.1f"));
-		// sliderValueProperty.bind(ballSpeed.valueProperty());
 
 		sizeChoice.getItems().addAll("1700 x 1060", "1300 x 1034", "1043 x 778", "800 x 600", "600 x 400");
 		sizeChoice.setStyle("-fx-font-size: 18px;");
@@ -157,7 +146,7 @@ public class SettingsMenuController {
 	@FXML
 	private void doSettingsGameSpeed() {
 		StageManagement.disableItems(this.primaryStage.getScene(), true);
-		gameSpeedSettings = new GameSpeedSettings(this.primaryStage, 2);
+		gameSpeedSettings = new GameSpeedSettings(this.primaryStage);
 		gameSpeedSettings.startMenu();
 		StageManagement.disableItems(this.primaryStage.getScene(), false);
 		this.conf = ConfigurationSave.chargerConfiguration();
@@ -184,9 +173,6 @@ public class SettingsMenuController {
 		this.conf.setSizeValues();
 		this.checkSettingsChanged();
 		ConfigurationSave.sauvegarderConfiguration(this.conf);
-		// this.conf = ConfigurationSave.chargerConfiguration();
-		System.out.println("OLD  = " + this.oldGameSize + " NEW = " + this.conf.gameSize);
-		System.out.println(this.conf.isConfHasChanged);
 		this.doRetour();
 	}
 
@@ -203,6 +189,9 @@ public class SettingsMenuController {
 	private void doRetour() {
 		if (this.playerSettings != null) {
 			this.playerSettings.closeMenu();
+		}
+		if (this.gameSpeedSettings != null) {
+			this.gameSpeedSettings.closeMenu();
 		}
 		if (this.inGame) {
 			ConfigurationSave.sauvegarderConfiguration(this.conf);

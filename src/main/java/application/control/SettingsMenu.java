@@ -73,6 +73,9 @@ public class SettingsMenu {
 		if (this.dbmfcViewController.playerSettings != null) {
 			this.dbmfcViewController.playerSettings.closeMenu();
 		}
+		if (this.dbmfcViewController.gameSpeedSettings != null) {
+			this.dbmfcViewController.gameSpeedSettings.closeMenu();
+		}
 		this.primaryStage.close();
 	}
 }

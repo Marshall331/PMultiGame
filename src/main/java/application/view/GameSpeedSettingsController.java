@@ -7,9 +7,7 @@ import application.tools.ConfigurationSave;
 import javafx.fxml.FXML;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -151,7 +149,6 @@ public class GameSpeedSettingsController {
     @FXML
     private void doValider() {
 
-        // boolean allOK = true;
         this.baseSpeedY = this.sliderBaseSpeedY.getValue();
         this.baseSpeedX = this.sliderBaseSpeedX.getValue();
         this.maxSpeed = this.sliderMaxSpeed.getValue();
@@ -159,33 +156,19 @@ public class GameSpeedSettingsController {
         this.size = this.sliderSize.getValue();
         this.color = this.ballColor.getValue().toString();
 
-        this.conf.isConfHasChanged = true;
-
         this.checkSettingsChanged();
-        // System.out.println("AVANT : " + this.conf.ballMaxSpeed);
         this.setNewSettings();
         ConfigurationSave.sauvegarderConfiguration(conf);
         this.conf = ConfigurationSave.chargerConfiguration();
-        // System.out.println("APRES : " + this.conf.ballMaxSpeed);
         this.doRetour();
     }
 
     private void checkSettingsChanged() {
-        // if (this.playerId == 1) {
-        // if (this.isComputer != this.conf.isPlayer1Computer || this.mouseControl !=
-        // this.conf.isPlayer1MouseControl
-        // || this.maxSpeed != this.conf.player1MaxSpeed || this.paddleSize !=
-        // this.conf.player1PaddleSize) {
-        // this.conf.isConfHasChanged = true;
-        // }
-        // } else {
-        // if (this.isComputer != this.conf.isPlayer2Computer || this.mouseControl !=
-        // this.conf.isPlayer2MouseControl
-        // || this.maxSpeed != this.conf.player2MaxSpeed || this.paddleSize !=
-        // this.conf.player2PaddleSize) {
-        // this.conf.isConfHasChanged = true;
-        // }
-        // }
+        if (this.baseSpeedY != this.conf.ballBaseSpeedY || this.baseSpeedX != this.conf.ballBaseSpeedX
+                || this.maxSpeed != this.conf.ballMaxSpeed || this.acc != this.conf.ballAcc
+                || this.size != this.conf.ballSize || !this.color.equals(this.conf.ballColor)) {
+            this.conf.isConfHasChanged = true;
+        }
     }
 
     /*

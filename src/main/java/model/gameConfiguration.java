@@ -14,11 +14,13 @@ public class gameConfiguration implements Serializable {
     public boolean isPlayer1MouseControl;
     public boolean isPlayer1Computer;
     public int player1PaddleSize;
+    public String player1Color;
 
     public double player2MaxSpeed;
     public boolean isPlayer2MouseControl;
     public boolean isPlayer2Computer;
     public int player2PaddleSize;
+    public String player2Color;
 
     public double ballBaseSpeedY;
     public double ballBaseSpeedX;
@@ -51,12 +53,16 @@ public class gameConfiguration implements Serializable {
         this.isPlayer1MouseControl = false;
         this.isPlayer1Computer = false;
         this.player1PaddleSize = 140;
+        this.player1Color = "#8808a3";
 
         this.player2MaxSpeed = 5;
         this.isPlayer2MouseControl = false;
         this.isPlayer2Computer = true;
         this.player2PaddleSize = 140;
+        this.player2Color = "#18ab05";
 
+        this.ballBaseSpeedY = 3;
+        this.ballBaseSpeedX = 3;
         this.ballMaxSpeed = 30;
         this.ballAcc = 1.1;
         this.ballSize = 25;
@@ -68,26 +74,6 @@ public class gameConfiguration implements Serializable {
 
         this.scr1 = 0;
         this.scr2 = 0;
-    }
-
-    public void resetScore() {
-        this.scr1 = 0;
-        this.scr2 = 0;
-    }
-
-    public void setNewPlayerSettings(int _playerId, double _maxSpeed, boolean _mouseControl, boolean _isComputer,
-            int _paddleSize) {
-        if (_playerId == 1) {
-            this.player1MaxSpeed = _maxSpeed;
-            this.isPlayer1MouseControl = _mouseControl;
-            this.isPlayer1Computer = _isComputer;
-            this.player1PaddleSize = _paddleSize;
-        } else {
-            this.player2MaxSpeed = _maxSpeed;
-            this.isPlayer2MouseControl = _mouseControl;
-            this.isPlayer2Computer = _isComputer;
-            this.player2PaddleSize = _paddleSize;
-        }
     }
 
     public void setSizeValues() {
@@ -135,5 +121,27 @@ public class gameConfiguration implements Serializable {
         this.ballAcc = _acc;
         this.ballSize = _size;
         this.ballColor = _color;
+    }
+
+    public void setNewPlayerSettings(int _playerId, double _maxSpeed, boolean _mouseControl, boolean _isComputer,
+            int _paddleSize, String _color) {
+        if (_playerId == 1) {
+            this.player1MaxSpeed = _maxSpeed;
+            this.isPlayer1MouseControl = _mouseControl;
+            this.isPlayer1Computer = _isComputer;
+            this.player1PaddleSize = _paddleSize;
+            this.player1Color = _color;
+        } else {
+            this.player2MaxSpeed = _maxSpeed;
+            this.isPlayer2MouseControl = _mouseControl;
+            this.isPlayer2Computer = _isComputer;
+            this.player2PaddleSize = _paddleSize;
+            this.player2Color = _color;
+        }
+    }
+
+    public void resetScore() {
+        this.scr1 = 0;
+        this.scr2 = 0;
     }
 }

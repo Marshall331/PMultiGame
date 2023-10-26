@@ -1,7 +1,5 @@
 package model;
 
-import java.io.Serializable;
-
 import javafx.scene.shape.Rectangle;
 
 public class player {

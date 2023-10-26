@@ -82,7 +82,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="450.0" GridPane.rowIndex="1">
                <children>
-                  <Label alignment="CENTER" prefHeight="42.0" prefWidth="199.0" text="Vitesse maximale :">
+                  <Label alignment="CENTER" prefHeight="42.0" prefWidth="204.0" text="Vitesse maximale :">
                      <font>
                         <Font name="Corbel Bold" size="24.0" />
                      </font>
