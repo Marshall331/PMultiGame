@@ -177,8 +177,10 @@ public class SettingsMenuController {
 	}
 
 	private void checkSettingsChanged() {
-		if (this.oldSoundSetting != this.conf.isSoundOn || this.oldGameSize != this.conf.gameSize) {
-			this.conf.isConfHasChanged = true;
+		if (!this.conf.isConfHasChanged) {
+			if (this.oldSoundSetting != this.conf.isSoundOn || this.oldGameSize != this.conf.gameSize) {
+				this.conf.isConfHasChanged = true;
+			}
 		}
 	}
 
@@ -208,6 +210,7 @@ public class SettingsMenuController {
 				"Voulez vous vraiment réinitialiser les paramètres du jeu ?",
 				null, AlertType.CONFIRMATION)) {
 			this.conf = new gameConfiguration();
+			this.conf.isConfHasChanged = true;
 			this.setItemsByConf();
 		}
 	}

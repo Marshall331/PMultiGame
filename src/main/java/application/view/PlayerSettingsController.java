@@ -208,17 +208,21 @@ public class PlayerSettingsController {
 	}
 
 	private void checkSettingsChanged() {
-		if (this.playerId == 1) {
-			if (this.isComputer != this.conf.isPlayer1Computer || this.mouseControl != this.conf.isPlayer1MouseControl
-					|| this.maxSpeed != this.conf.player1MaxSpeed || this.paddleSize != this.conf.player1PaddleSize
-					|| !this.color.equals(this.conf.player1Color)) {
-				this.conf.isConfHasChanged = true;
-			}
-		} else {
-			if (this.isComputer != this.conf.isPlayer2Computer || this.mouseControl != this.conf.isPlayer2MouseControl
-					|| this.maxSpeed != this.conf.player2MaxSpeed || this.paddleSize != this.conf.player2PaddleSize
-					|| !this.color.equals(this.conf.player2Color)) {
-				this.conf.isConfHasChanged = true;
+		if (!this.conf.isConfHasChanged) {
+			if (this.playerId == 1) {
+				if (this.isComputer != this.conf.isPlayer1Computer
+						|| this.mouseControl != this.conf.isPlayer1MouseControl
+						|| this.maxSpeed != this.conf.player1MaxSpeed || this.paddleSize != this.conf.player1PaddleSize
+						|| !this.color.equals(this.conf.player1Color)) {
+					this.conf.isConfHasChanged = true;
+				}
+			} else {
+				if (this.isComputer != this.conf.isPlayer2Computer
+						|| this.mouseControl != this.conf.isPlayer2MouseControl
+						|| this.maxSpeed != this.conf.player2MaxSpeed || this.paddleSize != this.conf.player2PaddleSize
+						|| !this.color.equals(this.conf.player2Color)) {
+					this.conf.isConfHasChanged = true;
+				}
 			}
 		}
 	}

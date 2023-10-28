@@ -4,12 +4,15 @@ import javafx.animation.AnimationTimer;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.shape.Circle;
-
 import java.util.Random;
+
+import application.tools.Animations;
+import application.view.GameController;
 
 public final class game extends AnimationTimer {
 
     private gameConfiguration conf;
+    private GameController gameController;
 
     private double C;
     private double MAG;
@@ -23,7 +26,7 @@ public final class game extends AnimationTimer {
 
     private final player player1;
     private final player player2;
-    private final Circle ball;
+    public final Circle ball;
 
     public final int WIDTH;
     public final int HEIGHT;
@@ -31,6 +34,8 @@ public final class game extends AnimationTimer {
     public final double BALL_RADIUS;
     public final int PADDLE_WIDTH;
 
+    public final double ballBaseSpeedX;
+    public final double ballBaseSpeedY;
     public final double ballMinX;
     public final double ballMaxX;
     public final double ballMinY;
@@ -43,9 +48,11 @@ public final class game extends AnimationTimer {
     private double dX;
     private double dY;
 
-    public game(player _player1, player _player2, Circle _ball, gameConfiguration _conf) {
+    public game(GameController _gameController, player _player1, player _player2, Circle _ball,
+            gameConfiguration _conf) {
 
         this.conf = _conf;
+        this.gameController = _gameController;
 
         this.C = this.conf.C;
         this.MAG = this.conf.MAG;
@@ -77,6 +84,8 @@ public final class game extends AnimationTimer {
         this.player2.paddleMaxY = this.HEIGHT - this.player2.paddleSize / 2;
         this.player2.paddleMinY = -this.HEIGHT + this.player2.paddleSize / 2;
 
+        this.ballBaseSpeedX = this.conf.ballBaseSpeedX;
+        this.ballBaseSpeedY = this.conf.ballBaseSpeedY;
         this.ballMinX = -WIDTH + BALL_RADIUS;
         this.ballMaxX = WIDTH - BALL_RADIUS;
         this.ballMinY = -HEIGHT + BALL_RADIUS;
@@ -87,8 +96,11 @@ public final class game extends AnimationTimer {
 
     @Override
     public void handle(long now) {
-        // System.out.println("BALL X :" + ball.getTranslateX() + " BALL Y :" +
-        // ball.getTranslateY());
+        // scorePlayer1.set(100);
+        // scorePlayer1.set(100);
+        // Animations.playGoalAnimation(this.gameController.scene, this, this.gameController.labGoal, 2,
+        //         this.conf.labGoalFontSize, this.conf.labScoreMargin);
+
         checkEndGame();
         checkGoal();
         checkPaddleCollision();
@@ -153,7 +165,8 @@ public final class game extends AnimationTimer {
                 && _player.paddle.getTranslateY() + _player.vel >= _player.paddleMinY;
     }
 
-    private void reset() {
+    public void reset() {
+        this.stop();
         ball.setTranslateX(0);
         ball.setTranslateY(0);
         player1.paddle.setTranslateY(0);
@@ -180,24 +193,28 @@ public final class game extends AnimationTimer {
             acc = this.C * Math.abs(
                     (player1.paddle.getTranslateY() + this.player1.paddleSize - ball.getTranslateY())
                             / this.player1.paddleSize);
-            dX = mag * Math.cos(acc);
-            dY = mag * Math.sin(acc);
-            dY = (ball.getTranslateY() <= player1.paddle.getTranslateY() + this.player1.paddleSize) ? -dY : dY;
+            dX = mag * Math.cos(acc) < this.ballBaseSpeedX ? this.ballBaseSpeedX : mag * Math.cos(acc);
+            dY = mag * Math.sin(acc) < this.ballBaseSpeedX ? this.ballBaseSpeedX : mag * Math.sin(acc);
+            dY = (ball.getTranslateY() <= player1.paddle.getTranslateY()) ? -dY : dY;
         } else if (player2.paddle.getBoundsInParent().intersects(ball.getBoundsInParent())) {
+            mag *= (mag < this.SPEED) ? this.ACC : 1;
             acc = this.C * Math.abs(
                     (player2.paddle.getTranslateY() + this.player2.paddleSize - ball.getTranslateY())
                             / this.player2.paddleSize);
+            dX = mag * Math.cos(acc) < this.ballBaseSpeedX ? this.ballBaseSpeedX : mag * Math.cos(acc);
+            dY = mag * Math.sin(acc) < this.ballBaseSpeedX ? this.ballBaseSpeedX : mag * Math.sin(acc);
+            dY = (ball.getTranslateY() <= player1.paddle.getTranslateY()) ? -dY : dY;
             dX = -mag * Math.cos(acc);
         }
     }
 
     private void checkGoal() {
         if (ball.getTranslateX() <= this.ballMinX) {
-            scorePlayer1.set(scorePlayer1.getValue() + 1);
-            reset();
+            Animations.playGoalAnimation(this.gameController.scene, this, this.gameController.labGoal, 2,
+                    this.conf.labGoalFontSize, this.conf.labScoreMargin);
         } else if (ball.getTranslateX() >= this.ballMaxX) {
-            scorePlayer2.set(scorePlayer2.getValue() + 1);
-            reset();
+            Animations.playGoalAnimation(this.gameController.scene, this, this.gameController.labGoal, 1,
+                    this.conf.labGoalFontSize, this.conf.labScoreMargin);
         }
     }
 

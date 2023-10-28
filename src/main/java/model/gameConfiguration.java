@@ -41,11 +41,17 @@ public class gameConfiguration implements Serializable {
     public int HEIGHT;
     public int midLineY;
     public int PADDLE_WIDTH;
-    // public int BALL_RADIUS;
     public double PADDLE_SPEED;
-    // public double BALL_SPEED;
 
     public boolean isConfHasChanged;
+
+    public int menuButtonWidth;
+    public int menuButtonFontSize;
+    public int settingsButtonRightMargin;
+    public int labScoreWidth;
+    public int labScoreFontSize;
+    public int labScoreMargin;
+    public int labGoalFontSize;
 
     public gameConfiguration() {
 
@@ -74,6 +80,7 @@ public class gameConfiguration implements Serializable {
 
         this.scr1 = 0;
         this.scr2 = 0;
+
     }
 
     public void setSizeValues() {
@@ -83,30 +90,65 @@ public class gameConfiguration implements Serializable {
                 this.HEIGHT = 982 / 2;
                 this.midLineY = 882;
                 this.PADDLE_WIDTH = 25;
+                menuButtonWidth = 250;
+                menuButtonFontSize = 31;
+                settingsButtonRightMargin = 270;
+                labScoreWidth = 130;
+                labScoreFontSize = 65;
+                labScoreMargin = 85;
+                labGoalFontSize = 75;
                 break;
             case 2:
                 this.WIDTH = 1299 / 2;
                 this.HEIGHT = 936 / 2;
                 this.midLineY = 836;
                 this.PADDLE_WIDTH = 25;
+                menuButtonWidth = 200;
+                menuButtonFontSize = 31;
+                settingsButtonRightMargin = 220;
+                labScoreWidth = 115;
+                labScoreFontSize = 55;
+                labScoreMargin = 70;
+                labGoalFontSize = 65;
                 break;
             case 3:
                 this.WIDTH = 1043 / 2;
                 this.HEIGHT = 700 / 2;
                 this.midLineY = 600;
                 this.PADDLE_WIDTH = 25;
+                menuButtonWidth = 150;
+                menuButtonFontSize = 31;
+                settingsButtonRightMargin = 170;
+                labScoreWidth = 100;
+                labScoreFontSize = 45;
+                labScoreMargin = 55;
+                labGoalFontSize = 55;
                 break;
             case 4:
                 this.WIDTH = 800 / 2;
                 this.HEIGHT = 600 / 2;
                 this.midLineY = 500;
                 this.PADDLE_WIDTH = 22;
+                menuButtonWidth = 125;
+                menuButtonFontSize = 26;
+                settingsButtonRightMargin = 155;
+                labScoreWidth = 85;
+                labScoreFontSize = 35;
+                labScoreMargin = 40;
+                labGoalFontSize = 45;
                 break;
             case 5:
                 this.WIDTH = 600 / 2;
                 this.HEIGHT = 400 / 2;
                 this.midLineY = 300;
                 this.PADDLE_WIDTH = 20;
+                menuButtonWidth = 100;
+                menuButtonFontSize = 21;
+                settingsButtonRightMargin = 120;
+                labScoreWidth = 70;
+                labScoreFontSize = 25;
+                labScoreMargin = 25;
+                labGoalFontSize = 45;
                 break;
             default:
                 break;

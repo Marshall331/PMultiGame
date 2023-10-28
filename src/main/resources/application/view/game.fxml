@@ -34,9 +34,54 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="menuButton" mnemonicParsing="false" onAction="#doMenu" text="Menu" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+            <Button fx:id="menuButton" mnemonicParsing="false" onAction="#doMenu" prefHeight="106.0" prefWidth="85.0" text="Menu" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
                <font>
-                  <Font size="30.0" />
+                  <Font name="System Bold" size="21.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop color="#060dbf" />
+                        <Stop color="#c21313" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="settingsButton" mnemonicParsing="false" onAction="#doSettings" prefHeight="55.0" prefWidth="59.0" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="120.0" top="5.0" />
+               </GridPane.margin>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0">
+                     <image>
+                        <Image url="@images/SettingsIconInGame.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label fx:id="labScrPlayer2" contentDisplay="CENTER" prefHeight="78.0" prefWidth="80.0" textFill="#0e1ac3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="50.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="110.0" />
+               </GridPane.margin>
+            </Label>
+            <Line fx:id="topLine" endX="100.17156982421875" endY="-46.166561126708984" fill="#900b0b" startX="100.0" startY="31.833438873291016" strokeWidth="2.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Label fx:id="labScrPlayer1" alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="78.0" prefWidth="80.0" textFill="#0e1ac3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="50.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets right="110.0" />
+               </GridPane.margin>
+            </Label>
+            <Button mnemonicParsing="false" onAction="#doReset" prefHeight="106.0" prefWidth="85.0" text="Reset" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="21.0" />
                </font>
                <textFill>
                   <LinearGradient endX="1.0" endY="1.0">
@@ -55,38 +100,9 @@
                   </LinearGradient>
                </textFill>
                <GridPane.margin>
-                  <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
+                  <Insets bottom="15.0" left="15.0" top="15.0" />
                </GridPane.margin>
             </Button>
-            <Button fx:id="settingsButton" mnemonicParsing="false" onAction="#doSettings" prefHeight="55.0" prefWidth="59.0" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
-               <GridPane.margin>
-                  <Insets bottom="5.0" left="5.0" right="180.0" top="5.0" />
-               </GridPane.margin>
-               <graphic>
-                  <ImageView fitHeight="50.0" fitWidth="50.0">
-                     <image>
-                        <Image url="@images/SettingsIconInGame.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Label fx:id="labScrPlayer2" alignment="CENTER" contentDisplay="CENTER" prefHeight="79.0" prefWidth="150.0" text="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-               <font>
-                  <Font name="Arial Bold" size="50.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="150.0" />
-               </GridPane.margin>
-            </Label>
-            <Line fx:id="topLine" endX="100.17156982421875" endY="-46.166561126708984" fill="#900b0b" startX="100.0" startY="31.833438873291016" strokeWidth="2.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Label fx:id="labScrPlayer1" alignment="CENTER" contentDisplay="CENTER" prefHeight="79.0" prefWidth="150.0" text="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-               <font>
-                  <Font name="Arial Bold" size="50.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets right="150.0" />
-               </GridPane.margin>
-            </Label>
          </children>
       </GridPane>
    </top>
@@ -99,7 +115,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Line fx:id="midLine" endX="1449.878662109375" endY="900.0" startX="1450.0" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="8.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+            <Line fx:id="midLine" endX="1449.878662109375" endY="900.0" startX="1450.0" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeMiterLimit="15.0" strokeWidth="8.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
                <fill>
                   <LinearGradient endX="1.0" endY="1.0">
                      <stops>
@@ -155,16 +171,8 @@
                <fill>
                   <LinearGradient endX="1.0" endY="0.990521327014218" startX="1.0" startY="1.0">
                      <stops>
-                        <Stop>
-                           <color>
-                              <Color blue="1.0" green="1.0" red="1.0" />
-                           </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                           <color>
-                              <Color blue="0.6392157077789307" green="0.0313725508749485" red="0.5333333611488342" />
-                           </color>
-                        </Stop>
+                        <Stop color="WHITE" />
+                        <Stop color="#8808a3" offset="1.0" />
                      </stops>
                   </LinearGradient>
                </fill>
@@ -188,20 +196,25 @@
                   <Insets left="30.0" />
                </GridPane.margin>
             </Rectangle>
+            <Label fx:id="labGoal" text="GOOOOOOOAL !" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="96.0" />
+               </font>
+               <textFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop color="#060dbf" />
+                        <Stop color="#c21313" offset="1.0" />
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+            </Label>
             <Rectangle fx:id="paddle2" arcHeight="30.0" arcWidth="30.0" height="160.0" strokeType="INSIDE" strokeWidth="3.0" width="25.0" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
                <fill>
                   <LinearGradient endX="1.0" endY="0.004739336492891044" startX="1.0">
                      <stops>
-                        <Stop>
-                           <color>
-                              <Color blue="1.0" green="1.0" red="1.0" />
-                           </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                           <color>
-                              <Color blue="0.019607843831181526" green="0.6705882549285889" red="0.0941176488995552" />
-                           </color>
-                        </Stop>
+                        <Stop color="WHITE" />
+                        <Stop color="#18ab05" offset="1.0" />
                      </stops>
                   </LinearGradient>
                </fill>

@@ -16,6 +16,7 @@ import javafx.geometry.VPos;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -41,40 +42,42 @@ public class GameController {
 	private Stage primaryStage;
 
 	// Scène de la fenêtre précédente
-	private Scene scene;
+	public Scene scene;
 
 	private game game;
 
 	@FXML
 	BorderPane borderpane;
 	@FXML
-	private GridPane scoreBoard;
+	public GridPane scoreBoard;
 	@FXML
-	private GridPane boardGame;
+	public GridPane boardGame;
 	@FXML
-	private Line topLine;
+	public Line topLine;
 	@FXML
-	private Line midLine;
+	public Line midLine;
 	@FXML
-	private Label labScrPlayer1;
+	public Label labScrPlayer1;
 	@FXML
-	private Label labScrPlayer2;
+	public Label labScrPlayer2;
 	@FXML
-	private Rectangle paddle1;
+	public Label labGoal;
 	@FXML
-	private Rectangle paddle2;
+	public Rectangle paddle1;
 	@FXML
-	private Circle balle;
+	public Rectangle paddle2;
 	@FXML
-	private Button menuButton;
+	public Circle balle;
 	@FXML
-	private Button settingsButton;
+	public Button menuButton;
+	@FXML
+	public Button settingsButton;
 
-	private gameConfiguration conf;
-	private SettingsMenu settingsMenu;
+	public gameConfiguration conf;
+	public SettingsMenu settingsMenu;
 
-	private player player1;
-	private player player2;
+	public player player1;
+	public player player2;
 
 	/**
 	 * Affichage de la fenêtre.
@@ -121,17 +124,34 @@ public class GameController {
 		this.paddle1.setWidth(this.conf.PADDLE_WIDTH);
 		this.paddle2.setWidth(this.conf.PADDLE_WIDTH);
 		this.balle.setRadius(this.conf.ballSize);
-		this.menuButton.setPrefWidth(150);
+		// this.labGoal.setStyle("-fx-text-fill: " + this.conf.ballColor + ";");
+		this.labGoal.setOpacity(0);
 
 		Style.setBallColor(this.balle, this.conf.ballColor);
 		Style.setPlayerColor(paddle1, this.conf.player1Color);
 		Style.setPlayerColor(paddle2, this.conf.player2Color);
 
-		if (this.conf.gameSize == 4 || this.conf.gameSize == 5) {
-			GridPane.setHalignment(this.settingsButton, HPos.LEFT);
-			GridPane.setValignment(this.settingsButton, VPos.CENTER);
-			GridPane.setMargin(this.settingsButton, new Insets(0, 0, 0, 10));
-		}
+		this.menuButton.setPrefWidth(this.conf.menuButtonWidth);
+		this.menuButton.setStyle("-fx-font-size: " + this.conf.menuButtonFontSize + "px; -fx-font-weight: bold;");
+
+		// this.labScrPlayer1.setStyle("-fx-font-size: " + this.conf.labScoreFontSize +
+		// "px; -fx-font-weight: bold;"
+		// + "-fx-border-color: red; -fx-border-width: 4px;");
+		// this.labScrPlayer2.setStyle("-fx-font-size: " + this.conf.labScoreFontSize +
+		// "px; -fx-font-weight: bold;"
+		// + "-fx-border-color: red; -fx-border-width: 4px;");
+		this.labScrPlayer1.setStyle("-fx-font-size: " + this.conf.labScoreFontSize + "px; -fx-font-weight: bold;");
+		this.labScrPlayer2.setStyle("-fx-font-size: " + this.conf.labScoreFontSize + "px; -fx-font-weight: bold;");
+		this.labScrPlayer1.setPrefWidth(this.conf.labScoreWidth);
+		this.labScrPlayer2.setPrefWidth(this.conf.labScoreWidth);
+
+		GridPane.setMargin(this.labScrPlayer1,
+				new Insets(0, this.conf.labScoreWidth + this.conf.labScoreMargin, 0, 0));
+		GridPane.setMargin(this.labScrPlayer2,
+				new Insets(0, 0, 0, this.conf.labScoreWidth + this.conf.labScoreMargin));
+
+		GridPane.setMargin(this.settingsButton, new Insets(0, this.conf.settingsButtonRightMargin, 0, 0));
+
 	}
 
 	private void setupPlayers() {
@@ -149,7 +169,7 @@ public class GameController {
 
 	private void createGame() {
 		setControls(player1.mouseControl, conf.isSoloGame);
-		game = new game(player1, player2, balle, conf);
+		game = new game(this, player1, player2, balle, conf);
 
 		// Mises à jour automatique des scores
 		labScrPlayer1.textProperty().bind(Bindings.convert(Bindings.concat(game.scorePlayer2)));
@@ -344,6 +364,13 @@ public class GameController {
 		}
 	}
 
+	@FXML
+	private void doReset() {
+		this.conf.resetScore();
+		ConfigurationSave.sauvegarderConfiguration(conf);
+		Game game = new Game(primaryStage);
+	}
+
 	/*
 	 * Action menu retour. Retourne à la fenêtre précédente.
 	 */
@@ -374,7 +401,6 @@ public class GameController {
 
 	private void updateGameSettings() {
 		this.conf = ConfigurationSave.chargerConfiguration();
-		System.out.println(this.conf.isConfHasChanged);
 		if (this.conf.isConfHasChanged) {
 			Game g = new Game(this.primaryStage);
 		} else {
