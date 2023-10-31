@@ -97,7 +97,7 @@ public class PlayerSettingsController {
 			this.color = this.conf.player1Color;
 		} else {
 			this.isComputer = this.conf.isPlayer2Computer;
-			this.mouseControl = this.conf.isPlayer1MouseControl;
+			this.mouseControl = this.conf.isPlayer2MouseControl;
 			this.maxSpeed = this.conf.player2MaxSpeed;
 			this.paddleSize = this.conf.player2PaddleSize;
 			this.color = this.conf.player2Color;
@@ -112,16 +112,19 @@ public class PlayerSettingsController {
 		botButt.setToggleGroup(controlChoice);
 
 		keyboardButt.selectedProperty().addListener((observable, oldValue, newValue) -> {
+			this.sliderPaddleSpeed.setDisable(false);
 			if (this.sliderPaddleSpeed.getValue() == 50) {
 				this.labPaddleSpeed.setText("50");
 			}
 		});
 		mouseButt.selectedProperty().addListener((observable, oldValue, newValue) -> {
+			this.sliderPaddleSpeed.setDisable(true);
 			if (this.sliderPaddleSpeed.getValue() == 50) {
 				this.labPaddleSpeed.setText("50");
 			}
 		});
 		botButt.selectedProperty().addListener((observable, oldValue, newValue) -> {
+			this.sliderPaddleSpeed.setDisable(false);
 			if (this.sliderPaddleSpeed.getValue() == 50) {
 				this.labPaddleSpeed.setText("infini");
 			}

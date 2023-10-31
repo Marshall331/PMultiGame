@@ -209,7 +209,10 @@ public class SettingsMenuController {
 		if (AlertUtilities.confirmYesCancel(this.primaryStage, "Réinitialiser les paramètres ?",
 				"Voulez vous vraiment réinitialiser les paramètres du jeu ?",
 				null, AlertType.CONFIRMATION)) {
+			int scr1 = this.conf.scr1;
+			int scr2 = this.conf.scr2;
 			this.conf = new gameConfiguration();
+			this.conf.setScores(scr1, scr2);
 			this.conf.isConfHasChanged = true;
 			this.setItemsByConf();
 		}

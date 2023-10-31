@@ -78,9 +78,6 @@ public class gameConfiguration implements Serializable {
         this.gameSize = 2;
         this.isSoundOn = true;
 
-        this.scr1 = 0;
-        this.scr2 = 0;
-
     }
 
     public void setSizeValues() {
@@ -96,7 +93,7 @@ public class gameConfiguration implements Serializable {
                 labScoreWidth = 130;
                 labScoreFontSize = 65;
                 labScoreMargin = 85;
-                labGoalFontSize = 75;
+                labGoalFontSize = 110;
                 break;
             case 2:
                 this.WIDTH = 1299 / 2;
@@ -109,7 +106,7 @@ public class gameConfiguration implements Serializable {
                 labScoreWidth = 115;
                 labScoreFontSize = 55;
                 labScoreMargin = 70;
-                labGoalFontSize = 65;
+                labGoalFontSize = 95;
                 break;
             case 3:
                 this.WIDTH = 1043 / 2;
@@ -122,7 +119,7 @@ public class gameConfiguration implements Serializable {
                 labScoreWidth = 100;
                 labScoreFontSize = 45;
                 labScoreMargin = 55;
-                labGoalFontSize = 55;
+                labGoalFontSize = 80;
                 break;
             case 4:
                 this.WIDTH = 800 / 2;
@@ -135,7 +132,7 @@ public class gameConfiguration implements Serializable {
                 labScoreWidth = 85;
                 labScoreFontSize = 35;
                 labScoreMargin = 40;
-                labGoalFontSize = 45;
+                labGoalFontSize = 60;
                 break;
             case 5:
                 this.WIDTH = 600 / 2;
@@ -146,7 +143,7 @@ public class gameConfiguration implements Serializable {
                 menuButtonFontSize = 21;
                 settingsButtonRightMargin = 120;
                 labScoreWidth = 70;
-                labScoreFontSize = 25;
+                labScoreFontSize = 35;
                 labScoreMargin = 25;
                 labGoalFontSize = 45;
                 break;
@@ -185,5 +182,10 @@ public class gameConfiguration implements Serializable {
     public void resetScore() {
         this.scr1 = 0;
         this.scr2 = 0;
+    }
+
+    public void setScores(int _scr1, int _scr2) {
+        this.scr1 = _scr1;
+        this.scr2 = _scr2;
     }
 }

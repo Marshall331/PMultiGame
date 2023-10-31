@@ -30,71 +30,94 @@ public class Animations {
         });
     }
 
-    public static void playGoalAnimation(Scene _scene, game _game, Label _labGoal, int _player, int _fontSizeGoal, int _labScoreMargin) {
+    public static void playGoalAnimation(Scene _scene, game _game, Label _labGoal, int _player, int _fontSizeGoal,
+            int _labScoreMargin) {
 
-        _game.ball.setVisible(false);
+        StageManagement.disableItems(_scene, true);
+        if (_player == 1) {
+            Style.setLabelColor(_labGoal, _game.gameController.conf.player1Color);
+        } else {
+            Style.setLabelColor(_labGoal, _game.gameController.conf.player2Color);
+        }
+        _labGoal.setVisible(true);
         _game.stop();
-
-        // StageManagement.disableItems(_scene, true);
 
         _labGoal.setTranslateX(0);
         _labGoal.setTranslateY(0);
         _labGoal.setStyle("-fx-font-size: " + _fontSizeGoal + "px; -fx-font-weight: bold;");
-        _labGoal.setText("GOOOOAL du joueur " + _player);
+        _labGoal.setText("Joueur " + _player + " a marqué !");
 
-        FadeTransition fadeIn = new FadeTransition(Duration.millis(500), _labGoal);
-        fadeIn.setFromValue(0);
-        fadeIn.setToValue(1);
+        FadeTransition fadeOutBall = new FadeTransition(Duration.seconds(0.1), _game.ball);
+        fadeOutBall.setFromValue(1);
+        fadeOutBall.setToValue(0);
 
-        FadeTransition fadeOut = new FadeTransition(Duration.seconds(0.7), _labGoal);
-        fadeOut.setFromValue(1);
-        fadeOut.setToValue(0.8);
+        ScaleTransition fadeOutLine = new ScaleTransition(Duration.seconds(0.2), _game.gameController.midLine);
+        fadeOutLine.setToY(0);
 
-        SequentialTransition sequence = new SequentialTransition(fadeIn, fadeOut);
-        sequence.setOnFinished(event -> {
-            _labGoal.setVisible(false);
-            playAddScore(_scene, _game, _labGoal, _player, _labScoreMargin);
+        FadeTransition fadeInGoal = new FadeTransition(Duration.seconds(0.5), _labGoal);
+        fadeInGoal.setFromValue(0);
+        fadeInGoal.setToValue(1);
+
+        FadeTransition fadeOutGoal = new FadeTransition(Duration.seconds(0.7), _labGoal);
+        fadeOutGoal.setFromValue(1);
+        fadeOutGoal.setToValue(0.2);
+
+        fadeOutGoal.setOnFinished(event -> {
+            _labGoal.setStyle("-fx-font-size: " + _labScoreMargin + "px; -fx-font-weight: bold;");
+            _labGoal.setTranslateX(_player == 1 ? -_labScoreMargin : _labScoreMargin);
+            _labGoal.setText("+100");
         });
 
-        _labGoal.setVisible(true);
-        sequence.play();
-    }
+        FadeTransition fadeInScore = new FadeTransition(Duration.millis(100), _labGoal);
+        fadeInScore.setFromValue(0);
+        fadeInScore.setToValue(1);
 
-    public static void playAddScore(Scene _scene, game _game, Label _labGoal, int _player, int _labScoreMargin) {
-        // _labGoal.setStyle("-fx-font-size: " + _fontSizeScore + "px; -fx-font-weight:
-        // bold;"
-        // + "-fx-border-color: red; -fx-border-width: 4px;");
-        _labGoal.setStyle("-fx-font-size: " + _labScoreMargin + "px; -fx-font-weight: bold;");
-        _labGoal.setTranslateX(
-                _player == 1 ? -_labScoreMargin : _labScoreMargin);
-        _labGoal.setText("+ 1");
-
-        FadeTransition fadeIn = new FadeTransition(Duration.millis(100), _labGoal);
-        fadeIn.setFromValue(0);
-        fadeIn.setToValue(1);
-
-        FadeTransition fadeOut = new FadeTransition(Duration.millis(700), _labGoal);
-        fadeOut.setFromValue(1);
-        fadeOut.setToValue(0);
-
-        TranslateTransition translateUpGoal = new TranslateTransition(Duration.millis(250), _labGoal);
+        TranslateTransition translateUpGoal = new TranslateTransition(Duration.millis(500), _labGoal);
         translateUpGoal.setByY(-ConfigurationSave.chargerConfiguration().HEIGHT + _labScoreMargin);
 
-        SequentialTransition sequence = new SequentialTransition(fadeIn, translateUpGoal, fadeOut);
-        sequence.setOnFinished(event -> {
-            if (_player == 2) {
-                _game.scorePlayer1.set(_game.scorePlayer1.getValue() + 1);
+        FadeTransition fadeOutScore = new FadeTransition(Duration.millis(300), _labGoal);
+        fadeOutScore.setFromValue(1);
+        fadeOutScore.setToValue(0);
+
+        ScaleTransition fadeInLine = new ScaleTransition(Duration.seconds(0.5), _game.gameController.midLine);
+        fadeInLine.setToY(1);
+
+        fadeInLine.setOnFinished(event -> {
+            _game.ball.setTranslateY(0);
+            _game.ball.setTranslateX(0);
+        });
+
+        FadeTransition fadeInBall = new FadeTransition(Duration.seconds(0.5), _game.ball);
+        fadeInBall.setFromValue(0);
+        fadeInBall.setToValue(1);
+
+        TranslateTransition translateMidPlayer1 = new TranslateTransition(Duration.millis(250),
+                _game.gameController.paddle1);
+        translateMidPlayer1.setToY(0);
+
+        TranslateTransition translateMidPlayer2 = new TranslateTransition(Duration.millis(250),
+                _game.gameController.paddle2);
+        translateMidPlayer2.setToY(0);
+
+        fadeOutScore.setOnFinished(event -> {
+            if (_player == 1) {
+                _game.scorePlayer2.setValue(_game.scorePlayer2.getValue() + 100);
             } else {
-                _game.scorePlayer2.set(_game.scorePlayer2.getValue() + 1);
+                _game.scorePlayer1.setValue(_game.scorePlayer1.getValue() + 100);
             }
-            _labGoal.setVisible(false);
-            _game.ball.setVisible(true);
+        });
+
+        SequentialTransition sequence = new SequentialTransition(fadeOutBall,
+                fadeOutLine, fadeInGoal, fadeOutGoal,
+                fadeInScore, translateUpGoal, fadeOutScore, fadeInLine, fadeInBall, translateMidPlayer1,
+                translateMidPlayer2);
+
+        sequence.setOnFinished(event -> {
             _game.reset();
             _game.start();
             StageManagement.disableItems(_scene, false);
         });
 
-        _labGoal.setVisible(true);
         sequence.play();
     }
 }

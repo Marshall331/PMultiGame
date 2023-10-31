@@ -10,13 +10,10 @@ import application.tools.StageManagement;
 import application.tools.Style;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.VPos;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -29,9 +26,6 @@ import javafx.stage.WindowEvent;
 import model.game;
 import model.gameConfiguration;
 import model.player;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.RadialGradient;
-import javafx.scene.paint.Stop;
 
 /**
  * Controller JavaFX de la scène du jeu.
@@ -130,18 +124,22 @@ public class GameController {
 		Style.setBallColor(this.balle, this.conf.ballColor);
 		Style.setPlayerColor(paddle1, this.conf.player1Color);
 		Style.setPlayerColor(paddle2, this.conf.player2Color);
+		Style.setLabelColor(labScrPlayer1, this.conf.player1Color);
+		Style.setLabelColor(labScrPlayer2, this.conf.player2Color);
 
 		this.menuButton.setPrefWidth(this.conf.menuButtonWidth);
 		this.menuButton.setStyle("-fx-font-size: " + this.conf.menuButtonFontSize + "px; -fx-font-weight: bold;");
 
-		// this.labScrPlayer1.setStyle("-fx-font-size: " + this.conf.labScoreFontSize +
-		// "px; -fx-font-weight: bold;"
-		// + "-fx-border-color: red; -fx-border-width: 4px;");
-		// this.labScrPlayer2.setStyle("-fx-font-size: " + this.conf.labScoreFontSize +
-		// "px; -fx-font-weight: bold;"
-		// + "-fx-border-color: red; -fx-border-width: 4px;");
-		this.labScrPlayer1.setStyle("-fx-font-size: " + this.conf.labScoreFontSize + "px; -fx-font-weight: bold;");
-		this.labScrPlayer2.setStyle("-fx-font-size: " + this.conf.labScoreFontSize + "px; -fx-font-weight: bold;");
+		this.labScrPlayer1.setStyle("-fx-font-size: " + this.conf.labScoreFontSize +
+				"px; -fx-font-weight: bold;");
+		this.labScrPlayer2.setStyle("-fx-font-size: " + this.conf.labScoreFontSize +
+				"px; -fx-font-weight: bold;");
+		// this.labScrPlayer1.setStyle("-fx-font-size: " + this.conf.labScoreFontSize
+		// + "px; -fx-font-weight: bold; -fx-text-fill: " + this.conf.player1Color +
+		// ";");
+		// this.labScrPlayer2.setStyle("-fx-font-size: " + this.conf.labScoreFontSize
+		// + "px; -fx-font-weight: bold; -fx-text-fill: " + this.conf.player2Color +
+		// ";");
 		this.labScrPlayer1.setPrefWidth(this.conf.labScoreWidth);
 		this.labScrPlayer2.setPrefWidth(this.conf.labScoreWidth);
 
@@ -180,108 +178,27 @@ public class GameController {
 	}
 
 	private void setControls(boolean _isMouseControl, boolean _isSoloGame) {
-		if (!this.conf.isPlayer1Computer) {
-			if (this.conf.isPlayer1MouseControl) {
-				this.setMouseControl(player1);
-			} else {
-				this.setKeyboardControl(player1);
+		System.out.println(conf.isPlayer1MouseControl);
+		System.out.println(conf.isPlayer2MouseControl + "" + this.conf.isPlayer2Computer);
+		if (!this.conf.isPlayer1Computer && !this.conf.isPlayer2Computer && !this.conf.isPlayer1MouseControl
+				&& !this.conf.isPlayer1MouseControl) {
+			this.setKeyboardControl(3);
+		} else {
+			if (!this.conf.isPlayer1Computer) {
+				if (this.conf.isPlayer1MouseControl) {
+					this.setMouseControl(player1);
+				} else {
+					this.setKeyboardControl(1);
+				}
+			}
+			if (!this.conf.isPlayer2Computer) {
+				if (this.conf.isPlayer2MouseControl) {
+					this.setMouseControl(player2);
+				} else {
+					this.setKeyboardControl(2);
+				}
 			}
 		}
-		if (!this.conf.isPlayer2Computer) {
-			if (this.conf.isPlayer2MouseControl) {
-				this.setMouseControl(player2);
-			} else {
-				this.setKeyboardControl(player2);
-			}
-		}
-		// if (_isMouseControl && _isSoloGame) {
-		// board.setOnMouseEntered(event -> {
-		// board.setCursor(Cursor.NONE);
-		// });
-		// board.setOnMouseMoved(event -> {
-		// // Calculez la position Y souhaitée pour le centre de la raquette
-		// double desiredRacketY = event.getY() - game.HEIGHT;
-		// double maxY = game.paddleMaxY;
-		// double minY = game.paddleMinY;
-
-		// if (desiredRacketY <= minY) {
-		// desiredRacketY = minY;
-		// } else if (desiredRacketY >= maxY) {
-		// desiredRacketY = maxY;
-		// }
-
-		// player1.mouseMove = desiredRacketY;
-		// });
-		// board.setOnMouseExited(event -> {
-		// board.setCursor(Cursor.DEFAULT);
-		// });
-		// } else if (!_isMouseControl && _isSoloGame) {
-		// scene.setOnKeyPressed(event -> {
-		// switch (event.getCode()) {
-		// case Z:
-		// player1.vel = -player1.maxSpeed;
-		// break;
-		// case S:
-		// player1.vel = player1.maxSpeed;
-		// break;
-		// default:
-		// event.consume();
-		// break;
-		// }
-		// });
-		// scene.setOnKeyReleased(event -> {
-		// switch (event.getCode()) {
-		// case Z:
-		// player1.vel = 0;
-		// break;
-		// case S:
-		// player1.vel = 0;
-		// break;
-		// default:
-		// event.consume();
-		// break;
-		// }
-		// });
-		// } else {
-		// scene.setOnKeyPressed(event -> {
-		// switch (event.getCode()) {
-		// case Z:
-		// player1.vel = -player1.maxSpeed;
-		// break;
-		// case S:
-		// player1.vel = player1.maxSpeed;
-		// break;
-		// case P:
-		// player2.vel = -player2.maxSpeed;
-		// break;
-		// case L:
-		// player2.vel = player2.maxSpeed;
-		// break;
-		// default:
-		// event.consume();
-		// break;
-		// }
-		// });
-		// scene.setOnKeyReleased(event -> {
-		// switch (event.getCode()) {
-		// case Z:
-		// player1.vel = 0;
-		// break;
-		// case S:
-		// player1.vel = 0;
-		// break;
-		// case P:
-		// player2.vel = 0;
-		// break;
-		// case L:
-		// player2.vel = 0;
-		// break;
-		// default:
-		// event.consume();
-		// break;
-		// }
-		// });
-		// }
 	}
 
 	private void setMouseControl(player _player) {
@@ -292,7 +209,6 @@ public class GameController {
 			double desiredRacketY = event.getY() - game.HEIGHT;
 			double maxY = _player.paddleMaxY;
 			double minY = _player.paddleMinY;
-			System.out.println("X : " + event.getX() + "Y : " + event.getY());
 			if (desiredRacketY <= minY) {
 				desiredRacketY = minY;
 			} else if (desiredRacketY >= maxY) {
@@ -306,15 +222,15 @@ public class GameController {
 		});
 	}
 
-	private void setKeyboardControl(player _Player) {
-		if (_Player.id == 1) {
+	private void setKeyboardControl(int _keyId) {
+		if (_keyId == 1) {
 			scene.setOnKeyPressed(event -> {
 				switch (event.getCode()) {
 					case Z:
-						_Player.vel = -_Player.maxSpeed;
+						this.player1.vel = -this.player1.maxSpeed;
 						break;
 					case S:
-						_Player.vel = _Player.maxSpeed;
+						this.player1.vel = this.player1.maxSpeed;
 						break;
 					default:
 						event.consume();
@@ -324,10 +240,37 @@ public class GameController {
 			scene.setOnKeyReleased(event -> {
 				switch (event.getCode()) {
 					case Z:
-						_Player.vel = 0;
+						this.player1.vel = 0;
 						break;
 					case S:
-						_Player.vel = 0;
+						this.player1.vel = 0;
+						break;
+					default:
+						event.consume();
+						break;
+				}
+			});
+		} else if (_keyId == 2) {
+			scene.setOnKeyPressed(event -> {
+				switch (event.getCode()) {
+					case P:
+						this.player2.vel = -this.player2.maxSpeed;
+						break;
+					case L:
+						this.player2.vel = this.player2.maxSpeed;
+						break;
+					default:
+						event.consume();
+						break;
+				}
+			});
+			scene.setOnKeyReleased(event -> {
+				switch (event.getCode()) {
+					case P:
+						this.player2.vel = 0;
+						break;
+					case L:
+						this.player2.vel = 0;
 						break;
 					default:
 						event.consume();
@@ -337,11 +280,17 @@ public class GameController {
 		} else {
 			scene.setOnKeyPressed(event -> {
 				switch (event.getCode()) {
+					case Z:
+						player1.vel = -player1.maxSpeed;
+						break;
+					case S:
+						player1.vel = player1.maxSpeed;
+						break;
 					case P:
-						_Player.vel = -_Player.maxSpeed;
+						player2.vel = -player2.maxSpeed;
 						break;
 					case L:
-						_Player.vel = _Player.maxSpeed;
+						player2.vel = player2.maxSpeed;
 						break;
 					default:
 						event.consume();
@@ -350,11 +299,17 @@ public class GameController {
 			});
 			scene.setOnKeyReleased(event -> {
 				switch (event.getCode()) {
+					case Z:
+						player1.vel = 0;
+						break;
+					case S:
+						player1.vel = 0;
+						break;
 					case P:
-						_Player.vel = 0;
+						player2.vel = 0;
 						break;
 					case L:
-						_Player.vel = 0;
+						player2.vel = 0;
 						break;
 					default:
 						event.consume();

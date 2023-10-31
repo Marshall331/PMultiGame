@@ -11,16 +11,16 @@ import application.view.GameController;
 
 public final class game extends AnimationTimer {
 
-    private gameConfiguration conf;
-    private GameController gameController;
+    public gameConfiguration conf;
+    public GameController gameController;
 
-    private double C;
-    private double MAG;
-    private double SPEED;
-    private double ACC;
+    public double C;
+    public double MAG;
+    public double SPEED;
+    public double ACC;
 
-    private int scr1;
-    private int scr2;
+    public int scr1;
+    public int scr2;
     public IntegerProperty scorePlayer1;
     public IntegerProperty scorePlayer2;
 

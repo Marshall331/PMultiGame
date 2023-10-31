@@ -62,22 +62,38 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Label fx:id="labScrPlayer2" contentDisplay="CENTER" prefHeight="78.0" prefWidth="80.0" textFill="#0e1ac3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <Label fx:id="labScrPlayer2" contentDisplay="CENTER" prefHeight="78.0" prefWidth="80.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
                   <Font size="50.0" />
                </font>
                <GridPane.margin>
                   <Insets left="110.0" />
                </GridPane.margin>
+               <textFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop color="#3111c2" />
+                        <Stop color="#18ab05" offset="1.0" />
+                     </stops>
+                  </RadialGradient>
+               </textFill>
             </Label>
             <Line fx:id="topLine" endX="100.17156982421875" endY="-46.166561126708984" fill="#900b0b" startX="100.0" startY="31.833438873291016" strokeWidth="2.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Label fx:id="labScrPlayer1" alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="78.0" prefWidth="80.0" textFill="#0e1ac3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <Label fx:id="labScrPlayer1" alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="78.0" prefWidth="80.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
                   <Font size="50.0" />
                </font>
                <GridPane.margin>
                   <Insets right="110.0" />
                </GridPane.margin>
+               <textFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop color="#3111c2" />
+                        <Stop color="#18ab05" offset="1.0" />
+                     </stops>
+                  </RadialGradient>
+               </textFill>
             </Label>
             <Button mnemonicParsing="false" onAction="#doReset" prefHeight="106.0" prefWidth="85.0" text="Reset" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                <font>
